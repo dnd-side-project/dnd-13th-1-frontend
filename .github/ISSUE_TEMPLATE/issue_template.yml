@@ -1,8 +1,6 @@
 name: DND 13th 1조 프론트엔트 이슈 템플릿
 description: DND 13th 1조 프론트엔트 이슈 템플릿입니다.
-labels: []
 title: "#이슈번호 - 이슈요약"
-labels: ["bug", "triage"]
 projects: ["dnd-side-project/projects/119"]
 body:
   - type: textarea
