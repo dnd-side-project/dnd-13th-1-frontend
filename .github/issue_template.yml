@@ -1,0 +1,32 @@
+name: "DND 13th 1조 프론트엔트 이슈 템플릿"
+description: "DND 13th 1조 프론트엔트 이슈 템플릿입니다."
+labels: []
+body:
+  - type: textarea
+    attributes:
+      label: 📄 설명
+      description: 새로운 기능에 대한 설명을 작성해 주세요.
+      placeholder: 자세히 적을수록 좋습니다!
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 🙋🏻 작업할 내용
+      description: 할 일을 체크박스 형태로 작성해주세요. 예: `- [ ] 작업 1`, `- [ ] 작업 2`
+      placeholder: |
+        - [ ] 작업 1: 엔드포인트 연동
+        - [ ] 작업 2: 리스폰스 DTO 작성
+        최대한 자세히 적어주세요!
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 📸 UI 캡쳐
+      description: Design 태그 작업인 경우 작업할 UI를 첨부해주세요. 이미지는 이슈 본문에 드래그 앤 드롭하거나 링크로 삽입하세요.
+  - type: checkboxes
+    attributes:
+      label: ✅ Label을 달았어요
+      description: Labels 설정 후 체크해주세요.
+      options:
+        - label: 라벨을 추가했습니다.
+          required: true
