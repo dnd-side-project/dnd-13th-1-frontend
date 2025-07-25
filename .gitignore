@@ -1,0 +1,17 @@
+# Xcode
+*.xcuserstate
+*.xcworkspace
+xcuserdata/
+build/
+DerivedData/
+*.pbxproj
+*.xcodeproj/*
+!.gitignore
+
+# Swift Package Manager
+.build/
+Packages/
+*.xcconfig
+
+# macOS
+.DS_Store
