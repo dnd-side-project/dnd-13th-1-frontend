@@ -9,7 +9,7 @@
 ### Commit Message
 `#이슈번호 - 제목`
 ### Issue Naming
-`#이슈번호 - 제목`
+`제목`
 ### Pull Request Naming
 `#이슈번호 - 제목`
 ### Branching Strategy
