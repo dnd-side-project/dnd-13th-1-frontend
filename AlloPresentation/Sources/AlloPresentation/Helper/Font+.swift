@@ -28,6 +28,7 @@ public enum AlloFontStyle {
     case body3
     case body4
     case body5
+    case body6
     case button1
     case button2
     case button3
@@ -39,13 +40,13 @@ public enum AlloFontStyle {
         switch self {
         case .headline1, .headline2,
              .subtitle1, .subtitle3,
-             .body1, .body4:
+             .body1, .body2, .body5:
             return "Pretendard-Bold"
         case .headline3, .subtitle2, .subtitle4, .button1, .button2, .caption1:
             return "Pretendard-SemiBold"
-        case .subtitle5, .body2, .body5, .button3:
+        case .subtitle5, .body3, .body6, .button3:
             return "Pretendard-Medium"
-        case .caption2, .caption3, .body3:
+        case .body4, .caption2, .caption3:
             return "Pretendard-Regular"
         }
     }
@@ -62,9 +63,9 @@ public enum AlloFontStyle {
             return 18
         case .body1, .button1:
             return 16
-        case .body2, .body3, .button2, .caption1, .caption2:
+        case .body2, .body3, .body4, .button2, .caption1, .caption2:
             return 14
-        case .body4, .body5, .button3, .caption3:
+        case .body5, .body6, .button3, .caption3:
             return 12
         }
     }
@@ -81,9 +82,9 @@ public enum AlloFontStyle {
             return 28 - 18
         case .body1, .button1:
             return 24 - 16
-        case .body2, .body3, .button2, .caption1, .caption2:
+        case .body2, .body3, .body4, .body6, .button2, .caption1, .caption2:
             return 24 - 14
-        case .body4, .body5, .button3, .caption3:
+        case .body5, .button3, .caption3:
             return 22 - 12
         }
     }
@@ -92,7 +93,7 @@ public enum AlloFontStyle {
         switch self {
         case .headline1, .headline2,
              .subtitle1, .subtitle2, .subtitle3, .subtitle4, .subtitle5,
-             .body1, .body2, .body3, .body4, .body5,
+             .body1, .body2, .body3, .body4, .body5, .body6,
              .caption1, .caption2, .caption3:
             return -(size * 0.02)  // -2% 자간
         case .headline3, .button1, .button2, .button3:
@@ -107,7 +108,7 @@ public enum AlloFontStyle {
 extension Font {
     static let headline1 = AlloFontStyle.headline1.font
     static let headline2 = AlloFontStyle.headline2.font
-    static let headline3 = AlloFontStyle.headline2.font
+    static let headline3 = AlloFontStyle.headline3.font
     static let subtitle1 = AlloFontStyle.subtitle1.font
     static let subtitle2 = AlloFontStyle.subtitle2.font
     static let subtitle3 = AlloFontStyle.subtitle3.font
@@ -119,6 +120,7 @@ extension Font {
     static let body3 = AlloFontStyle.body3.font
     static let body4 = AlloFontStyle.body4.font
     static let body5 = AlloFontStyle.body5.font
+    static let body6 = AlloFontStyle.body6.font
 
     static let button1 = AlloFontStyle.button1.font
     static let button2 = AlloFontStyle.button2.font
