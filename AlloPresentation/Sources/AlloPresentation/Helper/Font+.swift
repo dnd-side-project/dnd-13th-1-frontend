@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Font+.swift
 //  AlloPresentation
 //
 //  Created by 김민솔 on 8/4/25.
@@ -43,11 +43,9 @@ public enum AlloFontStyle {
             return "Pretendard-Bold"
         case .headline3, .subtitle2, .subtitle4, .button1, .button2, .caption1:
             return "Pretendard-SemiBold"
-        case .subtitle5, .body2, .body5, .button3,
-             .caption2, .caption3:
-            return ["Pretendard-Medium", "Pretendard-Regular"].contains(where: { $0 == self.weight }) ?
-                self.weight : "Pretendard-Medium"
-        default:
+        case .subtitle5, .body2, .body5, .button3:
+            return "Pretendard-Medium"
+        case .caption2, .caption3, .body3:
             return "Pretendard-Regular"
         }
     }
@@ -132,7 +130,7 @@ extension Font {
 }
 
 extension View {
-    func alloFont(_ style: AlloFontStyle) -> some View {
+    func font(_ style: AlloFontStyle) -> some View {
         self
             .font(style.font)
             .lineSpacing(style.lineSpacing)
