@@ -10,7 +10,7 @@ import SwiftUI
 /// Corner Radius를 구현한 View 익스텐션입니다.
 /// - Note: `cornerRadius(_:antialiased:)`는 iOS 13.0에서 deprecated되었으므로, clipShape(_:style:)를 이용합니다.
 extension View {
-    func cornerRadiusStyle(_ style: CornerRadiusStyle, corners: UIRectCorner = .allCorners) -> some View {
+    func cornerRadius(_ style: CornerRadiusStyle, corners: UIRectCorner = .allCorners) -> some View {
         clipShape(RoundedCorner(radius: style.rawValue, corners: corners))
     }
 }
