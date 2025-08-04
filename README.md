@@ -24,3 +24,4 @@
 | **Architecture Pattern** | MVVM-C + Clean Architecture |
 | **Dependency Injection** | [SwInject](https://github.com/Swinject/Swinject) |
 | **Dependency Management** | Swift Package Manager |
+| **Image** | [KingFisher](https://github.com/onevcat/Kingfisher) |
