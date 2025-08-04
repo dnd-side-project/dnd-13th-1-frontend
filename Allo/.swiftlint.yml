@@ -1,0 +1,5 @@
+included:
+  - Allo
+  - ../AlloData/Sources
+  - ../AlloDomain/Sources
+  - ../AlloPresentation/Sources
