@@ -13,16 +13,15 @@ final class HomeViewModel: ViewModelable {
     struct State {
     }
     enum Action {
+        case homeAppear
+        case homeDisappear
     }
     // MARK: - Properties
-    @Published private(set) var state = State()
+    @Published var state = State()
     private let appCoordinator: AppCoordinator
-
-    // MARK: - Init
     init(appCoordinator: AppCoordinator) {
         self.appCoordinator = appCoordinator
     }
-
     // MARK: - Action 처리
     func action(_ action: Action) {
     }

@@ -10,7 +10,6 @@ import SwiftUI
 
 struct HomeView: View {
     @StateObject var viewModel: HomeViewModel
-    @EnvironmentObject private var appCoordinator: AppCoordinator
     var body: some View {
     }
 }

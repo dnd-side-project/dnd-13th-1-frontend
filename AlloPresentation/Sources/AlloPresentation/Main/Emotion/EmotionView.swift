@@ -10,7 +10,6 @@ import SwiftUI
 
 struct EmotionView: View {
     @StateObject var viewModel: EmotionViewModel
-    @EnvironmentObject private var appCoordinator: AppCoordinator
     var body: some View {
     }
 }

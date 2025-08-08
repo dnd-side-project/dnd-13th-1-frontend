@@ -10,7 +10,6 @@ import SwiftUI
 
 struct CheckListView: View {
     @StateObject var viewModel: CheckListViewModel
-    @EnvironmentObject private var appCoordinator: AppCoordinator
     var body: some View {
     }
 }
