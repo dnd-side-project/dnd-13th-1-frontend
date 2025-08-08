@@ -7,26 +7,38 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
 @Observable
-final class AppCoordinator: Coordinator, ObservableObject {
+public final class AppCoordinator: Coordinator, ObservableObject {
     var sheetOnDismiss: (() -> Void)?
     var fullScreenCoverOnDismiss: (() -> Void)?
     var diContainer: DIContainer
     var path = NavigationPath()
     var sheet: (any AppRoute)?
+    var appSheet: AppSheet? {
+        get { sheet as? AppSheet }
+        set { sheet = newValue }
+    }
     var fullScreenCover: (any AppRoute)?
-    init(diContainer: DIContainer) {
-        self.diContainer = diContainer
+    var appFullScreenCover: AppFullScreenCover? {
+        get { fullScreenCover as? AppFullScreenCover }
+        set { fullScreenCover = newValue }
     }
 
-    @MainActor
-    @ViewBuilder
+    public init(diContainer: DIContainer) {
+        self.diContainer = diContainer
+    }
+    @MainActor @ViewBuilder
     func buildScene(_ scene: AppScene) -> some View {
         switch scene {
         case .tabBar:
-            diContainer.buildTabBarView()
+            diContainer.buildTabBarView(appCoordinator: self)
         }
+    }
+    @MainActor
+    public var start: some View {
+        buildScene(.tabBar)
     }
 
     @ViewBuilder

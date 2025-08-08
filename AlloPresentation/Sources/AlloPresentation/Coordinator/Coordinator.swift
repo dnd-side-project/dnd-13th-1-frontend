@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 /// Navigation 화면 전환을 관리하는 객체의 프로토콜입니다.
-public protocol Coordinator: AnyObject {
+protocol Coordinator: AnyObject {
     var diContainer: DIContainer { get set }
     var path: NavigationPath { get set }
     var sheet: (any AppRoute)? { get set }
@@ -30,7 +30,7 @@ public protocol Coordinator: AnyObject {
 }
 
 // MARK: - 기본 구현 제공
-public extension Coordinator {
+extension Coordinator {
     func push(_ scene: any AppRoute) {
         path.append(scene)
     }
