@@ -12,12 +12,16 @@ let package = Package(
             name: "AlloPresentation",
             targets: ["AlloPresentation"]),
     ],
+    dependencies: [
+        .package(path: "../AlloDomain")
+    ],
     targets: [
-            .target(
-                name: "AlloPresentation",
-                resources: [
-                    .process("Resources")
-                ]
-            )
-        ]
+        .target(
+            name: "AlloPresentation",
+            dependencies: ["AlloDomain"],
+            resources: [
+                .process("Resources")
+            ]
+        )
+    ]
 )
