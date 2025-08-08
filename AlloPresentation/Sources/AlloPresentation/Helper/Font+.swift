@@ -42,27 +42,40 @@ public enum AlloFontStyle {
     case caption1
     case caption2
     case caption3
-
+    
     var weight: String {
         switch self {
-        case .headline1, .headline3,
-             .subtitle1, .subtitle5,
-             .body1, .body2, .body5:
+        case
+                .headline1, .headline3,
+                .subtitle5,
+                .body1, .body2, .body5:
             return "Pretendard-Bold"
-        case .headline2, .headline4, .subtitle3, .subtitle6, .button1, .button2, .caption1:
+        case
+                .headline2, .headline4,
+                .subtitle1, .subtitle3, .subtitle6,
+                .button1, .button2,
+                .caption1:
             return "Pretendard-SemiBold"
-        case .subtitle2, .subtitle4, .subtitle7, .body3, .body6, .button3:
+        case
+                .subtitle2, .subtitle4, .subtitle7,
+                .body3, .body6,
+                .button3:
             return "Pretendard-Medium"
-        case .body4, .caption2, .caption3:
+        case
+                .body4,
+                .caption2,
+                .caption3:
             return "Pretendard-Regular"
         }
     }
-
+    
     var size: CGFloat {
         switch self {
         case .headline1:
             return 36
-        case .headline2, .subtitle4:
+        case
+                .headline2,
+                .subtitle4:
             return 28
         case .headline3, .headline4:
             return 24
@@ -70,17 +83,24 @@ public enum AlloFontStyle {
             return 20
         case .subtitle3, .subtitle5, .subtitle6, .subtitle7:
             return 18
-        case .body1, .button1:
+        case
+                .body1,
+                .button1:
             return 16
-        case .body2, .body3, .body4, .button2, .caption1, .caption2:
+        case
+                .body2, .body3, .body4,
+                .button2,
+                .caption1, .caption2:
             return 14
-        case .body5, .body6, .button3:
+        case
+                .body5, .body6,
+                .button3:
             return 12
         case .caption3:
             return 11
         }
     }
-
+    
     var lineSpacing: CGFloat {
         switch self {
         case .headline1:
@@ -95,11 +115,15 @@ public enum AlloFontStyle {
             return 28
         case .subtitle5, .subtitle6, .subtitle7:
             return 26
-        case .body1, .body2, .body3, .body4, .button1:
+        case
+                .body1, .body2, .body3, .body4,
+                .button1:
             return 24
         case .body5, .body6:
             return 22
-        case .button2, .button3, .caption1, .caption2, .caption3:
+        case
+                .button2, .button3,
+                .caption1, .caption2, .caption3:
             return 20
         }
     }
@@ -132,18 +156,18 @@ extension Font {
     static let subtitle3 = AlloFontStyle.subtitle5.font
     static let subtitle4 = AlloFontStyle.subtitle6.font
     static let subtitle5 = AlloFontStyle.subtitle7.font
-
+    
     static let body1 = AlloFontStyle.body1.font
     static let body2 = AlloFontStyle.body2.font
     static let body3 = AlloFontStyle.body3.font
     static let body4 = AlloFontStyle.body4.font
     static let body5 = AlloFontStyle.body5.font
     static let body6 = AlloFontStyle.body6.font
-
+    
     static let button1 = AlloFontStyle.button1.font
     static let button2 = AlloFontStyle.button2.font
     static let button3 = AlloFontStyle.button3.font
-
+    
     static let caption1 = AlloFontStyle.caption1.font
     static let caption2 = AlloFontStyle.caption2.font
     static let caption3 = AlloFontStyle.caption3.font
