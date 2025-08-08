@@ -7,9 +7,9 @@
 
 import Foundation
 import SwiftUI
-
+@MainActor
 public final class DIContainer {
-    @MainActor static let shared = DIContainer()
+    public static let shared = DIContainer()
     private init() {}
 }
 
@@ -40,10 +40,10 @@ extension DIContainer {
     }
 }
 
-@MainActor
 extension DIContainer {
-    func buildTabBarView() -> TabBarView {
-        return TabBarView()
+    func buildTabBarView(appCoordinator: AppCoordinator) -> some View {
+        TabBarView()
+            .environmentObject(appCoordinator)
     }
 
     func buildHomeView(appCoordinator: AppCoordinator) -> HomeView {
