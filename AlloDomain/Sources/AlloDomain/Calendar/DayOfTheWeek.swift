@@ -1,5 +1,11 @@
-// The Swift Programming Language
-// https://docs.swift.org/swift-book
+//
+//  DayOfTheWeek.swift
+//  AlloDomain
+//
+//  Created by 황채웅 on 8/8/25.
+//
+
+import Foundation
 
 public enum DayOfTheWeek: String, CaseIterable {
     case monday = "월"

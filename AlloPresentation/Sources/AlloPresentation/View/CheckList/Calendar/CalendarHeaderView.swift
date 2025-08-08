@@ -9,9 +9,10 @@ import SwiftUI
 
 struct CalendarHeaderView: View {
     
-    init() {
-        Fonts.registerCustomFonts()
-    }
+    let onTapDatePicker: () -> Void
+    let onTapToday: () -> Void
+    let onTapPreviousWeek: () -> Void
+    let onTapNextWeek: () -> Void
     
     var body: some View {
         HStack(
@@ -76,8 +77,4 @@ struct CalendarHeaderView: View {
         .frame(width: .infinity, height: 44)
         .padding(.horizontal, 20)
     }
-}
-
-#Preview {
-    CalendarHeaderView()
 }
