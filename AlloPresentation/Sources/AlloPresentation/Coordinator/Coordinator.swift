@@ -39,8 +39,8 @@ extension Coordinator {
         if !path.isEmpty { path.removeLast() }
     }
     func popLast(_ count: Int) {
-        for _ in 0..<count {
-            if !path.isEmpty { path.removeLast() }
+        for _ in 0..<count where !path.isEmpty {
+            path.removeLast()
         }
     }
 
