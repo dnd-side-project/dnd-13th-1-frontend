@@ -155,6 +155,7 @@ extension View {
             .font(style.font)
             .lineSpacing(style.lineSpacing - style.size)
             .kerning(style.kerning)
+            .frame(minHeight: style.lineSpacing)
     }
 }
 
