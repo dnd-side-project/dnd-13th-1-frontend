@@ -15,21 +15,17 @@ struct TabBarView: View {
             switch selectedTab {
             case .home:
                 DIContainer.shared.buildHomeView(appCoordinator: appCoordinator)
-                    .environmentObject(appCoordinator)
             case .checklist:
                 DIContainer.shared.buildCheckListView(appCoordinator: appCoordinator)
-                    .environmentObject(appCoordinator)
             case .emotion:
                 DIContainer.shared.buildEmotionView(appCoordinator: appCoordinator)
-                    .environmentObject(appCoordinator)
             case .mypage:
                 DIContainer.shared.buildMypageView(appCoordinator: appCoordinator)
-                    .environmentObject(appCoordinator)
             }
             VStack(spacing: 0) {
                 Spacer(minLength: 0)
                 HStack {
-                    ForEach([TabBarItem.home, .checklist, .emotion, .mypage], id: \.self) { (item: TabBarItem) in
+                    ForEach(TabBarItem.allCases, id: \.self) { (item: TabBarItem) in
                         let isSelected = selectedTab == item
                         Button(
                             action: {
