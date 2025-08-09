@@ -7,8 +7,8 @@
 
 import Foundation
 import SwiftUI
-@MainActor
-public final class DIContainer {
-    public static let shared = DIContainer()
-    private init() {}
+
+public protocol DIContainer {
+    // MARK: - Auth UseCases
+    // MARK: - User UseCases
 }
