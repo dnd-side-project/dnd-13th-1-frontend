@@ -14,13 +14,13 @@ struct TabBarView: View {
         ZStack(alignment: .bottom) {
             switch selectedTab {
             case .home:
-                DIContainer.shared.buildHomeView(appCoordinator: appCoordinator)
+                appCoordinator.buildScene(.home)
             case .checklist:
-                DIContainer.shared.buildCheckListView(appCoordinator: appCoordinator)
+                appCoordinator.buildScene(.checklist)
             case .emotion:
-                DIContainer.shared.buildEmotionView(appCoordinator: appCoordinator)
+                appCoordinator.buildScene(.emotion)
             case .mypage:
-                DIContainer.shared.buildMypageView(appCoordinator: appCoordinator)
+                appCoordinator.buildScene(.mypage)
             }
             VStack(spacing: 0) {
                 Spacer(minLength: 0)

@@ -10,9 +10,17 @@ import SwiftUI
 
 public enum AppScene: AppRoute {
     case tabBar
+    case home
+    case checklist
+    case emotion
+    case mypage
     public var id: String {
         switch self {
         case .tabBar: return "tabBar"
+        case .home: return "home"
+        case .checklist: return "checklist"
+        case .emotion: return "emotion"
+        case .mypage: return "mypage"
         }
     }
     public static func == (lhs: Self, rhs: Self) -> Bool {

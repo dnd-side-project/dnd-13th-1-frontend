@@ -33,7 +33,19 @@ public final class AppCoordinator: Coordinator, ObservableObject {
     func buildScene(_ scene: AppScene) -> some View {
         switch scene {
         case .tabBar:
-            diContainer.buildTabBarView(appCoordinator: self)
+            TabBarView().environmentObject(self)
+        case .home:
+            let homeViewModel = HomeViewModel(appCoordinator: self)
+            HomeView(viewModel: homeViewModel)
+        case .checklist:
+            let checkListViewModel = CheckListViewModel(appCoordinator: self)
+            CheckListView(viewModel: checkListViewModel)
+        case .emotion:
+            let emotionViewModel = EmotionViewModel(appCoordinator: self)
+            EmotionView(viewModel: emotionViewModel)
+        case .mypage:
+            let mypageViewModel = MyPageViewModel(appCoordinator: self)
+            MyPageView(viewModel: mypageViewModel)
         }
     }
     @MainActor
