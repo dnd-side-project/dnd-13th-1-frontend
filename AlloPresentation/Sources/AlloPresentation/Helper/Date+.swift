@@ -15,7 +15,6 @@ extension Date {
         let components = calendar.dateComponents([.day], from: self)
         return components.day ?? 1
     }
-    
     /// 해당 날짜의 요일을 반환합니다
     func getDayOfTheWeek() -> DayOfTheWeek {
         let calendar = Calendar.current
@@ -33,5 +32,26 @@ extension Date {
         case 7: return .saturday
         default: return .sunday
         }
+    }
+    /// 해당 날짜가 속한 주를 "n월 n째주" 형태로 반환합니다
+    func getWeekString() -> String {
+        let calendar = Calendar.current
+        let month = calendar.component(.month, from: self)
+        let weekOfMonth = calendar.component(.weekOfMonth, from: self)
+        let weekString: String
+        switch weekOfMonth {
+        case 1: weekString = "첫"
+        case 2: weekString = "둘"
+        case 3: weekString = "셋"
+        case 4: weekString = "넷"
+        case 5: weekString = "다섯"
+        case 6: weekString = "여섯"
+        default: weekString = "\(weekOfMonth)"
+        }
+        return "\(month)월 \(weekString)째주"
+    }
+    /// days 만큼 날짜를 이동합니다
+    func adding(days: Int) -> Date {
+        Calendar.current.date(byAdding: .day, value: days, to: self) ?? self
     }
 }

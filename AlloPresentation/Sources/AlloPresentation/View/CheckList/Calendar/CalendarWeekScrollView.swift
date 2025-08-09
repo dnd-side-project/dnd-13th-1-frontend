@@ -16,9 +16,9 @@ struct CalendarWeekScrollView: View {
     let selectedDayOfTheWeek: DayOfTheWeek // 선택한 요일(모든 주에 적용)
     
     /// 이전 주, 현재 주, 다음 주
-    let prevWeekDates: [Date : Bool]
-    let presentWeekDates: [Date : Bool]
-    let nextWeekDates: [Date : Bool]
+    let prevWeekDates: [Date: Bool]
+    let presentWeekDates: [Date: Bool]
+    let nextWeekDates: [Date: Bool]
     
     /// 특정 날짜 선택 시
     let onTap: (Date) -> Void

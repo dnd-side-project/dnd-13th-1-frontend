@@ -8,17 +8,18 @@
 import Foundation
 
 public final class Housework: Equatable, Identifiable {
+    /// Equatable을 채택하여 State의 변화를 보장합니다
     public static func == (lhs: Housework, rhs: Housework) -> Bool {
         lhs.id == rhs.id
     }
-    
+    // MARK: - Properties
     public let id: Int
     public let place: String
     public let title: String
     public let member: [Member]
     public let date: Date
     public var isDone: Bool
-    
+    // MARK: - Initializer
     public init(id: Int, place: String, title: String, member: [Member], date: Date, isDone: Bool) {
         self.id = id
         self.place = place

@@ -6,17 +6,15 @@
 //
 
 import SwiftUI
+import AlloDomain
 import Kingfisher
 
 struct CheckListCell: View {
-    let houseWorkId: Int
+    let housework: Housework
     let isEditing: Bool
     let status: CheckListCellStatus
-    let place: String
-    let houseWorkTitle: String
-    let myProfileImageUrl: URL?
-    let membersProfileImageUrl: [URL]?
-    let onCheckButtonTap: (Int) -> Void
+    let isMyHousework: Bool
+    let onCheckButtonTap: (Housework) -> Void
     var body: some View {
         HStack(
             alignment: .center,
@@ -25,7 +23,7 @@ struct CheckListCell: View {
             if isEditing {
                 Button(
                     action: {
-                        onCheckButtonTap(houseWorkId)
+                        onCheckButtonTap(housework)
                     }, label: {
                         VStack {
                             switch status {
@@ -56,13 +54,13 @@ struct CheckListCell: View {
                     alignment: .center,
                     spacing: 6
                 ) {
-                    Text(place)
+                    Text(housework.place)
                         .font(.button3)
                         .foregroundStyle(status.placeTextColor)
                         .frame(width: 37, height: 20)
                         .background(status.placeBackgroundColor)
                         .cornerRadius(.radius3)
-                    Text(houseWorkTitle)
+                    Text(housework.title)
                         .font(.subtitle6)
                         .foregroundStyle(status == .completed ? .gray500 : .gray900)
                 }
@@ -70,16 +68,18 @@ struct CheckListCell: View {
                     alignment: .center,
                     spacing: 2
                 ) {
-                    KFImage(myProfileImageUrl)
+                    if isMyHousework {
+                        KFImage(housework.member[0].profileImageUrl)
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .cornerRadius(.radius3)
+                    }
+                    ForEach(housework.member.dropFirst()) { member in
+                        KFImage(member.profileImageUrl)
                         .resizable()
                         .frame(width: 20, height: 20)
-                    if let membersProfileImageUrl {
-                        ForEach(membersProfileImageUrl.indices, id: \.self) { index in
-                            KFImage(membersProfileImageUrl[index])
-                                .resizable()
-                                .frame(width: 20, height: 20)
-                                .opacity(0.36) // FIXME: 조정 필요
-                        }
+                        .cornerRadius(.radius3)
+                        .opacity(0.36) // FIXME: 조정 필요
                     }
                 }
             }
@@ -87,6 +87,7 @@ struct CheckListCell: View {
             .frame(height: 84)
             .frame(maxWidth: .infinity)
             .cornerRadius(.radius2)
+            .padding(.horizontal, 20)
         }
     }
     /// 셀 상태를 기반으로 텍스트 색, 배경색을 정의합니다
@@ -99,39 +100,39 @@ struct CheckListCell: View {
         var cellBackgroundColor: Color {
             switch self {
             case .normal:
-                .white
+                    .white
             case .hover:
-                .blue50
+                    .blue50
             case .selected:
-                .white
+                    .white
             case .completed:
-                .gray100
+                    .gray100
             }
         }
         /// 장소 텍스트 색
         var placeTextColor: Color {
             switch self {
             case .normal:
-                .blue400
+                    .blue400
             case .hover:
-                .blue50
+                    .blue50
             case .selected:
-                .blue400
+                    .blue400
             case .completed:
-                .gray500
+                    .gray500
             }
         }
         /// 장소 배경 색
         var placeBackgroundColor: Color {
             switch self {
             case .normal:
-                .blue50
+                    .blue50
             case .hover:
-                .white
+                    .white
             case .selected:
-                .blue50
+                    .blue50
             case .completed:
-                .gray200
+                    .gray200
             }
         }
         /// 체크 아이콘 이미지

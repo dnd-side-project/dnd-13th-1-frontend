@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CalendarHeaderView: View {
     
+    let weekString: String
     let onTapDatePicker: () -> Void
     let onTapToday: () -> Void
     let onTapPreviousWeek: () -> Void
@@ -41,7 +42,7 @@ struct CalendarHeaderView: View {
                         .frame(maxWidth: 44, maxHeight: 44)
                 }
             )
-            Text("7월 넷째 주") // TODO: 월, 주 바인딩
+            Text(weekString) // TODO: 월, 주 바인딩
                 .font(.subtitle1)
                 .foregroundStyle(.gray900)
                 .padding(.horizontal, 16)
