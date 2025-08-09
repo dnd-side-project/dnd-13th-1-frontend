@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-final class HomeViewModel: ViewModelable {
+public final class HomeViewModel: ViewModelable {
     @Published var state = State()
-    private let appCoordinator: AppCoordinator
-    init(appCoordinator: AppCoordinator) {
+    let appCoordinator: Coordinator
+    public init(appCoordinator: Coordinator) {
         self.appCoordinator = appCoordinator
     }
     struct State {

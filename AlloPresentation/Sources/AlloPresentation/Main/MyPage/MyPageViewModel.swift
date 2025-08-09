@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-final class MyPageViewModel: ViewModelable {
+public final class MyPageViewModel: ViewModelable {
     @Published var state = State()
-    private let appCoordinator: AppCoordinator
-    init(appCoordinator: AppCoordinator) {
+    private let appCoordinator: Coordinator
+    public init(appCoordinator: Coordinator) {
         self.appCoordinator = appCoordinator
     }
     struct State {

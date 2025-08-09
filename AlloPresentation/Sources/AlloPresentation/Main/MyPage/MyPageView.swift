@@ -8,8 +8,11 @@
 import Foundation
 import SwiftUI
 
-struct MyPageView: View {
-    @StateObject var viewModel: MyPageViewModel
-    var body: some View {
+public struct MyPageView: View {
+    @State private var viewModel: MyPageViewModel
+    public init(viewModel: MyPageViewModel) {
+        self._viewModel = State(initialValue: viewModel)
+    }
+    public var body: some View {
     }
 }

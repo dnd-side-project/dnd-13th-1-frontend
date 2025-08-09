@@ -8,8 +8,11 @@
 import Foundation
 import SwiftUI
 
-struct CheckListView: View {
-    @StateObject var viewModel: CheckListViewModel
-    var body: some View {
+public struct CheckListView: View {
+    @State private var viewModel: CheckListViewModel
+    public init(viewModel: CheckListViewModel) {
+        self._viewModel = State(initialValue: viewModel)
+    }
+    public var body: some View {
     }
 }

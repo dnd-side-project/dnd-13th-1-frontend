@@ -8,8 +8,11 @@
 import Foundation
 import SwiftUI
 
-struct HomeView: View {
-    @StateObject var viewModel: HomeViewModel
-    var body: some View {
+public struct HomeView: View {
+    @State private var viewModel: HomeViewModel
+    public init(viewModel: HomeViewModel) {
+        self._viewModel = State(initialValue: viewModel)
+    }
+    public var body: some View {
     }
 }

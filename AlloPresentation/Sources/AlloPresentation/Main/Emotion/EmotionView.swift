@@ -8,8 +8,11 @@
 import Foundation
 import SwiftUI
 
-struct EmotionView: View {
-    @StateObject var viewModel: EmotionViewModel
-    var body: some View {
+public struct EmotionView: View {
+    @State private var viewModel: EmotionViewModel
+    public init(viewModel: EmotionViewModel) {
+        self._viewModel = State(initialValue: viewModel)
+    }
+    public var body: some View {
     }
 }

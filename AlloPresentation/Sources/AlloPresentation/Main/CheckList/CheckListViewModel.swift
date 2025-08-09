@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-final class CheckListViewModel: ViewModelable {
+public final class CheckListViewModel: ViewModelable {
     @Published var state = State()
-    private let appCoordinator: AppCoordinator
-    init(appCoordinator: AppCoordinator) {
+    let appCoordinator: Coordinator
+    public init(appCoordinator: Coordinator) {
         self.appCoordinator = appCoordinator
     }
     struct State {
