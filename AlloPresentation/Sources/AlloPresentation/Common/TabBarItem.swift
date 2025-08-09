@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum TabBarItem: CaseIterable {
+public enum TabBarItem: CaseIterable {
     case home, checklist, emotion, mypage
     var title: String {
         switch self {
