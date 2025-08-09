@@ -10,14 +10,6 @@ import AlloDomain
 
 struct CalendarWeekView: View {
     
-    
-    init(selectedDayOfTheWeek: DayOfTheWeek, dates: [Date : Bool], onTap: @escaping (Date) -> Void) {
-        Fonts.registerCustomFonts()
-        self.selectedDayOfTheWeek = selectedDayOfTheWeek
-        self.dates = dates
-        self.onTap = onTap
-    }
-    
     let selectedDayOfTheWeek: DayOfTheWeek // 선택한 요일
     let dates: [Date: Bool] // [일주일 날짜 데이터 : 집안일 여부 Boolean]
     let onTap: (Date) -> Void // 선택 시
