@@ -3,3 +3,10 @@ included:
   - ../AlloData/Sources
   - ../AlloDomain/Sources
   - ../AlloPresentation/Sources
+  
+disabled_rules:
+  - large_tuple
+  - trailing_whitespace
+  
+vertical_whitespace:
+  max_empty_lines: 1
