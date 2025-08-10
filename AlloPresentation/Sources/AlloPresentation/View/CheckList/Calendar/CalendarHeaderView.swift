@@ -22,7 +22,7 @@ struct CalendarHeaderView: View {
         ) {
             Button(
                 action: {
-                    // TODO: DatePicker 보여주기
+                    onTapDatePicker()
                 },
                 label: {
                     Image(.iconDatepicker)
@@ -35,20 +35,20 @@ struct CalendarHeaderView: View {
             Spacer(minLength: 0)
             Button(
                 action: {
-                    // TODO: 이전 주로 넘기기
+                    onTapPreviousWeek()
                 },
                 label: {
                     Image(.iconChevronLeft)
                         .frame(maxWidth: 44, maxHeight: 44)
                 }
             )
-            Text(weekString) // TODO: 월, 주 바인딩
+            Text(weekString)
                 .font(.subtitle1)
                 .foregroundStyle(.gray900)
                 .padding(.horizontal, 16)
             Button(
                 action: {
-                    // TODO: 다음 주로 넘기기
+                    onTapNextWeek()
                 },
                 label: {
                     Image(.iconChevronRight)
@@ -58,7 +58,7 @@ struct CalendarHeaderView: View {
             Spacer(minLength: 0)
             Button(
                 action: {
-                    // TODO: 오늘 이동
+                    onTapToday()
                 },
                 label: {
                     Text("오늘")

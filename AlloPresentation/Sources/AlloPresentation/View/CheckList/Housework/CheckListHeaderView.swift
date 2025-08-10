@@ -24,7 +24,7 @@ struct CheckListHeaderView: View {
             if isEditing {
                 Button(
                     action: {
-                        
+                        onSelectTab(0)
                     }, label: {
                         HStack(
                             alignment: .center,
@@ -42,7 +42,7 @@ struct CheckListHeaderView: View {
                 )
                 Button(
                     action: {
-                        
+                        onSelectTab(1)
                     }, label: {
                         HStack(
                             alignment: .center,
@@ -74,7 +74,7 @@ struct CheckListHeaderView: View {
             Spacer(minLength: 0)
             Button(
                 action: {
-                    
+                    isEditing ? onCompleteEdit() : onStartEdit()
                 }, label: {
                     HStack(
                         alignment: .center,

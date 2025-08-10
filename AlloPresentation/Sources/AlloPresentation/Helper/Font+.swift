@@ -149,13 +149,16 @@ public enum AlloFontStyle {
 
 extension Font {
     static let headline1 = AlloFontStyle.headline1.font
-    static let headline2 = AlloFontStyle.headline3.font
-    static let headline3 = AlloFontStyle.headline4.font
+    static let headline2 = AlloFontStyle.headline2.font
+    static let headline3 = AlloFontStyle.headline3.font
+    static let headline4 = AlloFontStyle.headline4.font
     static let subtitle1 = AlloFontStyle.subtitle1.font
-    static let subtitle2 = AlloFontStyle.subtitle3.font
-    static let subtitle3 = AlloFontStyle.subtitle5.font
-    static let subtitle4 = AlloFontStyle.subtitle6.font
-    static let subtitle5 = AlloFontStyle.subtitle7.font
+    static let subtitle2 = AlloFontStyle.subtitle2.font
+    static let subtitle3 = AlloFontStyle.subtitle3.font
+    static let subtitle4 = AlloFontStyle.subtitle4.font
+    static let subtitle5 = AlloFontStyle.subtitle5.font
+    static let subtitle6 = AlloFontStyle.subtitle6.font
+    static let subtitle7 = AlloFontStyle.subtitle7.font
     
     static let body1 = AlloFontStyle.body1.font
     static let body2 = AlloFontStyle.body2.font

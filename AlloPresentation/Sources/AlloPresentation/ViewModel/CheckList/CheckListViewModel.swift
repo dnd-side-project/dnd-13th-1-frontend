@@ -77,8 +77,9 @@ final class CheckListViewModel: ViewModelable {
     }
     let generateCalendarDateUseCase: GenerateCalendarDateUseCase
     var state: State
-    init(state: State) {
+    init(state: State, generateCalendarDateUseCase: GenerateCalendarDateUseCase) {
         self.state = state
+        self.generateCalendarDateUseCase = generateCalendarDateUseCase
     }
     func action(_ action: Action) {
         switch action {
@@ -140,7 +141,11 @@ extension CheckListViewModel {
                 }
             }
         case let .selectHousework(housework):
-            state.checkListState.selectedHouseworks.append(housework)
+            if let index = state.checkListState.selectedHouseworks.firstIndex(of: housework) {
+                state.checkListState.selectedHouseworks.remove(at: index) // 선택 취소(다시 탭)
+            } else {
+                state.checkListState.selectedHouseworks.append(housework) // 선택 추가
+            }
         case .startEditing:
             state.checkListState.isEditing = true
         case .deleteSelectedHousework:
@@ -173,12 +178,11 @@ extension CheckListViewModel {
         defer { state.isLoading = false }
         Task {
             do {
-                let date = Date() // 오늘
                 /// 3주 날짜 데이터를 생성합니다
-                let (pastWeek, presentWeek, futureWeek) = generateCalendarDateUseCase.execute(date)
+                let (pastWeek, presentWeek, futureWeek) = generateCalendarDateUseCase.execute(baseDate)
                 /// async let - await를 사용하여 비동기 작업들이 병렬적으로 실행하되, 모두 완료된 후 상태를 업데이트하도록 보장합니다
                 /// 선택한 날짜의 집안일 목록을 가져와 state에 반영합니다
-                async let update: () = updateHouseworkListOn(date)
+                async let update: () = updateHouseworkListOn(baseDate)
                 /// 집안일 존재 여부를 조회하고 state에 반영합니다
                 async let data = try fetchHasHouseworkOn(from: pastWeek[0], to: futureWeek[6])
                 let ((), houseworkData) = try await (update, data)
@@ -199,8 +203,8 @@ extension CheckListViewModel {
                     }
                 )
                 /// 날짜 선택 상태를 달력에 반영합니다
-                state.calendarState.selectedDate = date
-                state.calendarState.selectedDayOfTheWeek = date.getDayOfTheWeek()
+                state.calendarState.selectedDate = baseDate
+                state.calendarState.selectedDayOfTheWeek = baseDate.getDayOfTheWeek()
                 state.calendarState.weekString = presentWeek[0].getWeekString()
             } catch(let error) {
                 dump(#function)

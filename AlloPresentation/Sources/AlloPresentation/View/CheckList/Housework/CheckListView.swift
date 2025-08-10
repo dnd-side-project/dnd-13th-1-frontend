@@ -24,7 +24,7 @@ struct CheckListView: View {
                 ) {
                     // TODO: 네비바 추가
                     CalendarHeaderView(
-                        weekString: "",
+                        weekString: viewModel.state.calendarState.weekString,
                         onTapDatePicker: {
                             viewModel.action(.datePickerAction(.willPresentDatePicker))
                         },
@@ -101,8 +101,8 @@ struct CheckListView: View {
                     : viewModel.state.checkListState.ourHouseworksCompleted.count > 0 {
                     CheckListCompletedHeaderView(
                         count: viewModel.state.checkListState.selectedTabIndex == 0
-                        ? viewModel.state.checkListState.myHouseworksLeft.count
-                        : viewModel.state.checkListState.ourHouseworksLeft.count,
+                        ? viewModel.state.checkListState.myHouseworksCompleted.count
+                        : viewModel.state.checkListState.ourHouseworksCompleted.count,
                         isOpened: viewModel.state.checkListState.showsCompleted,
                         onTap: {
                             viewModel.action(.checkListAction(.didTapCompletedHouseworkListButton))
