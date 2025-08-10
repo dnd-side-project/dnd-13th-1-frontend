@@ -8,18 +8,19 @@
 import SwiftUI
 import AlloDomain
 
-struct CheckListView: View {
-    @StateObject var viewModel: CheckListViewModel
-    var body: some View {
-        ZStack(
-            alignment: .center
-        ) {
+public struct CheckListView: View {
+    @StateObject private var viewModel: CheckListViewModel
+    
+    public init(viewModel: CheckListViewModel) {
+        Fonts.registerCustomFonts()
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
+    public var body: some View {
+        ZStack {
             VStack(
-                alignment: .center,
                 spacing: 0
             ) {
                 VStack(
-                    alignment: .center,
                     spacing: 0
                 ) {
                     // TODO: 네비바 추가
@@ -38,6 +39,7 @@ struct CheckListView: View {
                             viewModel.action(.weekCalendarAction(.moveToFuture))
                         }
                     )
+                    .padding(.bottom, 12)
                     CalendarWeekScrollView(
                         selectedDayOfTheWeek: viewModel.state.calendarState.selectedDayOfTheWeek,
                         prevWeekDates: viewModel.state.calendarState.pastWeek,
@@ -57,7 +59,9 @@ struct CheckListView: View {
                 }
                 .padding(.top, 8)
                 .padding(.bottom, 15)
+                .frame(height: 135)
                 .frame(maxWidth: .infinity)
+                .background(.white)
                 .cornerRadius(.radius3, corners: [.bottomLeft, .bottomRight])
                 CheckListHeaderView(
                     selectedTabIndex: viewModel.state.checkListState.selectedTabIndex,
@@ -80,19 +84,29 @@ struct CheckListView: View {
                     ? viewModel.state.checkListState.myHouseworksLeft
                     : viewModel.state.checkListState.ourHouseworksLeft
                 ) { housework in
-                    VStack(alignment: .center, spacing: 12) {
-                        CheckListCell(
-                            housework: housework,
-                            isEditing: viewModel.state.checkListState.isEditing,
-                            status:
-                                viewModel.state.checkListState.selectedHouseworks.contains(housework)
-                            ? .selected
-                            : .normal,
-                            isMyHousework: viewModel.state.checkListState.myHouseworksLeft.contains(housework),
-                            onCheckButtonTap: { housework in
-                                viewModel.action(.checkListAction(.selectHousework(housework)))
+                    ScrollView(.vertical) {
+                        VStack(alignment: .center, spacing: 12) {
+                            CheckListCell(
+                                housework: housework,
+                                isEditing: viewModel.state.checkListState.isEditing,
+                                status:
+                                    viewModel.state.checkListState.selectedHouseworks.contains(housework)
+                                ? .selected
+                                : .normal,
+                                isMyHousework: viewModel.state.checkListState.myHouseworksLeft.contains(housework),
+                                onCheckButtonTap: { housework in
+                                    viewModel.action(.checkListAction(.completeHousework(housework)))
+                                }
+                            )
+                            .onTapGesture {
+                                if viewModel.state.checkListState.isEditing {
+                                    viewModel.action(.checkListAction(.selectHousework(housework)))
+                                } else {
+                                    viewModel.action(.checkListAction(.didTaphousework(housework)))
+                                }
                             }
-                        )
+                        }
+                        Spacer(minLength: 0)
                     }
                 }
                 /// 완료한 집안일이 있는 경우에만 보여줍니다
@@ -109,32 +123,49 @@ struct CheckListView: View {
                         }
                     )
                     .padding(.top, 20)
-                    ForEach(
-                        viewModel.state.checkListState.selectedTabIndex == 0
-                        ? viewModel.state.checkListState.myHouseworksCompleted
-                        : viewModel.state.checkListState.ourHouseworksCompleted
-                    ) { housework in
-                        VStack(alignment: .center, spacing: 12) {
-                            CheckListCell(
-                                housework: housework,
-                                isEditing: viewModel.state.checkListState.isEditing,
-                                status: .completed,
-                                isMyHousework: viewModel.state.checkListState.myHouseworksLeft.contains(housework),
-                                onCheckButtonTap: { housework in
-                                    viewModel.action(.checkListAction(.selectHousework(housework)))
+                    if viewModel.state.checkListState.showsCompleted {
+                        ForEach(
+                            viewModel.state.checkListState.selectedTabIndex == 0
+                            ? viewModel.state.checkListState.myHouseworksCompleted
+                            : viewModel.state.checkListState.ourHouseworksCompleted
+                        ) { housework in
+                            ScrollView(.vertical) {
+                                VStack(alignment: .center, spacing: 12) {
+                                    CheckListCell(
+                                        housework: housework,
+                                        isEditing: viewModel.state.checkListState.isEditing,
+                                        status: .completed,
+                                        isMyHousework: viewModel.state.checkListState.myHouseworksLeft.contains(housework),
+                                        onCheckButtonTap: { housework in
+                                            viewModel.action(.checkListAction(.selectHousework(housework)))
+                                        }
+                                    )
                                 }
-                            )
+                            }
                         }
                     }
                 }
+                Spacer(minLength: 0)
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.bottom, 20)
-            .background(.gray50)
             if viewModel.state.isLoading {
                 ProgressView()
             }
-            CheckListFloatingButton(viewModel: viewModel)
+            VStack {
+                Spacer(minLength: 0)
+                HStack {
+                    Spacer(minLength: 0)
+                    CheckListFloatingButton(viewModel: viewModel)
+                        .padding(.trailing, 20)
+                        .padding(.bottom, 20)
+                }
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(.gray50)
+        .onAppear {
+            viewModel.action(.weekCalendarAction(.didTapTodayButton))
+        }
     }
 }

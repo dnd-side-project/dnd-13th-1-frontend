@@ -21,9 +21,7 @@ struct CheckListFloatingButton: View {
                         ? .iconButtonTrashGray900
                         : .iconButtonTrashGray300
                     )
-                    .frame(width: 50, height: 50, alignment: .bottomTrailing)
-                    .padding(.trailing, 20)
-                    .padding(.bottom, 20)
+                    .frame(width: 50, height: 50)
                 }
             )
         } else {
@@ -32,9 +30,7 @@ struct CheckListFloatingButton: View {
                     viewModel.action(.checkListAction(.didTapAddHouseworkButton))
                 }, label: {
                     Image(.iconButtonAdd)
-                        .frame(width: 50, height: 50, alignment: .bottomTrailing)
-                        .padding(.trailing, 20)
-                        .padding(.bottom, 20)
+                        .frame(width: 50, height: 50)
                 }
             )
             

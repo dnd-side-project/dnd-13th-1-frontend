@@ -113,15 +113,17 @@ public enum AlloFontStyle {
             return 30
         case .subtitle3, .subtitle4:
             return 28
-        case .subtitle5, .subtitle6, .subtitle7:
+        case .subtitle5, .subtitle6:
             return 26
         case
-                .body1, .body2, .body3, .body4,
+                .body1, .body2, .body3,
+                .subtitle7,
                 .button1:
             return 24
         case .body5, .body6:
             return 22
         case
+                .body4,
                 .button2, .button3,
                 .caption1, .caption2, .caption3:
             return 20

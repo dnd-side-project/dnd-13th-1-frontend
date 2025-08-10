@@ -6,6 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		09AA8BC02E48A1C400A93BD3 /* AlloData in Frameworks */ = {isa = PBXBuildFile; productRef = 09AA8BBF2E48A1C400A93BD3 /* AlloData */; };
+		09AA8BC32E48A1CA00A93BD3 /* AlloPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 09AA8BC22E48A1CA00A93BD3 /* AlloPresentation */; };
+		09AA8BC62E48A1D400A93BD3 /* AlloDomain in Frameworks */ = {isa = PBXBuildFile; productRef = 09AA8BC52E48A1D400A93BD3 /* AlloDomain */; };
+		09AA8BC92E48A1DB00A93BD3 /* AlloPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 09AA8BC82E48A1DB00A93BD3 /* AlloPresentation */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		094C23842E3DDA8F009EF33E /* Allo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Allo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		094C23922E3DDAB3009EF33E /* AlloPresentation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = AlloPresentation; path = ../AlloPresentation; sourceTree = SOURCE_ROOT; };
@@ -28,6 +35,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09AA8BC92E48A1DB00A93BD3 /* AlloPresentation in Frameworks */,
+				09AA8BC62E48A1D400A93BD3 /* AlloDomain in Frameworks */,
+				09AA8BC32E48A1CA00A93BD3 /* AlloPresentation in Frameworks */,
+				09AA8BC02E48A1C400A93BD3 /* AlloData in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +87,10 @@
 			);
 			name = Allo;
 			packageProductDependencies = (
+				09AA8BBF2E48A1C400A93BD3 /* AlloData */,
+				09AA8BC22E48A1CA00A93BD3 /* AlloPresentation */,
+				09AA8BC52E48A1D400A93BD3 /* AlloDomain */,
+				09AA8BC82E48A1DB00A93BD3 /* AlloPresentation */,
 			);
 			productName = Allo;
 			productReference = 094C23842E3DDA8F009EF33E /* Allo.app */;
@@ -107,6 +122,9 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				096639D62E3F45CE00238861 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
+				09AA8BBE2E48A1C400A93BD3 /* XCLocalSwiftPackageReference "../AlloData" */,
+				09AA8BC42E48A1D400A93BD3 /* XCLocalSwiftPackageReference "../AlloDomain" */,
+				09AA8BC72E48A1DB00A93BD3 /* XCLocalSwiftPackageReference "../AlloPresentation" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 094C23852E3DDA8F009EF33E /* Products */;
@@ -371,6 +389,21 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		09AA8BBE2E48A1C400A93BD3 /* XCLocalSwiftPackageReference "../AlloData" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../AlloData;
+		};
+		09AA8BC42E48A1D400A93BD3 /* XCLocalSwiftPackageReference "../AlloDomain" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../AlloDomain;
+		};
+		09AA8BC72E48A1DB00A93BD3 /* XCLocalSwiftPackageReference "../AlloPresentation" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../AlloPresentation;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		096639D62E3F45CE00238861 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -381,6 +414,25 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		09AA8BBF2E48A1C400A93BD3 /* AlloData */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AlloData;
+		};
+		09AA8BC22E48A1CA00A93BD3 /* AlloPresentation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AlloPresentation;
+		};
+		09AA8BC52E48A1D400A93BD3 /* AlloDomain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AlloDomain;
+		};
+		09AA8BC82E48A1DB00A93BD3 /* AlloPresentation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AlloPresentation;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 094C237C2E3DDA8F009EF33E /* Project object */;
 }

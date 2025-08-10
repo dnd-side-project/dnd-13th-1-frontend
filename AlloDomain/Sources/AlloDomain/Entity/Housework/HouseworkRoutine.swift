@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum HouseworkRoutine: String, CaseIterable {
+public enum HouseworkRoutine: String, CaseIterable, Sendable {
     case none = "반복안함"
     case everyday = "매일"
     case everyWeek = "매주"

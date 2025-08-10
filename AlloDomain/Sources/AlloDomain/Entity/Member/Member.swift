@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class Member: Equatable, Identifiable {
+public final class Member: Equatable, Identifiable, Sendable {
     /// Equatable을 채택하여 State의 변화를 보장합니다
     public static func == (lhs: Member, rhs: Member) -> Bool {
         lhs.id == rhs.id

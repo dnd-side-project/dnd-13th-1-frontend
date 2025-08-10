@@ -22,6 +22,19 @@ struct CheckListHeaderView: View {
             spacing: 20
         ) {
             if isEditing {
+                HStack(
+                    alignment: .center,
+                    spacing: 4
+                ) {
+                    Text("선택됨")
+                        .font(.body1)
+                        .foregroundStyle(.gray900)
+                    Text("\(selectedHouseworkCount)")
+                        .font(.body1)
+                        .foregroundStyle(selectedHouseworkCount > 0 ? .blue400 : .gray400)
+                }
+                .frame(height: 44)
+            } else {
                 Button(
                     action: {
                         onSelectTab(0)
@@ -50,26 +63,14 @@ struct CheckListHeaderView: View {
                         ) {
                             Text("우리집 집안일")
                                 .font(.body1)
-                                .foregroundStyle(selectedTabIndex == 0 ? .gray900 : .gray300)
+                                .foregroundStyle(selectedTabIndex == 1 ? .gray900 : .gray300)
                             Text("\(allHouseworkCount)")
                                 .font(.body1)
-                                .foregroundStyle(selectedTabIndex == 0 ? .blue400 : .gray300)
+                                .foregroundStyle(selectedTabIndex == 1 ? .blue400 : .gray300)
                         }
                         .frame(height: 44)
                     }
                 )
-            } else {
-                HStack(
-                    alignment: .center,
-                    spacing: 4
-                ) {
-                    Text("선택됨")
-                        .font(.body1)
-                        .foregroundStyle(.gray900)
-                    Text("\(selectedHouseworkCount)")
-                        .font(.body1)
-                        .foregroundStyle(selectedHouseworkCount > 0 ? .blue400 : .gray400)
-                }
             }
             Spacer(minLength: 0)
             Button(

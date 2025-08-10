@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@MainActor
 protocol ViewModelable: ObservableObject {
     associatedtype Action
     associatedtype State

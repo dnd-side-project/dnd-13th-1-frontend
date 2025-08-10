@@ -18,9 +18,9 @@ struct CheckListCell: View {
     var body: some View {
         HStack(
             alignment: .center,
-            spacing: 0
+            spacing: 8
         ) {
-            if isEditing {
+            if !isEditing {
                 Button(
                     action: {
                         onCheckButtonTap(housework)
@@ -63,6 +63,7 @@ struct CheckListCell: View {
                     Text(housework.title)
                         .font(.subtitle6)
                         .foregroundStyle(status == .completed ? .gray500 : .gray900)
+                    Spacer(minLength: 0)
                 }
                 HStack(
                     alignment: .center,
@@ -71,24 +72,34 @@ struct CheckListCell: View {
                     if isMyHousework {
                         KFImage(housework.member[0].profileImageUrl)
                             .resizable()
+                            .scaledToFit()
                             .frame(width: 20, height: 20)
                             .cornerRadius(.radius3)
                     }
                     ForEach(housework.member.dropFirst()) { member in
                         KFImage(member.profileImageUrl)
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                        .cornerRadius(.radius3)
-                        .opacity(0.36) // FIXME: 조정 필요
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 20, height: 20)
+                            .cornerRadius(.radius3)
+                            .opacity(0.36) // FIXME: 조정 필요
                     }
+                    Spacer(minLength: 0)
                 }
             }
-            .padding(.vertical, 14)
-            .frame(height: 84)
-            .frame(maxWidth: .infinity)
-            .cornerRadius(.radius2)
-            .padding(.horizontal, 20)
         }
+        .padding(.vertical, 14)
+        .padding(.horizontal, isEditing ? 24 : 6)
+        .frame(height: 84)
+        .frame(maxWidth: .infinity)
+        .background(.white)
+        .cornerRadius(.radius2)
+        .overlay(
+            RoundedRectangle(cornerRadius: CornerRadiusStyle.radius2.rawValue)
+                .stroke(status == .selected ? .blue400 : .clear, lineWidth: 1)
+                .padding(1)
+        )
+        .padding(.horizontal, 20)
     }
     /// 셀 상태를 기반으로 텍스트 색, 배경색을 정의합니다
     enum CheckListCellStatus {

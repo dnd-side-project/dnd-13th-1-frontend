@@ -36,26 +36,33 @@ struct CalendarWeekScrollView: View {
     var body: some View {
         GeometryReader { geometry in
             ScrollView(.horizontal) {
-                LazyHStack {
+                LazyHStack(spacing: 0) {
                     CalendarWeekView(
                         selectedDayOfTheWeek: selectedDayOfTheWeek,
                         dates: prevWeekDates,
                         onTap: onTap
                     )
+                    .padding(.horizontal, padding)
+                    .frame(width: geometry.size.width)
                     .id(-1)
                     CalendarWeekView(
                         selectedDayOfTheWeek: selectedDayOfTheWeek,
                         dates: presentWeekDates,
                         onTap: onTap
                     )
+                    .padding(.horizontal, padding)
+                    .frame(width: geometry.size.width)
                     .id(0)
                     CalendarWeekView(
                         selectedDayOfTheWeek: selectedDayOfTheWeek,
                         dates: nextWeekDates,
                         onTap: onTap
                     )
+                    .padding(.horizontal, padding)
+                    .frame(width: geometry.size.width)
                     .id(1)
-                }.scrollTargetLayout()
+                }
+                .scrollTargetLayout()
             }
             .scrollPosition(id: $scrollPosition)
             .scrollIndicators(.hidden)

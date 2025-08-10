@@ -16,7 +16,7 @@ struct CalendarWeekView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            HStack(spacing: (geometry.size.width - 23.5 * 2 - 40 * 7) / 6) {
+            HStack(spacing: (geometry.size.width - 40 * 7) / 6) {
                 ForEach(dates.keys.sorted(), id: \.self) { date in
                     CalendarDayView(
                         dayOfTheWeek: date.getDayOfTheWeek().rawValue,
@@ -27,7 +27,7 @@ struct CalendarWeekView: View {
                         onTap(date)
                     }
                 }
-            }.padding(.horizontal, 23.5)
+            }
         }
     }
     

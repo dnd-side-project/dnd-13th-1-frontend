@@ -9,7 +9,9 @@ import Foundation
 import AlloDomain
 
 @Observable
-final class CheckListViewModel: ViewModelable {
+@MainActor
+public final class CheckListViewModel: ViewModelable {
+    // MARK: - State
     /// 한 뷰에 다양한 기능이 있으므로 캘린더와 체크리스트로 내부적으로 분리하여 관리합니다
     /// - Note: 뷰모델을 분리하여도 되나, 뷰모델 간의 양방향 의존성이 생길 수 있음을 주의해야합니다
     struct State {
@@ -44,6 +46,7 @@ final class CheckListViewModel: ViewModelable {
         var selectedTabIndex: Int // 0(나의 집안일), 1(우리집 집안일)
         var isEditing: Bool // 편집 상태
     }
+    // MARK: - Action
     enum Action {
         case weekCalendarAction(WeekCalendarAction) // 주간 캘린더 관련 유저 액션
         case datePickerAction(DatePickerAction) // 데이트피커 관련 유저 액션
@@ -75,19 +78,62 @@ final class CheckListViewModel: ViewModelable {
         case didTapCompletedHouseworkListButton
         case didTaphousework(_ housework: Housework)
     }
-    let generateCalendarDateUseCase: GenerateCalendarDateUseCase
+    // MARK: - Dependencies
+    private let generateCalendarDateUseCase: GenerateCalendarDateUseCase
+    private let completeHouseworkUseCase: CompleteHouseworkUseCase
+    private let deleteHouseworkUseCase: DeleteHouseworkUseCase
+    private let getHouseworkListUseCase: GetHouseworkListUseCase
+    private let getHaveHouseworkUseCase: GetHaveHouseworkUseCase
+    // MARK: - Properties
     var state: State
-    init(state: State, generateCalendarDateUseCase: GenerateCalendarDateUseCase) {
-        self.state = state
+    // MARK: - Initializer
+    public init(
+        generateCalendarDateUseCase: GenerateCalendarDateUseCase,
+        completeHouseworkUseCase: CompleteHouseworkUseCase,
+        deleteHouseworkUseCase: DeleteHouseworkUseCase,
+        getHouseworkListUseCase: GetHouseworkListUseCase,
+        getHaveHouseworkUseCase: GetHaveHouseworkUseCase
+    ) {
         self.generateCalendarDateUseCase = generateCalendarDateUseCase
+        self.completeHouseworkUseCase = completeHouseworkUseCase
+        self.deleteHouseworkUseCase = deleteHouseworkUseCase
+        self.getHouseworkListUseCase = getHouseworkListUseCase
+        self.getHaveHouseworkUseCase = getHaveHouseworkUseCase
+        self.state = State(
+            isLoading: false,
+            calendarState: .init(
+                pastWeek: [:],
+                presentWeek: [:],
+                futureWeek: [:],
+                weekString: "",
+                selectedDate: Date(),
+                selectedDayOfTheWeek: .friday,
+                selectedDateOnDatePicker: Date(),
+                showDatePicker: false
+            ),
+            checkListState: .init(
+                myHouseworksLeft: [],
+                ourHouseworksLeft: [],
+                myHouseworksCompleted: [],
+                ourHouseworksCompleted: [],
+                selectedHouseworks: [],
+                showsCompleted: false,
+                selectedTabIndex: 0,
+                isEditing: false
+            )
+        )
     }
+    // MARK: - Action Method
     func action(_ action: Action) {
         switch action {
         case let .weekCalendarAction(action):
             handleWeekCalendarAction(action)
         case let .datePickerAction(action):
+            handleDatePickerAction(action)
         case let .checkListAction(action):
+            handleCheckListAction(action)
         case .didTapNotificationButton:
+            break
             // TODO: 알림 UI 전환
         }
     }
@@ -116,8 +162,10 @@ extension CheckListViewModel {
             state.calendarState.selectedDateOnDatePicker = date
         case .didTapPreviousMonth:
             // TODO: DatePicker 구현 필요
+            break
         case .didTapNextMonth:
             // TODO: DatePicker 구현 필요
+            break
         case .didTapSelectButton:
             updateDataOnNewWeeks(state.calendarState.selectedDateOnDatePicker)
         case .willCloseDatePicker:
@@ -162,10 +210,12 @@ extension CheckListViewModel {
             state.checkListState.isEditing = false
         case .didTapAddHouseworkButton:
             // TODO: 집안일 추가 UI 전환
+            break
         case .didTapCompletedHouseworkListButton:
             state.checkListState.showsCompleted.toggle()
         case let .didTaphousework(housework):
             // TODO: 집안일 상세보기 바텀시트 UI
+            break
         }
     }
 }
@@ -182,9 +232,9 @@ extension CheckListViewModel {
                 let (pastWeek, presentWeek, futureWeek) = generateCalendarDateUseCase.execute(baseDate)
                 /// async let - await를 사용하여 비동기 작업들이 병렬적으로 실행하되, 모두 완료된 후 상태를 업데이트하도록 보장합니다
                 /// 선택한 날짜의 집안일 목록을 가져와 state에 반영합니다
-                async let update: () = updateHouseworkListOn(baseDate)
+                async let update: () = await updateHouseworkListOn(baseDate)
                 /// 집안일 존재 여부를 조회하고 state에 반영합니다
-                async let data = try fetchHasHouseworkOn(from: pastWeek[0], to: futureWeek[6])
+                async let data = try await fetchHasHouseworkOn(from: pastWeek[0], to: futureWeek[6])
                 let ((), houseworkData) = try await (update, data)
                 /// 3주의 집안일 정보를 매핑합니다
                 state.calendarState.pastWeek = Dictionary(
@@ -206,6 +256,8 @@ extension CheckListViewModel {
                 state.calendarState.selectedDate = baseDate
                 state.calendarState.selectedDayOfTheWeek = baseDate.getDayOfTheWeek()
                 state.calendarState.weekString = presentWeek[0].getWeekString()
+                /// 무한 스크롤을 위해 스크롤 포지션을 초기화합니다
+                state.calendarState.scrollPosition = 0
             } catch(let error) {
                 dump(#function)
                 dump(error)
@@ -232,7 +284,7 @@ extension CheckListViewModel {
 // MARK: - API Calls
 extension CheckListViewModel {
     func fetchHasHouseworkOn(from: Date, to: Date) async throws -> [Date: Bool] {
-        // TODO: 집안일 존재 여부 조회 유즈케이스 호출
+        try await getHaveHouseworkUseCase.execute(from: from, to: to)
     }
     func fetchHouseworkListOn(_ date: Date) async throws -> (
         myHouseworksLeft: [Housework],
@@ -240,9 +292,9 @@ extension CheckListViewModel {
         myHouseworksCompleted: [Housework],
         ourHouseworksCompleted: [Housework]
     ) {
-        // TODO: 집안일 리스트 조회 유즈케이스 호출
+        try await getHouseworkListUseCase.execute(date)
     }
     func completeHousework(_ housework: Housework) async throws {
-        // TODO: 집안일 완료 유즈케이스 호출
+        try await completeHouseworkUseCase.execute(housework)
     }
 }
