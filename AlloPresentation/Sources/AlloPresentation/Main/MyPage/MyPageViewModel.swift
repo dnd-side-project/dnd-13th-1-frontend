@@ -9,16 +9,22 @@ import SwiftUI
 
 public final class MyPageViewModel: ViewModelable {
     @Published var state = State()
-    private let appCoordinator: Coordinator
-    public init(appCoordinator: Coordinator) {
-        self.appCoordinator = appCoordinator
+    let coordinator: Coordinator
+    public init(coordinator: Coordinator) {
+        self.coordinator = coordinator
     }
     struct State {
     }
     enum Action {
-        case myPageAppear
-        case myPageDisappear
+        case backButtonDidTap
+        case myPageDidTap
     }
     func action(_ action: Action) {
+        switch action {
+        case .backButtonDidTap:
+            coordinator.pop()
+        case .myPageDidTap:
+            coordinator.popToRoot()
+        }
     }
 }

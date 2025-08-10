@@ -9,16 +9,22 @@ import SwiftUI
 
 public final class CheckListViewModel: ViewModelable {
     @Published var state = State()
-    let appCoordinator: Coordinator
-    public init(appCoordinator: Coordinator) {
-        self.appCoordinator = appCoordinator
+    let coordinator: Coordinator
+    public init(coordinator: Coordinator) {
+        self.coordinator = coordinator
     }
     struct State {
     }
     enum Action {
-        case checkListAppear
-        case checkListDisappear
+        case backButtonDidTap
+        case checkListDidTap
     }
     func action(_ action: Action) {
+        switch action {
+        case .backButtonDidTap:
+            coordinator.pop()
+        case .checkListDidTap:
+            coordinator.popToRoot()
+        }
     }
 }

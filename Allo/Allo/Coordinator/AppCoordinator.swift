@@ -35,16 +35,16 @@ final class AppCoordinator: Coordinator {
         case .tabBar:
             TabBarView(selectedTab: selectedTab ?? .constant(.home))
         case .home:
-            let homeViewModel = HomeViewModel(appCoordinator: self)
+            let homeViewModel = HomeViewModel(coordinator: self)
             HomeView(viewModel: homeViewModel)
         case .checklist:
-            let checkListViewModel = CheckListViewModel(appCoordinator: self)
+            let checkListViewModel = CheckListViewModel(coordinator: self)
             CheckListView(viewModel: checkListViewModel)
         case .emotion:
-            let emotionViewModel = EmotionViewModel(appCoordinator: self)
+            let emotionViewModel = EmotionViewModel(coordinator: self)
             EmotionView(viewModel: emotionViewModel)
         case .mypage:
-            let mypageViewModel = MyPageViewModel(appCoordinator: self)
+            let mypageViewModel = MyPageViewModel(coordinator: self)
             MyPageView(viewModel: mypageViewModel)
         }
     }

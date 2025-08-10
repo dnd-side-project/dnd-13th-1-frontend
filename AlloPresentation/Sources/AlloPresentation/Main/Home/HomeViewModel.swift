@@ -9,16 +9,22 @@ import SwiftUI
 
 public final class HomeViewModel: ViewModelable {
     @Published var state = State()
-    let appCoordinator: Coordinator
-    public init(appCoordinator: Coordinator) {
-        self.appCoordinator = appCoordinator
+    let coordinator: Coordinator
+    public init(coordinator: Coordinator) {
+        self.coordinator = coordinator
     }
     struct State {
     }
     enum Action {
-        case homeAppear
-        case homeDisappear
+        case backButtonDidTap
+        case homeDidTap
     }
     func action(_ action: Action) {
+        switch action {
+        case .backButtonDidTap:
+            coordinator.pop()
+        case .homeDidTap:
+            coordinator.popToRoot()
+        }
     }
 }

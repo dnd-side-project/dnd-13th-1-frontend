@@ -9,16 +9,22 @@ import SwiftUI
 
 public final class EmotionViewModel: ViewModelable {
     @Published var state = State()
-    private let appCoordinator: Coordinator
-    public init(appCoordinator: Coordinator) {
-        self.appCoordinator = appCoordinator
+    let coordinator: Coordinator
+    public init(coordinator: Coordinator) {
+        self.coordinator = coordinator
     }
     struct State {
     }
     enum Action {
-        case emotionAppear
-        case emotionDisappear
+        case backButtonDidTap
+        case emotionDidTap
     }
     func action(_ action: Action) {
+        switch action {
+        case .backButtonDidTap:
+            coordinator.pop()
+        case .emotionDidTap:
+            coordinator.popToRoot()
+        }
     }
 }
