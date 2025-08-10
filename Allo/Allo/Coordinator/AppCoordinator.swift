@@ -33,10 +33,7 @@ final class AppCoordinator: Coordinator {
     func buildScene(_ scene: AppScene, selectedTab: Binding<TabBarItem>? = nil) -> some View {
         switch scene {
         case .tabBar:
-            if let selectedTab = selectedTab {
-                TabBarView(selectedTab: selectedTab)
-            } else {
-            }
+            TabBarView(selectedTab: selectedTab ?? .constant(.home))
         case .home:
             let homeViewModel = HomeViewModel(appCoordinator: self)
             HomeView(viewModel: homeViewModel)
