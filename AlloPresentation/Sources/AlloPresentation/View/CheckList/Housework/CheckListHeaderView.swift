@@ -77,27 +77,19 @@ struct CheckListHeaderView: View {
                 action: {
                     isEditing ? onCompleteEdit() : onStartEdit()
                 }, label: {
-                    HStack(
-                        alignment: .center,
-                        spacing: 4
-                    ) {
-                        if isEditing {
-                            Text("완료")
-                                .font(.body1)
-                                .foregroundStyle(.white)
-                                .frame(width: 50, height: 32)
-                                .background(selectedHouseworkCount > 0 ? .gray700 : .gray300)
-                                .cornerRadius(.radius3)
-                        } else {
-                            Text("편집")
-                                .font(.body1)
-                                .foregroundStyle(.white)
-                                .frame(width: 50, height: 32)
-                                .background(.gray300)
-                                .cornerRadius(.radius3)
-                        }
+                    if isEditing {
+                        Text("완료")
+                            .font(.body1)
+                            .foregroundStyle(.white)
+                            .frame(width: 50, height: 32)
+                            .background(.gray700)
+                            .cornerRadius(.radius3)
+                    } else {
+                        Text("편집")
+                            .font(.body1)
+                            .foregroundStyle(.gray500)
+                            .frame(width: 50, height: 32)
                     }
-                    .frame(width: 50, height: 32)
                 }
             )
         }

@@ -18,7 +18,7 @@ struct CheckListFloatingButton: View {
                 }, label: {
                     Image(
                         viewModel.state.checkListState.selectedHouseworks.count > 0
-                        ? .iconButtonTrashGray900
+                        ? .iconButtonTrashBlue400
                         : .iconButtonTrashGray300
                     )
                     .frame(width: 50, height: 50)

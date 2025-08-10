@@ -234,7 +234,7 @@ extension CheckListViewModel {
                 /// 선택한 날짜의 집안일 목록을 가져와 state에 반영합니다
                 async let update: () = await updateHouseworkListOn(baseDate)
                 /// 집안일 존재 여부를 조회하고 state에 반영합니다
-                async let data = try await fetchHasHouseworkOn(from: pastWeek[0], to: futureWeek[6])
+                async let data = try await fetchHaveHouseworkOn(from: pastWeek[0], to: futureWeek[6])
                 let ((), houseworkData) = try await (update, data)
                 /// 3주의 집안일 정보를 매핑합니다
                 state.calendarState.pastWeek = Dictionary(
@@ -283,7 +283,7 @@ extension CheckListViewModel {
 
 // MARK: - API Calls
 extension CheckListViewModel {
-    func fetchHasHouseworkOn(from: Date, to: Date) async throws -> [Date: Bool] {
+    func fetchHaveHouseworkOn(from: Date, to: Date) async throws -> [Date: Bool] {
         try await getHaveHouseworkUseCase.execute(from: from, to: to)
     }
     func fetchHouseworkListOn(_ date: Date) async throws -> (

@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "icon_button_add.png",
+      "filename" : "icon_button_trash_blue400.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "icon_button_add@2x.png",
+      "filename" : "icon_button_trash_blue400@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "icon_button_add@3x.png",
+      "filename" : "icon_button_trash_blue400@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

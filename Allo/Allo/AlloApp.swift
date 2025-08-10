@@ -13,32 +13,13 @@ import AlloData
 @main
 struct AlloApp: App {
     
-    let houseworkRepository: HouseworkRepository = RepositoryFactory.makeHouseworkRepository(liveData: false)
+    init() {
+        Fonts.registerCustomFonts()
+    }
     
     var body: some Scene {
         WindowGroup {
-            CheckListView(
-                viewModel: CheckListViewModel(
-                    generateCalendarDateUseCase: UseCaseFactory.makeGenerateCalendarDateUseCase(),
-                    completeHouseworkUseCase: UseCaseFactory.makeCompleteHouseworkUseCase(houseworkRepository: houseworkRepository),
-                    deleteHouseworkUseCase: UseCaseFactory.makeDeleteHouseworkUseCase(houseworkRepository: houseworkRepository),
-                    getHouseworkListUseCase: UseCaseFactory.makeGetHouseworkListUseCase(houseworkRepository: houseworkRepository),
-                    getHaveHouseworkUseCase: UseCaseFactory.makeGetHaveHouseworkUseCase(houseworkRepository: houseworkRepository)
-                )
-            )
+            
         }
     }
-}
-
-#Preview {
-    let houseworkRepository: HouseworkRepository = RepositoryFactory.makeHouseworkRepository(liveData: false)
-    CheckListView(
-        viewModel: CheckListViewModel(
-            generateCalendarDateUseCase: UseCaseFactory.makeGenerateCalendarDateUseCase(),
-            completeHouseworkUseCase: UseCaseFactory.makeCompleteHouseworkUseCase(houseworkRepository: houseworkRepository),
-            deleteHouseworkUseCase: UseCaseFactory.makeDeleteHouseworkUseCase(houseworkRepository: houseworkRepository),
-            getHouseworkListUseCase: UseCaseFactory.makeGetHouseworkListUseCase(houseworkRepository: houseworkRepository),
-            getHaveHouseworkUseCase: UseCaseFactory.makeGetHaveHouseworkUseCase(houseworkRepository: houseworkRepository)
-        )
-    )
 }

@@ -27,7 +27,7 @@ struct CheckListCell: View {
                     }, label: {
                         VStack {
                             switch status {
-                            case .normal, .hover:
+                            case .normal:
                                 Image(.iconCheckCircle)
                                     .resizable()
                                     .frame(width: 24, height: 24)
@@ -92,7 +92,7 @@ struct CheckListCell: View {
         .padding(.horizontal, isEditing ? 24 : 6)
         .frame(height: 84)
         .frame(maxWidth: .infinity)
-        .background(.white)
+        .background(status == .selected ? .blue50 : .white)
         .cornerRadius(.radius2)
         .overlay(
             RoundedRectangle(cornerRadius: CornerRadiusStyle.radius2.rawValue)
@@ -104,7 +104,6 @@ struct CheckListCell: View {
     /// 셀 상태를 기반으로 텍스트 색, 배경색을 정의합니다
     enum CheckListCellStatus {
         case normal
-        case hover // Editing 중 Selected 포함
         case selected
         case completed
         /// 셀 전체 배경색
@@ -112,8 +111,6 @@ struct CheckListCell: View {
             switch self {
             case .normal:
                     .white
-            case .hover:
-                    .blue50
             case .selected:
                     .white
             case .completed:
@@ -125,8 +122,6 @@ struct CheckListCell: View {
             switch self {
             case .normal:
                     .blue400
-            case .hover:
-                    .blue50
             case .selected:
                     .blue400
             case .completed:
@@ -138,8 +133,6 @@ struct CheckListCell: View {
             switch self {
             case .normal:
                     .blue50
-            case .hover:
-                    .white
             case .selected:
                     .blue50
             case .completed:
@@ -149,7 +142,7 @@ struct CheckListCell: View {
         /// 체크 아이콘 이미지
         var checkIconImage: Image {
             switch self {
-            case .normal, .hover:
+            case .normal:
                 Image(.iconCheckCircle)
             case .selected:
                 Image(.iconCheckCircleChecked)

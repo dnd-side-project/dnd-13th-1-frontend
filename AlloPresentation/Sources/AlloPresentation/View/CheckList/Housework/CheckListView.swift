@@ -12,7 +12,6 @@ public struct CheckListView: View {
     @StateObject private var viewModel: CheckListViewModel
     
     public init(viewModel: CheckListViewModel) {
-        Fonts.registerCustomFonts()
         _viewModel = StateObject(wrappedValue: viewModel)
     }
     public var body: some View {
@@ -79,13 +78,13 @@ public struct CheckListView: View {
                         viewModel.action(.checkListAction(.startEditing))
                     }
                 )
-                ForEach(
-                    viewModel.state.checkListState.selectedTabIndex == 0
-                    ? viewModel.state.checkListState.myHouseworksLeft
-                    : viewModel.state.checkListState.ourHouseworksLeft
-                ) { housework in
-                    ScrollView(.vertical) {
-                        VStack(alignment: .center, spacing: 12) {
+                ScrollView(.vertical) {
+                    VStack(alignment: .center, spacing: 12) {
+                        ForEach(
+                            viewModel.state.checkListState.selectedTabIndex == 0
+                            ? viewModel.state.checkListState.myHouseworksLeft
+                            : viewModel.state.checkListState.ourHouseworksLeft
+                        ) { housework in
                             CheckListCell(
                                 housework: housework,
                                 isEditing: viewModel.state.checkListState.isEditing,
@@ -105,39 +104,37 @@ public struct CheckListView: View {
                                     viewModel.action(.checkListAction(.didTaphousework(housework)))
                                 }
                             }
+                            
                         }
-                        Spacer(minLength: 0)
                     }
-                }
-                /// 완료한 집안일이 있는 경우에만 보여줍니다
-                if viewModel.state.checkListState.selectedTabIndex == 0
-                    ? viewModel.state.checkListState.myHouseworksCompleted.count > 0
-                    : viewModel.state.checkListState.ourHouseworksCompleted.count > 0 {
-                    CheckListCompletedHeaderView(
-                        count: viewModel.state.checkListState.selectedTabIndex == 0
-                        ? viewModel.state.checkListState.myHouseworksCompleted.count
-                        : viewModel.state.checkListState.ourHouseworksCompleted.count,
-                        isOpened: viewModel.state.checkListState.showsCompleted,
-                        onTap: {
-                            viewModel.action(.checkListAction(.didTapCompletedHouseworkListButton))
-                        }
-                    )
-                    .padding(.top, 20)
-                    if viewModel.state.checkListState.showsCompleted {
-                        ForEach(
-                            viewModel.state.checkListState.selectedTabIndex == 0
-                            ? viewModel.state.checkListState.myHouseworksCompleted
-                            : viewModel.state.checkListState.ourHouseworksCompleted
-                        ) { housework in
-                            ScrollView(.vertical) {
-                                VStack(alignment: .center, spacing: 12) {
+                    /// 완료한 집안일이 있는 경우에만 보여줍니다
+                    if viewModel.state.checkListState.selectedTabIndex == 0
+                        ? viewModel.state.checkListState.myHouseworksCompleted.count > 0
+                        : viewModel.state.checkListState.ourHouseworksCompleted.count > 0 {
+                        CheckListCompletedHeaderView(
+                            count: viewModel.state.checkListState.selectedTabIndex == 0
+                            ? viewModel.state.checkListState.myHouseworksCompleted.count
+                            : viewModel.state.checkListState.ourHouseworksCompleted.count,
+                            isOpened: viewModel.state.checkListState.showsCompleted,
+                            onTap: {
+                                viewModel.action(.checkListAction(.didTapCompletedHouseworkListButton))
+                            }
+                        )
+                        .padding(.top, 20)
+                        if viewModel.state.checkListState.showsCompleted {
+                            VStack(alignment: .center, spacing: 12) {
+                                ForEach(
+                                    viewModel.state.checkListState.selectedTabIndex == 0
+                                    ? viewModel.state.checkListState.myHouseworksCompleted
+                                    : viewModel.state.checkListState.ourHouseworksCompleted
+                                ) { housework in
                                     CheckListCell(
                                         housework: housework,
                                         isEditing: viewModel.state.checkListState.isEditing,
                                         status: .completed,
                                         isMyHousework: viewModel.state.checkListState.myHouseworksLeft.contains(housework),
                                         onCheckButtonTap: { housework in
-                                            viewModel.action(.checkListAction(.selectHousework(housework)))
+                                            viewModel.action(.checkListAction(.completeHousework(housework))) // FIXME: 완료 취소
                                         }
                                     )
                                 }
@@ -145,10 +142,11 @@ public struct CheckListView: View {
                         }
                     }
                 }
-                Spacer(minLength: 0)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.bottom, 20)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .ignoresSafeArea(edges: .bottom)
+            .background(.gray50)
             if viewModel.state.isLoading {
                 ProgressView()
             }
@@ -163,7 +161,7 @@ public struct CheckListView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(.gray50)
+        .background(.white)
         .onAppear {
             viewModel.action(.weekCalendarAction(.didTapTodayButton))
         }
