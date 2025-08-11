@@ -33,7 +33,7 @@ extension Date {
         default: return .sunday
         }
     }
-    /// 해당 날짜가 속한 주를 "n월 n째주" 형태로 반환합니다
+    /// 해당 날짜가 속한 주를 "n월 n째 주" 형태로 반환합니다
     func getWeekString() -> String {
         let calendar = Calendar.current
         let month = calendar.component(.month, from: self)
@@ -48,7 +48,7 @@ extension Date {
         case 6: weekString = "여섯"
         default: weekString = "\(weekOfMonth)"
         }
-        return "\(month)월 \(weekString)째주"
+        return "\(month)월 \(weekString)째 주"
     }
     /// days 만큼 날짜를 이동합니다
     func adding(days: Int) -> Date {

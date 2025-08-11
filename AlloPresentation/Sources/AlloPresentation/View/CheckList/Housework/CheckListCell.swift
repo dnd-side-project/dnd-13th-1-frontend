@@ -18,7 +18,7 @@ struct CheckListCell: View {
     var body: some View {
         HStack(
             alignment: .center,
-            spacing: 8
+            spacing: 0
         ) {
             if !isEditing {
                 Button(

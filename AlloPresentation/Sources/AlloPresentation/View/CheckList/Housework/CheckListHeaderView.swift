@@ -79,14 +79,14 @@ struct CheckListHeaderView: View {
                 }, label: {
                     if isEditing {
                         Text("완료")
-                            .font(.body1)
+                            .font(.button1)
                             .foregroundStyle(.white)
                             .frame(width: 50, height: 32)
                             .background(.gray700)
                             .cornerRadius(.radius3)
                     } else {
                         Text("편집")
-                            .font(.body1)
+                            .font(.button1)
                             .foregroundStyle(.gray500)
                             .frame(width: 50, height: 32)
                     }
