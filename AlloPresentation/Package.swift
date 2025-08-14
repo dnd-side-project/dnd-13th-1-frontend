@@ -12,12 +12,20 @@ let package = Package(
             name: "AlloPresentation",
             targets: ["AlloPresentation"]),
     ],
+    dependencies: [
+        .package(path: "../AlloDomain"),
+        .package(url: "https://github.com/onevcat/Kingfisher.git", .upToNextMajor(from: "8.5.0"))
+    ],
     targets: [
-            .target(
-                name: "AlloPresentation",
-                resources: [
-                    .process("Resources")
-                ]
-            )
-        ]
+        .target(
+            name: "AlloPresentation",
+            dependencies: [
+                "AlloDomain",
+                .product(name: "Kingfisher", package: "Kingfisher")
+            ],
+            resources: [
+                .process("Resources")
+            ]
+        )
+    ]
 )
