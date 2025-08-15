@@ -13,8 +13,6 @@ public struct TabBarView: View {
         self._selectedTab = selectedTab
     }
     public var body: some View {
-        VStack {
-            Spacer()
             HStack {
                 ForEach(TabBarItem.allCases, id: \.self) { item in
                     Button {
@@ -35,7 +33,6 @@ public struct TabBarView: View {
             }
             .frame(height: 48)
             .padding(.bottom, 34)
-        }
-        .edgesIgnoringSafeArea(.bottom)
+            .background(Color.white)
     }
 }
