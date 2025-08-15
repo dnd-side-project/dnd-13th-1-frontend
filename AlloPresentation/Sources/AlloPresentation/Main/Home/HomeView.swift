@@ -13,6 +13,11 @@ public struct HomeView: View {
     public init(viewModel: HomeViewModel) {
         self._viewModel = State(initialValue: viewModel)
     }
+    
     public var body: some View {
+        VStack {
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
