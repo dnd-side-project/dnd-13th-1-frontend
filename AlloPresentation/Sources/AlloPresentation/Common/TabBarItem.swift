@@ -18,10 +18,10 @@ public enum TabBarItem: CaseIterable {
         }
     }
     var normalTitleColor: Color {
-        return .GRAY_300
+        return .gray300
     }
     var selectedTitleColor: Color {
-        return .GRAY_800
+        return .gray800
     }
     var normalItem: Image {
         switch self {
