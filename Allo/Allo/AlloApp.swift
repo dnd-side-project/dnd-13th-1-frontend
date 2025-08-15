@@ -38,7 +38,6 @@ struct AlloApp: App {
                             appCoordinator.buildScene(.mypage)
                         }
                     }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                     // MARK: - 탭바
                     TabBarView(selectedTab: $selectedTab)
                 }

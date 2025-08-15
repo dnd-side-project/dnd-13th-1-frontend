@@ -17,6 +17,6 @@ public struct EmotionView: View {
         VStack {
             Spacer()
         }
-        frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
