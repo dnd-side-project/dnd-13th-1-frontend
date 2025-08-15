@@ -14,7 +14,7 @@ public enum TabBarItem: CaseIterable {
         case .home: return "홈"
         case .checklist: return "체크리스트"
         case .emotion: return "마음"
-        case .mypage: return "MY"
+        case .mypage: return "마이"
         }
     }
     var normalTitleColor: Color {

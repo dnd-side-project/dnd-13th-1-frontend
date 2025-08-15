@@ -14,5 +14,9 @@ public struct EmotionView: View {
         self._viewModel = State(initialValue: viewModel)
     }
     public var body: some View {
+        VStack {
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }

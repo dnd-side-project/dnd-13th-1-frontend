@@ -10,7 +10,6 @@ import SwiftUI
 
 /// Navigation 화면 전환을 관리하는 객체의 프로토콜입니다.
 public protocol Coordinator: AnyObject {
-    var diContainer: DIContainer { get set }
     var path: NavigationPath { get set }
     var sheet: (any AppRoute)? { get set }
     var fullScreenCover: (any AppRoute)? { get set }
