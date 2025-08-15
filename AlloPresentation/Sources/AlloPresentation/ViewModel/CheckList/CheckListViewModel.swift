@@ -86,13 +86,15 @@ public final class CheckListViewModel: ViewModelable {
     private let getHaveHouseworkUseCase: GetHaveHouseworkUseCase
     // MARK: - Properties
     var state: State
+    let coordinator: Coordinator
     // MARK: - Initializer
     public init(
         generateCalendarDateUseCase: GenerateCalendarDateUseCase,
         completeHouseworkUseCase: CompleteHouseworkUseCase,
         deleteHouseworkUseCase: DeleteHouseworkUseCase,
         getHouseworkListUseCase: GetHouseworkListUseCase,
-        getHaveHouseworkUseCase: GetHaveHouseworkUseCase
+        getHaveHouseworkUseCase: GetHaveHouseworkUseCase,
+        coordinator: Coordinator
     ) {
         self.generateCalendarDateUseCase = generateCalendarDateUseCase
         self.completeHouseworkUseCase = completeHouseworkUseCase
@@ -122,6 +124,7 @@ public final class CheckListViewModel: ViewModelable {
                 isEditing: false
             )
         )
+        self.coordinator = coordinator
     }
     // MARK: - Action Method
     func action(_ action: Action) {

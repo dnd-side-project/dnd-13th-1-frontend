@@ -37,7 +37,14 @@ final class AppCoordinator: Coordinator {
             let homeViewModel = HomeViewModel(coordinator: self)
             HomeView(viewModel: homeViewModel)
         case .checklist:
-            let checkListViewModel = CheckListViewModel(coordinator: self)
+            let checkListViewModel = CheckListViewModel(
+                generateCalendarDateUseCase: diContainer.resolveGenerateCalendarDateUseCase(),
+                completeHouseworkUseCase: diContainer.resolveCompleteHouseworkUseCase(),
+                deleteHouseworkUseCase: diContainer.resolveDeleteHouseworkUseCase(),
+                getHouseworkListUseCase: diContainer.resolveGetHouseworkListUseCase(),
+                getHaveHouseworkUseCase: diContainer.resolveGetHaveHouseworkUseCase(),
+                coordinator: self
+            )
             CheckListView(viewModel: checkListViewModel)
         case .emotion:
             let emotionViewModel = EmotionViewModel(coordinator: self)
@@ -47,7 +54,7 @@ final class AppCoordinator: Coordinator {
             MyPageView(viewModel: mypageViewModel)
         }
     }
-
+    
     @ViewBuilder
     func buildSheet(_ sheet: AppSheet) -> some View {
     }
