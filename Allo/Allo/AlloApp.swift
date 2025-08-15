@@ -6,12 +6,20 @@
 //
 
 import SwiftUI
+import AlloPresentation
+import AlloDomain
+import AlloData
 
 @main
 struct AlloApp: App {
+    
+    init() {
+        Fonts.registerCustomFonts()
+    }
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            
         }
     }
 }

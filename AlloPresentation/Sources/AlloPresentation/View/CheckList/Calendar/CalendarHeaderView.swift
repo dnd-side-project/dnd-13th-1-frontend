@@ -1,0 +1,82 @@
+//
+//  CalendarHeaderView.swift
+//  AlloPresentation
+//
+//  Created by 황채웅 on 8/6/25.
+//
+
+import SwiftUI
+
+struct CalendarHeaderView: View {
+    
+    let weekString: String
+    let onTapDatePicker: () -> Void
+    let onTapToday: () -> Void
+    let onTapPreviousWeek: () -> Void
+    let onTapNextWeek: () -> Void
+    
+    var body: some View {
+        HStack(
+            alignment: .center,
+            spacing: 0
+        ) {
+            Button(
+                action: {
+                    onTapDatePicker()
+                },
+                label: {
+                    Image(.iconDatepicker)
+                        .resizable()
+                        .frame(width: 28, height: 28)
+                        .padding(.trailing, 16)
+                        .padding(.vertical, 8)
+                }
+            )
+            Spacer(minLength: 0)
+            Button(
+                action: {
+                    onTapPreviousWeek()
+                },
+                label: {
+                    Image(.iconChevronLeft)
+                        .frame(maxWidth: 44, maxHeight: 44)
+                }
+            )
+            Text(weekString)
+                .font(.subtitle1)
+                .foregroundStyle(.gray900)
+                .padding(.horizontal, 16)
+            Button(
+                action: {
+                    onTapNextWeek()
+                },
+                label: {
+                    Image(.iconChevronRight)
+                        .frame(maxWidth: 44, maxHeight: 44)
+                }
+            )
+            Spacer(minLength: 0)
+            Button(
+                action: {
+                    onTapToday()
+                },
+                label: {
+                    Text("오늘")
+                        .font(.button1)
+                        .foregroundStyle(.gray500)
+                        .frame(width: 50, height: 32)
+                        .cornerRadius(.radius3)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(.gray300, lineWidth: 1)
+                                .padding(1)
+                        )
+                        .padding(.vertical, 6)
+                }
+            )
+        }
+        .frame(height: 44)
+        .frame(maxWidth: .infinity)
+        .padding(.horizontal, 20)
+    }
+}
