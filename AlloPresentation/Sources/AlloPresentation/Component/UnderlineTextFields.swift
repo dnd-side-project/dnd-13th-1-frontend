@@ -55,7 +55,7 @@ struct UnderlineTextFields: View {
                         }
                     }
                 Button(action: onPresetTap) {
-                    Image(.icPreset)
+                    Image(.iconPreset)
                 }
                 //위치 값 지정
             }

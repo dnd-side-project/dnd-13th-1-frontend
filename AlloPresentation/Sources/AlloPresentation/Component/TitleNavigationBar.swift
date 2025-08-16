@@ -14,7 +14,7 @@ struct TitleNavigationBar: View {
             HStack {
                 Button {
                 } label: {
-                    Image(.icon_chevron_left)
+                    Image(.iconChevronLeft)
                 }
                 Spacer()
             }

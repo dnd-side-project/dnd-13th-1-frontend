@@ -17,7 +17,7 @@ struct RoutineButton: View {
             action() // 클릭 시 전달된 액션 실행
         } label: {
             HStack(spacing: 12) {
-                Image(isSelected ? .icCheckon : .icCheckoff)
+                Image(isSelected ? .iconCheckOn : .iconCheckOff)
                     .resizable()
                     .frame(width: 22, height: 22)
                     .padding(.leading, 20)
