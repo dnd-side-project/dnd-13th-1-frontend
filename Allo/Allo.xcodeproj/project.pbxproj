@@ -19,12 +19,26 @@
 		094C23932E3DDAC2009EF33E /* AlloDomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = AlloDomain; path = ../AlloDomain; sourceTree = SOURCE_ROOT; };
 		094C23942E3DDACE009EF33E /* AlloData */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = AlloData; path = ../AlloData; sourceTree = SOURCE_ROOT; };
 		094C23952E3DDBBE009EF33E /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; name = .gitignore; path = ../.gitignore; sourceTree = SOURCE_ROOT; };
+		09943AF32E51863F00E028CC /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		09FCAFF42E3F46D500EA9C36 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		09943AF22E5185F200E028CC /* Exceptions for "Allo" folder in "Allo" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 094C23832E3DDA8F009EF33E /* Allo */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		094C23862E3DDA8F009EF33E /* Allo */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				09943AF22E5185F200E028CC /* Exceptions for "Allo" folder in "Allo" target */,
+			);
 			path = Allo;
 			sourceTree = "<group>";
 		};
@@ -49,6 +63,7 @@
 			isa = PBXGroup;
 			children = (
 				09FCAFF42E3F46D500EA9C36 /* .swiftlint.yml */,
+				09943AF32E51863F00E028CC /* Config.xcconfig */,
 				094C23952E3DDBBE009EF33E /* .gitignore */,
 				094C23942E3DDACE009EF33E /* AlloData */,
 				094C23932E3DDAC2009EF33E /* AlloDomain */,
@@ -181,6 +196,7 @@
 /* Begin XCBuildConfiguration section */
 		094C238D2E3DDA8F009EF33E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 09943AF32E51863F00E028CC /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -245,6 +261,7 @@
 		};
 		094C238E2E3DDA8F009EF33E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 09943AF32E51863F00E028CC /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -302,6 +319,7 @@
 		};
 		094C23902E3DDA8F009EF33E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 09943AF32E51863F00E028CC /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -312,6 +330,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 347X4G24BF;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Allo/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -335,6 +354,7 @@
 		};
 		094C23912E3DDA8F009EF33E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 09943AF32E51863F00E028CC /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -345,6 +365,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 347X4G24BF;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Allo/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
