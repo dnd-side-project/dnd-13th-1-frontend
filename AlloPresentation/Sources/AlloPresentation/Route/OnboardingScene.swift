@@ -1,19 +1,15 @@
 //
-//  AppScene.swift
+//  OnboardingScene.swift
 //  AlloPresentation
 //
-//  Created by 김민솔 on 8/6/25.
+//  Created by 황채웅 on 8/17/25.
 //
 
 import Foundation
 import SwiftUI
 
-public enum AppScene: AppRoute {
-    case tabBar
-    case home
-    case checklist
-    case emotion
-    case mypage
+public enum OnboardingScene: AppRoute {
+    case login
     public var id: String {
         String(describing: self)
     }
@@ -25,14 +21,14 @@ public enum AppScene: AppRoute {
     }
 }
 
-public enum AppSheet: AppRoute {
+public enum OnboardingSheet: AppRoute {
     public var id: String {
         switch self {
         }
     }
 }
 
-public enum AppFullScreenCover: AppRoute {
+public enum OnboardingFullScreenCover: AppRoute {
     public var id: String {
         switch self {
         }

@@ -54,10 +54,11 @@ final class AppCoordinator: Coordinator {
             MyPageView(viewModel: mypageViewModel)
         }
     }
-    
+    @MainActor
     @ViewBuilder
     func buildSheet(_ sheet: AppSheet) -> some View {
     }
+    @MainActor
     @ViewBuilder
     func buildFullScreenCover(_ fullScreenCover: AppFullScreenCover) -> some View {
     }
