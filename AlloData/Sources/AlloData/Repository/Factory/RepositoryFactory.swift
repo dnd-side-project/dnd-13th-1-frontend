@@ -9,7 +9,17 @@ import Foundation
 import AlloDomain
 
 public struct RepositoryFactory {
-    public static func makeHouseworkRepository(liveData: Bool) -> HouseworkRepository {
+    
+    private let networkService: NetworkService
+    
+    public init() {
+        networkService = NetworkService()
+    }
+    
+    public func makeHouseworkRepository(liveData: Bool) -> HouseworkRepository {
         liveData ? HouseworkRepositoryImpl() : StubHouseworkRepository()
+    }
+    public func makeKakaoLoginRepository() -> KakaoLoginRepository {
+        KakaoLoginRepositoryImpl(networkService: networkService)
     }
 }

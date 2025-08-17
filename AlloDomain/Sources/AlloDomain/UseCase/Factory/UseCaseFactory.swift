@@ -8,6 +8,12 @@
 import Foundation
 
 public struct UseCaseFactory {
+    // MARK: Login
+    public static func makeKakaoLoginUseCase(kakaoLoginRepository: KakaoLoginRepository) -> KakaoLoginUseCase {
+        return KakaoLoginUseCaseImpl(repository: kakaoLoginRepository)
+    }
+    
+    // MARK: Housework
     public static func makeAddHouseworkUseCase(houseworkRepository: HouseworkRepository) -> AddHouseworkUseCase {
         return AddHouseworkUseCaseImpl(houseworkRepository: houseworkRepository)
     }

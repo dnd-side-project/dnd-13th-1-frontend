@@ -11,14 +11,19 @@ import AlloDomain
 import AlloPresentation
 
 final class DIContainerImpl {
-    private let houseworkRepository: HouseworkRepository
+    let liveData: Bool = true
+    let repositoryFactory = RepositoryFactory()
     
-    init(liveData: Bool = true) {
-        self.houseworkRepository = RepositoryFactory.makeHouseworkRepository(liveData: liveData)
-    }
+    private lazy var houseworkRepository: HouseworkRepository = repositoryFactory.makeHouseworkRepository(liveData: liveData)
+    private lazy var kakaoLoginRepository: KakaoLoginRepository = repositoryFactory.makeKakaoLoginRepository()
+    
 }
 // MARK: - DIContainer 프로토콜 구현
 extension DIContainerImpl: DIContainer {
+    func resolveKakaoLoginUseCase() -> KakaoLoginUseCase {
+        UseCaseFactory.makeKakaoLoginUseCase(kakaoLoginRepository: kakaoLoginRepository)
+    }
+    
     func resolveGenerateCalendarDateUseCase() -> GenerateCalendarDateUseCase {
         UseCaseFactory.makeGenerateCalendarDateUseCase()
     }
