@@ -114,11 +114,11 @@ extension AddHouseworkViewModel {
             member: [],
             date: date,
             isDone: false,
-            routine: HouseworkRoutine(rawValue: state.routine) ?? .none
+            routine: HouseworkRoutine(rawValue: state.routine) ?? .none,
+            tags: []
         )
     }
 }
-
 
 // MARK: - API Calls
 extension AddHouseworkViewModel {

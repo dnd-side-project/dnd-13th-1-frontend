@@ -44,11 +44,11 @@ public final class AddWorkstandardViewModel: ViewModelable {
                 member: [],
                 date: state.housework.date,
                 isDone: state.housework.isDone,
-                routine: state.housework.routine
+                routine: state.housework.routine,
+                tags: allTags
             )
             coordinator.push(AppScene.houseworkMember(
-                housework: updatedHousework,
-                tagList: allTags
+                housework: updatedHousework
             ))
         }
     }

@@ -94,13 +94,13 @@ public struct AddHouseworkFinishView: View {
                             .font(.subtitle6)
                             .foregroundColor(.gray700)
                         LazyVGrid(columns: columns, alignment: .leading, spacing: 12) {
-                            ForEach(viewModel.state.tags, id: \.self) { tag in
+                            ForEach(viewModel.state.housework.tags, id: \.self) { tag in
                                 TagItemView(tag: tag)
                             }
                         }
 
                     }
-                    .padding(.horizontal,20)
+                    .padding(.horizontal, 20)
                     .background(
                         RoundedRectangle(cornerRadius: 12)
                             .fill(.gray25)

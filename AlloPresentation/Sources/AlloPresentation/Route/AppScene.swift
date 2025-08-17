@@ -17,7 +17,7 @@ public enum AppScene: AppRoute {
     case mypage
     case houseworkPlus
     case houseworkStandard(housework: Housework)
-    case houseworkMember(housework: Housework, tagList: [String])
+    case houseworkMember(housework: Housework)
     case houseworkPlusFinish(housework: Housework)
     public var id: String {
         switch self {

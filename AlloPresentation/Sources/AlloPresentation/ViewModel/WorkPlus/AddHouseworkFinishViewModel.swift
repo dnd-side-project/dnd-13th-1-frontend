@@ -14,11 +14,8 @@ public final class AddHouseworkFinishViewModel: ViewModelable {
     // MARK: - State
     public struct State {
         public var housework: Housework
-        public var tags: [String]
-        
-        public init(housework: Housework, tags: [String]) {
+        public init(housework: Housework) {
             self.housework = housework
-            self.tags = tags
         }
     }
     
@@ -36,11 +33,10 @@ public final class AddHouseworkFinishViewModel: ViewModelable {
     // MARK: - Init
     public init(coordinator: Coordinator,
                 addHouseworkUseCase: AddHouseworkUseCase,
-                housework: Housework,
-                tags: [String]) {
+                housework: Housework) {
         self.coordinator = coordinator
         self.addHouseworkUseCase = addHouseworkUseCase
-        self.state = State(housework: housework, tags: tags)
+        self.state = State(housework: housework)
     }
     
     // MARK: - Action Handler

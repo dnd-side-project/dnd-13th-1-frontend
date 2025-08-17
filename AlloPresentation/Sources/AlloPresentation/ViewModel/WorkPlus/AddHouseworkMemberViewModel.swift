@@ -43,7 +43,8 @@ public final class AddHouseworkMemberViewModel: ViewModelable {
                 member: state.selectedMembers,
                 date: state.housework.date,
                 isDone: state.housework.isDone,
-                routine: state.housework.routine
+                routine: state.housework.routine,
+                tags: state.housework.tags
             )
             coordinator.push(AppScene.houseworkPlusFinish(housework: updatedHousework))
         }

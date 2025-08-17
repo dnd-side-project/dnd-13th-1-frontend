@@ -60,20 +60,18 @@ final class AppCoordinator: Coordinator {
         case .houseworkStandard(let housework):
             let addWorkstandardViewModel = AddWorkstandardViewModel(
                 coordinator: self,
-                housework: housework
-            )
+                housework: housework)
             AddWorkstandardView(viewModel: addWorkstandardViewModel)
-        case .houseworkMember(let housework, let tagList):
+        case .houseworkMember(let housework):
             let addWorkMemberViewModel = AddHouseworkMemberViewModel(
                 coordinator: self,
-                housework: housework, tagList: tagList)
+                housework: housework)
             AddHouseworkMemberView(viewModel: addWorkMemberViewModel)
         case .houseworkPlusFinish(let housework):
             let addHouseworkFinishViewModel = AddHouseworkFinishViewModel(
                 coordinator: self,
                 addHouseworkUseCase: diContainer.resolveAddHouseworkUsecase(),
-                housework: housework,
-                tags: []
+                housework: housework
             )
             AddHouseworkFinishView(viewModel: addHouseworkFinishViewModel)
 
