@@ -52,12 +52,55 @@ final class AppCoordinator: Coordinator {
         case .mypage:
             let mypageViewModel = MyPageViewModel(coordinator: self)
             MyPageView(viewModel: mypageViewModel)
+        case .houseworkPlus:
+            let addHouseworkViewModel = AddHouseworkViewModel(
+                addHouseworkUseCase: diContainer.resolveAddHouseworkUsecase(),
+                coordinator: self)
+            AddHouseworkView(viewModel: addHouseworkViewModel)
+        case .houseworkStandard(let myHouseworkTitle):
+            let addWorkstandardViewModel = AddWorkstandardViewModel(
+                coordinator: self,
+                myHouseworkTitle: myHouseworkTitle
+            )
+            AddWorkstandardView(viewModel: addWorkstandardViewModel, myHouseworkTitle: myHouseworkTitle)
+        case .houseworkMember(let myHouseworkTitle, let tagList):
+            let addWorkMemberViewModel = AddHouseworkMemberViewModel(
+                coordinator: self,
+                myHouseworkTitle: myHouseworkTitle, tagList: tagList)
+            AddHouseworkMemberView(viewModel: addWorkMemberViewModel)
+        case .houseworkPlusFinish(let data):
+            let addHouseworkFinishViewModel = AddHouseworkFinishViewModel(
+                coordinator: self,
+                myHouseworkTitle: data.myHouseworkTitle,
+                place: data.place,
+                routine: data.routine,
+                deadline: data.deadline,
+                tags: data.tagList
+            )
+            AddHouseworkFinishView(viewModel: addHouseworkFinishViewModel)
+
         }
     }
     
     @ViewBuilder
     func buildSheet(_ sheet: AppSheet) -> some View {
+        switch sheet {
+        case .houseworkSelection(let worklistClickAction):
+            HouseworkSelectionSheet(worklistClickAction: worklistClickAction)
+
+        case .placeSelection(let placeClickAction):
+            PlaceSelectionSheet(placeClickAction: placeClickAction)
+                .presentationDetents([.height(624)])
+        case .routineSelection(let completeButtonAction):
+            RoutinesetSheet(completeButtonAction: completeButtonAction)
+                .presentationDetents([.height(624)])
+            
+        case .calendarSelection(let dateClickAction):
+            CalendarDateSheet(dateClickAction: dateClickAction)
+                .presentationDetents([.height(624)])
+        }
     }
+
     @ViewBuilder
     func buildFullScreenCover(_ fullScreenCover: AppFullScreenCover) -> some View {
     }

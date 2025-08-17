@@ -57,7 +57,6 @@ struct UnderlineTextFields: View {
                 Button(action: onPresetTap) {
                     Image(.iconPreset)
                 }
-                //위치 값 지정
             }
             .overlay(
                 Rectangle()

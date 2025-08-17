@@ -15,6 +15,7 @@ struct TitleNavigationBar: View {
                 Button {
                 } label: {
                     Image(.iconChevronLeft)
+                        .frame(maxWidth: 44, maxHeight: 44)
                 }
                 Spacer()
             }

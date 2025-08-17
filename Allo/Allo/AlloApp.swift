@@ -12,7 +12,6 @@ import AlloDomain
 @main
 struct AlloApp: App {
     @State private var appCoordinator: AppCoordinator
-    @State private var selectedTab: TabBarItem = .home
     private let diContainer: DIContainerImpl
     
     init() {
@@ -24,27 +23,23 @@ struct AlloApp: App {
     
     var body: some Scene {
         WindowGroup {
+            // AddHouseworkView 직접 호출
+            let addHouseworkVM = AddHouseworkViewModel(
+                addHouseworkUseCase: diContainer.resolveAddHouseworkUsecase(),
+                coordinator: appCoordinator
+            )
             NavigationStack(path: $appCoordinator.path) {
-                VStack(spacing: 0) {
-                    Group {
-                        switch selectedTab {
-                        case .home:
-                            appCoordinator.buildScene(.home)
-                        case .checklist:
-                            appCoordinator.buildScene(.checklist)
-                        case .emotion:
-                            appCoordinator.buildScene(.emotion)
-                        case .mypage:
-                            appCoordinator.buildScene(.mypage)
-                        }
+                AddHouseworkView(viewModel: addHouseworkVM)
+                    .navigationBarHidden(true)
+                    .navigationDestination(for: AppScene.self) {
+                        appCoordinator.buildScene($0)
+                            .navigationBarHidden(true)
                     }
-                    // MARK: - 탭바
-                    TabBarView(selectedTab: $selectedTab)
-                }
-                .navigationDestination(for: AppScene.self) { scene in
-                    appCoordinator.buildScene(scene)
-                }
+                    .sheet(item: $appCoordinator.appSheet, onDismiss: appCoordinator.sheetOnDismiss) {
+                        appCoordinator.buildSheet($0)
+                    }
             }
+
         }
     }
 }

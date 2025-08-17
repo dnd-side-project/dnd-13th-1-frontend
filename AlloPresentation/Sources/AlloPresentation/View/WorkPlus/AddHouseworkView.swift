@@ -1,0 +1,81 @@
+//
+//  AddHouseworkView.swift
+//  AlloPresentation
+//
+//  Created by 김민솔 on 8/15/25.
+//
+
+import Foundation
+import SwiftUI
+import AlloDomain
+
+public struct AddHouseworkView: View {
+    @StateObject var viewModel: AddHouseworkViewModel
+    @FocusState private var isTextFieldFocused: Bool
+    public init(viewModel: AddHouseworkViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
+    public var body: some View {
+        VStack(spacing: 0) {
+            TitleNavigationBar(title: "집안일 추가")
+                .padding(.bottom, 20)
+            VStack(spacing: 32) {
+                UnderlineTextFields(
+                    text: $viewModel.state.myHouseworkTitle,
+                    onPresetTap: {
+                        viewModel.action(.didTapAddHouseworkButton)
+                    },
+                    showError: false,
+                )
+                // 장소 선택
+                UnderlineTextView(
+                    onPresetTap: {
+                        viewModel.action(.didTapAddPlaceButton)
+                    },
+                    title: "장소 선택",
+                    style: .place,
+                    value: $viewModel.state.place
+                )
+                // 루틴 설정
+                UnderlineTextView(
+                    onPresetTap: {
+                        viewModel.action(.didTapAdddRoutineButton)
+                    },
+                    title: "루틴 설정",
+                    style: .routine,
+                    value: $viewModel.state.routine
+                )
+                // 마감일 선택
+                UnderlineTextView(
+                    onPresetTap: {
+                        viewModel.action(.didTapCalendarButton)
+                    },
+                    title: "마감일 선택",
+                    style: .deadline,
+                    value: .constant(routineDateText)
+                )
+                AlarmSettngView()
+            }
+            Spacer()
+            MainButton(
+                title: "다음으로",
+                action: { viewModel.action(.didTapNextButton) },
+                style: .bottoomMain
+            )
+            .padding(.bottom, 46)
+            .contentShape(Rectangle())
+            .onTapGesture {
+                isTextFieldFocused = false
+            }
+        }
+        .padding(.horizontal, 20)
+    }
+    private var routineDateText: String {
+        if viewModel.state.routine == "반복안함" {
+            return viewModel.state.endDate
+        } else {
+            return "\(viewModel.state.startDate) - \(viewModel.state.endDate)"
+        }
+    }
+
+}

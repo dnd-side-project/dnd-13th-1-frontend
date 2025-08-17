@@ -40,14 +40,13 @@ public struct RoutinesetSheet: View {
                         var routineString = category
 
                         if category == "매주" || category == "격주" {
-                            if selectedDays.count == days.count { // 모든 요일 선택 시
+                            if selectedDays.count == days.count {
                                 routineString = "매일"
                             } else if !selectedDays.isEmpty {
-                                let sortedDays = days.filter { selectedDays.contains($0) } // 순서 유지
+                                let sortedDays = days.filter { selectedDays.contains($0) }
                                 routineString += " (" + sortedDays.joined(separator: ",") + ")"
                             }
                         }
-
                         completeButtonAction(routineString)
                     }) {
                         Text("완료")
@@ -56,8 +55,8 @@ public struct RoutinesetSheet: View {
                             .frame(width: 52, height: 32)
                             .background(.gray700)
                             .cornerRadius(20)
+                            .padding(.bottom, 30)
                     }
-
                 }
                 .padding(.horizontal, 20)
             }

@@ -34,14 +34,13 @@ struct MainButton: View {
                 .blue400
         }
     }
-    var height: CGFloat = 56
     var body: some View {
         Button(action: action) {
             Text(title)
                 .font(.subtitle3)
                 .foregroundColor(textColor)
                 .frame(maxWidth: .infinity)
-                .frame(height: height)
+                .frame(height: 56)
         }
         .background(backgroundColor)
         .cornerRadius(12)

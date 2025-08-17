@@ -40,4 +40,8 @@ extension DIContainerImpl: DIContainer {
         UseCaseFactory.makeGetHaveHouseworkUseCase(houseworkRepository: houseworkRepository)
     }
     
+    func resolveAddHouseworkUsecase() -> AddHouseworkUseCase {
+        UseCaseFactory.makeAddHouseworkUseCase(houseworkRepository: houseworkRepository)
+    }
+    
 }

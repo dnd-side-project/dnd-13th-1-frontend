@@ -19,4 +19,6 @@ public protocol DIContainer {
     func resolveDeleteHouseworkUseCase() -> DeleteHouseworkUseCase
     func resolveGetHouseworkListUseCase() -> GetHouseworkListUseCase
     func resolveGetHaveHouseworkUseCase() -> GetHaveHouseworkUseCase
+    //MARK: -- AddHousework UseCases
+    func resolveAddHouseworkUsecase() -> AddHouseworkUseCase
 }
