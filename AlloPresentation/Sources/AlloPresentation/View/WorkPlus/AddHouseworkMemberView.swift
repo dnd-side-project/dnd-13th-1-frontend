@@ -86,7 +86,7 @@ struct MemberButton: View {
                     .clipShape(Circle())
                 
                 Text(member.name)
-                    .font(.body2)
+                    .font(isSelected ? .subtitle3: .subtitle4)
                     .foregroundColor(isSelected ? .blue400 : .gray900)
                 
                 Spacer()
