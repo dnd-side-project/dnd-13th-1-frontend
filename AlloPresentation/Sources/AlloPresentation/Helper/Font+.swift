@@ -34,6 +34,7 @@ public enum AlloFontStyle {
     case body4
     case body5
     case body6
+    case body7
     
     case button1
     case button2
@@ -52,6 +53,7 @@ public enum AlloFontStyle {
             return "Pretendard-Bold"
         case
                 .headline2, .headline4,
+                .body7,
                 .subtitle1, .subtitle3, .subtitle6,
                 .button1, .button2,
                 .caption1:
@@ -73,22 +75,21 @@ public enum AlloFontStyle {
         switch self {
         case .headline1:
             return 36
-        case
-                .headline2,
-                .subtitle4:
+        case .headline2:
             return 28
         case .headline3, .headline4:
             return 24
         case .subtitle1, .subtitle2:
             return 20
-        case .subtitle3, .subtitle5, .subtitle6, .subtitle7:
+        case .subtitle3, .subtitle4:
             return 18
         case
+                .subtitle5, .subtitle6, .subtitle7,
                 .body1,
                 .button1:
             return 16
         case
-                .body2, .body3, .body4,
+                .body2, .body3, .body4, .body7,
                 .button2,
                 .caption1, .caption2:
             return 14
@@ -116,11 +117,11 @@ public enum AlloFontStyle {
         case .subtitle5, .subtitle6:
             return 26
         case
-                .body1, .body2, .body3,
+                .body1, .body2,
                 .subtitle7,
                 .button1:
             return 24
-        case .body5, .body6:
+        case .body3, .body5, .body6, .body7:
             return 22
         case
                 .body4,
@@ -135,7 +136,7 @@ public enum AlloFontStyle {
         case
                 .headline1, .headline2, .headline3,
                 .subtitle1, .subtitle2, .subtitle3, .subtitle4, .subtitle5, .subtitle6, .subtitle7,
-                .body1, .body2, .body3, .body4, .body5, .body6:
+                .body1, .body2, .body3, .body4, .body5, .body6, .body7:
             return -(size * 0.02)  // -2% 자간
         case
                 .headline4,

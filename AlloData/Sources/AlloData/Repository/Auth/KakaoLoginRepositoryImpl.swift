@@ -34,6 +34,7 @@ final class KakaoLoginRepositoryImpl: KakaoLoginRepository {
     
     /// - 카카오톡에서 카카오 로그인 후 토큰 정보를 가져오는 메소드입니다.
     /// - 카카오 SDK의 UserApi.shared,loginWithKakaoTalk이 GCD 기반이기 때문에, Swift Concurrency 기반으로 관리하기 위해 accessToken을 받아오는 메소드를 작성해 매핑했습니다.
+    @MainActor
     private func getKakaoLoginAccessToken() async throws -> String {
         return try await withCheckedThrowingContinuation { continuation in
             if UserApi.isKakaoTalkLoginAvailable() {
