@@ -6,23 +6,18 @@
 //
 
 import SwiftUI
+import AlloDomain
 
 @Observable
 @MainActor
 public final class AddHouseworkFinishViewModel: ViewModelable {
     // MARK: - State
     public struct State {
+        public var housework: Housework
         public var tags: [String]
-        public var myHouseworkTitle: String
-        public var place: String
-        public var routine: String
-        public var deadline: String
         
-        public init(myHouseworkTitle: String, place: String, routine: String, deadline: String, tags: [String]) {
-            self.myHouseworkTitle = myHouseworkTitle
-            self.place = place
-            self.routine = routine
-            self.deadline = deadline
+        public init(housework: Housework, tags: [String]) {
+            self.housework = housework
             self.tags = tags
         }
     }
@@ -37,23 +32,15 @@ public final class AddHouseworkFinishViewModel: ViewModelable {
     // MARK: - Properties
     public var state: State
     let coordinator: Coordinator
-    
+    private let addHouseworkUseCase: AddHouseworkUseCase
     // MARK: - Init
     public init(coordinator: Coordinator,
-                myHouseworkTitle: String,
-                place: String,
-                routine: String,
-                deadline: String,
+                addHouseworkUseCase: AddHouseworkUseCase,
+                housework: Housework,
                 tags: [String]) {
         self.coordinator = coordinator
-        self.state = State(
-            myHouseworkTitle: myHouseworkTitle,
-            place: place,
-            routine: routine,
-            deadline: deadline,
-            tags: tags
-        )
-        print("✅ AddHouseworkFinishViewModel initialized with tags:", tags)
+        self.addHouseworkUseCase = addHouseworkUseCase
+        self.state = State(housework: housework, tags: tags)
     }
     
     // MARK: - Action Handler
@@ -64,7 +51,15 @@ public final class AddHouseworkFinishViewModel: ViewModelable {
         case .didTapTagButton:
             coordinator.popToRoot()
         case .didTapNextButton:
-            coordinator.push(AppScene.checklist)
+            let useCase = addHouseworkUseCase
+            let housework = state.housework
+            Task {
+                try await useCase.execute(housework)
+                await MainActor.run {
+                    coordinator.push(AppScene.checklist)
+                }
+            }
+
         }
     }
 }

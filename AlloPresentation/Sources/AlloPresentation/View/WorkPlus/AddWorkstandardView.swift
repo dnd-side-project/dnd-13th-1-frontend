@@ -10,24 +10,17 @@ import AlloDomain
 
 public struct AddWorkstandardView: View {
     @State private var viewModel: AddWorkstandardViewModel
-    public init(viewModel: AddWorkstandardViewModel, myHouseworkTitle: String) {
-        let vm = AddWorkstandardViewModel(coordinator: viewModel.coordinator,
-        myHouseworkTitle: myHouseworkTitle)
-        self._viewModel = State(initialValue: vm)
+    public init(viewModel: AddWorkstandardViewModel) {
+        self._viewModel = State(initialValue: viewModel)
     }
     @State private var selectedStandards: Set<String> = []
     @State private var customTags: [String] = []
     
     private let maxSelection = 5
     
-    private let columns = [
-        GridItem(.flexible(), spacing: 5),
-        GridItem(.flexible(), spacing: 5)
-    ]
-    
     public var body: some View {
         VStack(alignment: .leading) {
-            TitleNavigationBar(title: "")
+            TitleNavigationBar(title: "", onBack: {viewModel.action(.didTapBackButton)})
             VStack(alignment: .leading) {
                 Text("대화로 집안일 기준을 정해볼까요?")
                     .font(.headline4)
@@ -38,7 +31,7 @@ public struct AddWorkstandardView: View {
                     Image(.iconCheck)
                         .resizable()
                         .frame(width: 24,height: 24)
-                    Text(viewModel.state.myHouseworkTitle)
+                    Text(viewModel.state.housework.title)
                         .font(.subtitle6)
                         .foregroundColor(.gray500)
                 }
@@ -47,47 +40,15 @@ public struct AddWorkstandardView: View {
             TagWriteTextFields(tags: $customTags, maxSelection: maxSelection)
                 .padding(.bottom, 20)
             
-            LazyVGrid(columns: columns, alignment: .leading, spacing: 12) {
-                
-                ForEach(HouseworkStandard.allCases, id: \.self) { standard in
-                    StandardButton(
-                        standard: standard,
-                        isSelected: Binding(
-                            get: { selectedStandards.contains(standard.rawValue) },
-                            set: { selected in
-                                if selected {
-                                    selectedStandards.insert(standard.rawValue)
-                                } else {
-                                    selectedStandards.remove(standard.rawValue)
-                                }
-                            }
-                        )
-                    )
-                }
-                // 사용자 커스텀 태그
-                ForEach(customTags, id: \.self) { tag in
-                    StandardButton(
-                        title: tag,
-                        isSelected: Binding(
-                            get: { selectedStandards.contains(tag) },
-                            set: { selected in
-                                if selected {
-                                    selectedStandards.insert(tag)
-                                } else {
-                                    selectedStandards.remove(tag)
-                                }
-                            }
-                        )
-                    )
-                }
-            }
+            TagFlowView(tags: HouseworkStandard.allCases.map { $0.rawValue } + customTags, selectedTags: $selectedStandards)
+            
             Spacer()
             HStack {
                 Spacer()
                 TipView()
             }
-            .padding(.trailing, 20)
-            .padding(.bottom,5)
+            .padding(.horizontal, 5)
+            .padding(.bottom, 5)
             HStack {
                 Spacer()
                 Button {
@@ -116,6 +77,42 @@ public struct AddWorkstandardView: View {
             .padding(.bottom, 46)
         }
         .padding(.horizontal, 20)
+    }
+}
+
+struct TagFlowView: View {
+    let tags: [String]
+    let spacing: CGFloat = 12
+    
+    @Binding var selectedTags: Set<String>
+    
+    private var rows: [[String]] {
+        stride(from: 0, to: tags.count, by: 2).map { start in
+            let end = min(start + 2, tags.count)
+            return Array(tags[start..<end])
+        }
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: spacing) {
+            ForEach(rows, id: \.self) { row in
+                HStack(spacing: spacing) {
+                    ForEach(row, id: \.self) { tag in
+                        StandardButton(
+                            title: tag,
+                            isSelected: Binding(
+                                get: { selectedTags.contains(tag) },
+                                set: { selected in
+                                    if selected { selectedTags.insert(tag) }
+                                    else { selectedTags.remove(tag) }
+                                }
+                            )
+                        )
+                    }
+                    Spacer()
+                }
+            }
+        }
     }
 }
 

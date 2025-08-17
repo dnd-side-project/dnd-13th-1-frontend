@@ -31,7 +31,7 @@ public struct AddHouseworkFinishView: View {
     ]
     public var body: some View {
         VStack(spacing: 0) {
-            TitleNavigationBar(title: "") // 맨 위 고정
+            TitleNavigationBar(title: "", onBack: {viewModel.action(.didTapBackButton)})
             Spacer()
             VStack(spacing: 0) {
                 VStack(alignment: .center) {
@@ -50,7 +50,7 @@ public struct AddHouseworkFinishView: View {
                 Spacer()
                 VStack(alignment: .leading) {
                     VStack(alignment: .leading) {
-                        Text(viewModel.state.myHouseworkTitle)
+                        Text(viewModel.state.housework.title)
                             .font(.subtitle1)
                             .foregroundColor(.gray800)
                             .padding(.bottom, 12)
@@ -59,7 +59,7 @@ public struct AddHouseworkFinishView: View {
                                 .font(.subtitle6)
                                 .foregroundColor(.gray700)
                             Spacer()
-                            Text(viewModel.state.place)
+                            Text(viewModel.state.housework.place)
                                 .font(.subtitle6)
                                 .foregroundColor(.gray700)
                         }
@@ -68,7 +68,7 @@ public struct AddHouseworkFinishView: View {
                                 .font(.subtitle6)
                                 .foregroundColor(.gray700)
                             Spacer()
-                            Text(viewModel.state.routine)
+                            Text(viewModel.state.housework.routine.rawValue)
                                 .font(.subtitle6)
                                 .foregroundColor(.gray700)
                         }
@@ -77,7 +77,7 @@ public struct AddHouseworkFinishView: View {
                                 .font(.subtitle6)
                                 .foregroundColor(.gray700)
                             Spacer()
-                            Text(viewModel.state.deadline)
+                            Text(viewModel.state.housework.date.toKoreanDateString())
                                 .font(.subtitle6)
                                 .foregroundColor(.gray700)
                         }

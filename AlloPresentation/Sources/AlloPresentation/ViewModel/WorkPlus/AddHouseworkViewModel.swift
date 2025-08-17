@@ -22,6 +22,7 @@ public final class AddHouseworkViewModel: ViewModelable {
     }
     // MARK: - Action
     enum Action {
+        case didTapBackButton
         case didTapAddHouseworkButton
         case didTapAddPlaceButton
         case didTapAdddRoutineButton
@@ -50,7 +51,7 @@ public final class AddHouseworkViewModel: ViewModelable {
         self.addHouseworkUseCase = addHouseworkUseCase
         self.coordinator = coordinator
     }
-
+    
     //MARK: - Action Method
     func action(_ action: Action) {
         addHouseWorkAction(action)
@@ -62,6 +63,8 @@ public final class AddHouseworkViewModel: ViewModelable {
 extension AddHouseworkViewModel {
     private func addHouseWorkAction(_ action: Action) {
         switch action {
+        case .didTapBackButton:
+            coordinator.pop()
         case .didTapAddHouseworkButton:
             coordinator.presentSheet(AppSheet.houseworkSelection(worklistClickAction: { [weak self] selected in
                 self?.state.myHouseworkTitle = selected
@@ -87,14 +90,35 @@ extension AddHouseworkViewModel {
                 self?.coordinator.dismissSheet()
             }), onDismiss: {})
         case .didTapNextButton:
-            coordinator.push(AppScene.houseworkStandard(myHouseworkTitle: state.myHouseworkTitle))
+            if let housework = makeHousework() {
+                coordinator.push(AppScene.houseworkStandard(housework: housework))
+            }
         }
     }
 }
 
 // MARK: - Function
 extension AddHouseworkViewModel {
+    func makeHousework() -> Housework? {
+        // Date 변환 (startDate 사용)
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.dateFormat = "yyyy.MM.dd(EE)"
+        
+        guard let date = formatter.date(from: state.startDate) else { return nil }
+        
+        return Housework(
+            id: Int.random(in: 1...999999),
+            place: state.place,
+            title: state.myHouseworkTitle,
+            member: [],
+            date: date,
+            isDone: false,
+            routine: HouseworkRoutine(rawValue: state.routine) ?? .none
+        )
+    }
 }
+
 
 // MARK: - API Calls
 extension AddHouseworkViewModel {

@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
+import AlloDomain
 
 public final class AddWorkstandardViewModel: ViewModelable {
     // MARK: - State
     struct State {
-        var myHouseworkTitle: String
+        var housework: Housework
         var selectedStandards: [String] = []
         var customTags: [String] = []
     }
@@ -18,15 +19,14 @@ public final class AddWorkstandardViewModel: ViewModelable {
     enum Action {
         case didTapBackButton
         case didTapTagButton
-        //case didTapPlusButton
         case didTapNextButton
     }
     // MARK: - Properties
     var state: State
     let coordinator: Coordinator
-    public init(coordinator: Coordinator, myHouseworkTitle: String) {
-        self.state = State(myHouseworkTitle: myHouseworkTitle)
+    public init(coordinator: Coordinator, housework: Housework) {
         self.coordinator = coordinator
+        self.state = State(housework: housework)
     }
 
     func action(_ action: Action) {
@@ -37,10 +37,17 @@ public final class AddWorkstandardViewModel: ViewModelable {
             coordinator.popToRoot()
         case .didTapNextButton:
             let allTags = state.selectedStandards + state.customTags
-            print("✅ AddHouseworkFinishViewModel initialized with tags:", allTags)
-
+            let updatedHousework = Housework(
+                id: state.housework.id,
+                place: state.housework.place,
+                title: state.housework.title,
+                member: [],
+                date: state.housework.date,
+                isDone: state.housework.isDone,
+                routine: state.housework.routine
+            )
             coordinator.push(AppScene.houseworkMember(
-                myHouseworkTitle: state.myHouseworkTitle,
+                housework: updatedHousework,
                 tagList: allTags
             ))
         }

@@ -17,7 +17,7 @@ public struct AddHouseworkView: View {
     }
     public var body: some View {
         VStack(spacing: 0) {
-            TitleNavigationBar(title: "집안일 추가")
+            TitleNavigationBar(title: "집안일 추가", onBack: {viewModel.action(.didTapBackButton)})
                 .padding(.bottom, 20)
             VStack(spacing: 32) {
                 UnderlineTextFields(
@@ -65,8 +65,11 @@ public struct AddHouseworkView: View {
             .padding(.bottom, 46)
             .contentShape(Rectangle())
             .onTapGesture {
-                isTextFieldFocused = false
+                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
             }
+        }
+        .onTapGesture {
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         }
         .padding(.horizontal, 20)
     }

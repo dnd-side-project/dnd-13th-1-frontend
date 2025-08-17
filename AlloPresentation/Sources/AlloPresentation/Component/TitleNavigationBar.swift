@@ -9,10 +9,12 @@ import SwiftUI
 
 struct TitleNavigationBar: View {
     let title: String
+    let onBack: () -> Void
     var body: some View {
         ZStack(alignment: .center) {
             HStack {
                 Button {
+                    onBack()
                 } label: {
                     Image(.iconChevronLeft)
                         .frame(maxWidth: 44, maxHeight: 44)
@@ -25,8 +27,4 @@ struct TitleNavigationBar: View {
         }
         .frame(height: 54)
     }
-}
-
-#Preview {
-    TitleNavigationBar(title: "집안일추가")
 }

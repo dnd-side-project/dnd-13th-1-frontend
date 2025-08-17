@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import AlloDomain
 
 public enum AppScene: AppRoute {
     case tabBar
@@ -15,9 +16,9 @@ public enum AppScene: AppRoute {
     case emotion
     case mypage
     case houseworkPlus
-    case houseworkStandard(myHouseworkTitle: String)
-    case houseworkMember(myHouseworkTitle: String, tagList: [String])
-    case houseworkPlusFinish(data: HouseworkFinishData)
+    case houseworkStandard(housework: Housework)
+    case houseworkMember(housework: Housework, tagList: [String])
+    case houseworkPlusFinish(housework: Housework)
     public var id: String {
         switch self {
         case .tabBar: return "tabBar"
@@ -66,21 +67,5 @@ public enum AppFullScreenCover: AppRoute {
     public var id: String {
         switch self {
         }
-    }
-}
-
-public struct HouseworkFinishData {
-    public let myHouseworkTitle: String
-    public let place: String
-    public let routine: String
-    public let deadline: String
-    public let tagList: [String]
-
-    public init(myHouseworkTitle: String, place: String, routine: String, deadline: String, tagList: [String]) {
-        self.myHouseworkTitle = myHouseworkTitle
-        self.place = place
-        self.routine = routine
-        self.deadline = deadline
-        self.tagList = tagList
     }
 }

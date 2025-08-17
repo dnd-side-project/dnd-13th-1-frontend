@@ -24,7 +24,7 @@ public struct AddHouseworkMemberView: View {
     
     public var body: some View {
         VStack(alignment: .leading) {
-            TitleNavigationBar(title: "")
+            TitleNavigationBar(title: "", onBack: {viewModel.action(.didTapBackButton)})
                 .padding(.bottom, 20)
             Text("분담 멤버를 선택하세요.")
                 .font(.headline4)
@@ -33,7 +33,7 @@ public struct AddHouseworkMemberView: View {
                 Image(.iconCheck)
                     .resizable()
                     .frame(width: 24, height: 24)
-                Text(viewModel.state.myHouseworkTitle)
+                Text(viewModel.state.housework.title)
                     .font(.subtitle6)
                     .foregroundColor(.gray500)
             }
