@@ -16,9 +16,9 @@ public struct CalendarDateSheet: View {
     public var body: some View {
         VStack(spacing: 16) {
             Capsule()
-                .fill(Color.gray.opacity(0.3))
-                .frame(width: 40, height: 5)
-                .padding(.top, 8)
+                .fill(.gray200)
+                .frame(width: 40, height: 4)
+                .padding(.top, 13)
             Text("마감일 선택")
                 .font(.subtitle1)
                 .foregroundColor(.gray900)

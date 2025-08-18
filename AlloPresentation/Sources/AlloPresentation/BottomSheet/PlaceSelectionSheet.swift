@@ -22,14 +22,13 @@ public struct PlaceSelectionSheet: View {
     public var body: some View {
         VStack(spacing: 0) {
             Capsule()
-                .fill(Color.gray.opacity(0.3))
-                .frame(width: 40, height: 5)
-                .padding(.top, 8)
-                .padding(.bottom, 16)
+                .fill(.gray200)
+                .frame(width: 40, height: 4)
+                .padding(.top, 13)
             
             Text("장소 선택")
                 .font(.subtitle1)
-                .foregroundColor(.gray900)
+                .foregroundStyle(.gray900)
                 .padding(.bottom, 30)
             
             VStack(spacing: 12) {
@@ -46,6 +45,8 @@ public struct PlaceSelectionSheet: View {
                 // + 버튼
                 Button {
                     isAddingCategory = true
+                    //TODO: -- fullscreen 나오게 처리
+                    //AddPlaceView
                 } label: {
                     Image(.iconPlus)
                         .frame(maxWidth: .infinity, minHeight: 56)
@@ -64,8 +65,5 @@ public struct PlaceSelectionSheet: View {
         }
         Spacer()
         .animation(.easeInOut(duration: 0.15), value: selectedCategory)
-        .fullScreenCover(isPresented: $isAddingCategory) {
-            AddPlaceView()
-        }
     }
 }

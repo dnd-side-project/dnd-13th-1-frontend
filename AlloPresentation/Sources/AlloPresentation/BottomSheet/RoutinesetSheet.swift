@@ -21,10 +21,9 @@ public struct RoutinesetSheet: View {
     public var body: some View {
         VStack(spacing: 0) {
             Capsule()
-                .fill(Color.gray.opacity(0.3))
-                .frame(width: 40, height: 5)
-                .padding(.top, 8)
-                .padding(.bottom, 16)
+                .fill(.gray200)
+                .frame(width: 40, height: 4)
+                .padding(.top, 13)
             
             ZStack {
                 Text("루틴 설정")
