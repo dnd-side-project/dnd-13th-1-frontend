@@ -29,6 +29,7 @@ public struct RoutinesetSheet: View {
                 Text("루틴 설정")
                     .font(.subtitle1)
                     .foregroundColor(.gray900)
+                    .padding(.top, 20)
                     .padding(.bottom, 30)
                 
                 HStack {
@@ -54,6 +55,7 @@ public struct RoutinesetSheet: View {
                             .frame(width: 52, height: 32)
                             .background(.gray700)
                             .cornerRadius(20)
+                            .padding(.top, 20)
                             .padding(.bottom, 30)
                     }
                 }

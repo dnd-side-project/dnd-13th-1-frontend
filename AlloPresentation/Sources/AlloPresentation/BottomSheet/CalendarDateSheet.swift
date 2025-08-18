@@ -22,6 +22,8 @@ public struct CalendarDateSheet: View {
             Text("마감일 선택")
                 .font(.subtitle1)
                 .foregroundColor(.gray900)
+                .padding(.top, 20)
+
             
         }
         Spacer()

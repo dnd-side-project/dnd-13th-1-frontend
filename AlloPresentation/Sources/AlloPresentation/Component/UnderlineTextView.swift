@@ -32,8 +32,12 @@ struct UnderlineTextView: View {
                         switch style {
                         case .deadline:
                             Image(.iconDatepicker)
+                                .resizable()
+                                .frame(width: 28, height: 28)
                         default:
-                            Image(.iconChevronDown)
+                            Image(.iconSheetDown)
+                                .resizable()
+                                .frame(width: 28, height: 28)
                         }
                     }
                 }

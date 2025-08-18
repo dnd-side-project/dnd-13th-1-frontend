@@ -29,6 +29,7 @@ public struct PlaceSelectionSheet: View {
             Text("장소 선택")
                 .font(.subtitle1)
                 .foregroundStyle(.gray900)
+                .padding(.top, 20)
                 .padding(.bottom, 30)
             
             VStack(spacing: 12) {
