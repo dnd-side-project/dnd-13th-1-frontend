@@ -53,11 +53,3 @@ public final class AddWorkstandardViewModel: ViewModelable {
         }
     }
 }
-
-extension AddWorkstandardViewModel {
-    private func addHouseWorkAction(_ action: Action) {
-//        switch action {
-//            
-//        }
-    }
-}
