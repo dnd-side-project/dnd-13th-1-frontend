@@ -12,6 +12,7 @@ import AlloDomain
 @main
 struct AlloApp: App {
     @State private var appCoordinator: AppCoordinator
+    @State private var selectedTab: TabBarItem = .home
     private let diContainer: DIContainerImpl
     
     init() {
@@ -23,23 +24,35 @@ struct AlloApp: App {
     
     var body: some Scene {
         WindowGroup {
-            // AddHouseworkView 직접 호출
-            let addHouseworkVM = AddHouseworkViewModel(
-                addHouseworkUseCase: diContainer.resolveAddHouseworkUsecase(),
-                coordinator: appCoordinator
-            )
             NavigationStack(path: $appCoordinator.path) {
-                AddHouseworkView(viewModel: addHouseworkVM)
-                    .navigationBarHidden(true)
-                    .navigationDestination(for: AppScene.self) {
-                        appCoordinator.buildScene($0)
-                            .navigationBarHidden(true)
+                VStack(spacing: 0) {
+                    Group {
+                        switch selectedTab {
+                        case .home:
+                            appCoordinator.buildScene(.home)
+                        case .checklist:
+                            appCoordinator.buildScene(.checklist)
+                        case .emotion:
+                            appCoordinator.buildScene(.emotion)
+                        case .mypage:
+                            appCoordinator.buildScene(.mypage)
+                        }
                     }
-                    .sheet(item: $appCoordinator.appSheet, onDismiss: appCoordinator.sheetOnDismiss) {
-                        appCoordinator.buildSheet($0)
-                    }
+                    // MARK: - 탭바
+                    TabBarView(selectedTab: $selectedTab)
+                }
+                .navigationDestination(for: AppScene.self) {
+                    appCoordinator.buildScene($0).navigationBarHidden(true)
+                }
+                .sheet(item: $appCoordinator.appSheet, onDismiss: appCoordinator.sheetOnDismiss) {
+                    appCoordinator.buildSheet($0)
+                }
+                .fullScreenCover(item: $appCoordinator.appFullScreenCover, onDismiss:
+                                    appCoordinator.fullScreenCoverOnDismiss) {
+                    appCoordinator.buildFullScreenCover($0)
+                }
+                .navigationBarHidden(true)
             }
-
         }
     }
 }
