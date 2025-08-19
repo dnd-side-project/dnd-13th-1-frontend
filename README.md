@@ -19,9 +19,8 @@
 | Category | Stack |
 | :-----: | :-----: |
 | **UI** | SwiftUI |
-| **Reactive Programming** | Combine |
+| **Concurrency Programming** | Swift Concurrency |
 | **Network** | [Moya](https://github.com/Moya/Moya) |
 | **Architecture Pattern** | MVVM-C + Clean Architecture |
-| **Dependency Injection** | [SwInject](https://github.com/Swinject/Swinject) |
 | **Dependency Management** | Swift Package Manager |
 | **Image** | [KingFisher](https://github.com/onevcat/Kingfisher) |
