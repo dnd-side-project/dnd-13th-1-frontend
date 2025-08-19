@@ -27,6 +27,7 @@ public struct AddHouseworkView: View {
                     },
                     showError: false,
                 )
+                .focused($isTextFieldFocused)
                 // 장소 선택
                 UnderlineTextView(
                     onPresetTap: {
@@ -64,11 +65,9 @@ public struct AddHouseworkView: View {
             )
             .padding(.bottom, 46)
             .contentShape(Rectangle())
-            .onTapGesture {
-                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-            }
         }
         .onTapGesture {
+            isTextFieldFocused = false
             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         }
         .padding(.horizontal, 20)
