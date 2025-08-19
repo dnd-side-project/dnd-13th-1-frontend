@@ -18,7 +18,8 @@ struct PlaceButton: View {
             Text(title)
                 .font(.subtitle2)
                 .foregroundColor(.gray700)
-                .frame(maxWidth: .infinity, minHeight: 56)
+                .frame(maxWidth: .infinity, minHeight: 56, alignment: .leading)
+                .padding(.leading, 20)
         }
         .buttonStyle(.plain)
         .background(
@@ -27,7 +28,7 @@ struct PlaceButton: View {
         )
         .overlay(
             RoundedRectangle(cornerRadius: 12)
-                .stroke(isSelected ? .blue400 : .gray200, lineWidth: 1)
+                .stroke(isSelected ? .blue400 : .gray50, lineWidth: 1)
         )
     }
 }

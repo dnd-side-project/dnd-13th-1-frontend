@@ -34,7 +34,7 @@ struct StandardButton: View {
                 if isSelected {
                     Image(.iconCheck)
                         .resizable()
-                        .frame(width: 24, height: 24)
+                        .frame(width: 20, height: 20)
                 }
                 Text(title)
                     .font(.button3)
