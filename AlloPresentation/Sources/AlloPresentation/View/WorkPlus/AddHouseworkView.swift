@@ -12,6 +12,7 @@ import AlloDomain
 public struct AddHouseworkView: View {
     @StateObject var viewModel: AddHouseworkViewModel
     @FocusState private var isTextFieldFocused: Bool
+    @State private var isAlarmOn: Bool = false
     public init(viewModel: AddHouseworkViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
@@ -55,7 +56,7 @@ public struct AddHouseworkView: View {
                     style: .deadline,
                     value: .constant(routineDateText)
                 )
-                AlarmSettngView()
+                AlarmSettngView(toggleOn: $isAlarmOn)
             }
             Spacer()
             MainButton(
@@ -68,7 +69,6 @@ public struct AddHouseworkView: View {
         }
         .onTapGesture {
             isTextFieldFocused = false
-            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         }
         .padding(.horizontal, 20)
     }

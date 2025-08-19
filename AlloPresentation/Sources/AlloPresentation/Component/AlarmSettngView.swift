@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AlarmSettngView: View {
-    @State var toggleOn = false
+    @Binding var toggleOn:Bool
     
     var body: some View {
         HStack {
