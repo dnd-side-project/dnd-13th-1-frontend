@@ -85,7 +85,7 @@ final class AppCoordinator: Coordinator {
             HouseworkSelectionSheet(worklistClickAction: worklistClickAction)
 
         case .placeSelection(let placeClickAction):
-            PlaceSelectionSheet(placeClickAction: placeClickAction)
+            PlaceSelectionSheet(coordinator: self, placeClickAction: placeClickAction)
                 .presentationDetents([.height(624)])
         case .routineSelection(let completeButtonAction):
             RoutinesetSheet(completeButtonAction: completeButtonAction)
@@ -97,7 +97,12 @@ final class AppCoordinator: Coordinator {
         }
     }
 
-    @ViewBuilder
+    @MainActor @ViewBuilder
     func buildFullScreenCover(_ fullScreenCover: AppFullScreenCover) -> some View {
+        switch fullScreenCover {
+        case .addHousePlace:
+            let viewModel = AddPlaceViewModel(coordinator: self)
+            AddPlaceView(viewModel: viewModel)
+        }
     }
 }

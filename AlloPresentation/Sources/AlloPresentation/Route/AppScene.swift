@@ -64,8 +64,11 @@ public enum AppSheet: AppRoute {
 }
 
 public enum AppFullScreenCover: AppRoute {
+    case addHousePlace
+    
     public var id: String {
         switch self {
+        case .addHousePlace: return "addHousePlace"
         }
     }
 }
