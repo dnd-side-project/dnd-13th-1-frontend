@@ -35,7 +35,9 @@ struct UnderlineTextFields: View {
             Text("집안일 입력")
                 .font(.subtitle3)
                 .foregroundColor(
-                    showError ? .red700 : (text.isEmpty ? .gray500 : .blue500)
+                    showError
+                    ? .red700
+                    : (isFocused ? .blue500 : .gray500)
                 )
                 .focused($isFocused)
 
