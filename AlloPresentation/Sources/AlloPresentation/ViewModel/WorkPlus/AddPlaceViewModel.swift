@@ -27,7 +27,7 @@ public final class AddPlaceViewModel: ViewModelable {
     }
 
     // MARK: - Init
-    public init(coordinator: Coordinator,existingPlaces: [String] = []) {
+    public init(coordinator: Coordinator, existingPlaces: [String] = []) {
         self.coordinator = coordinator
         self.state = State(existingPlaces: existingPlaces)
     }
@@ -39,6 +39,7 @@ public final class AddPlaceViewModel: ViewModelable {
             coordinator.pop()
         case .didTapAddPlaceButton:
             // 새로운 장소 추가 로직
+            coordinator.push(AppScene.houseworkPlus)
             if !state.newPlaceName.isEmpty {
                 state.existingPlaces.append(state.newPlaceName)
                 state.newPlaceName = ""
@@ -46,4 +47,3 @@ public final class AddPlaceViewModel: ViewModelable {
         }
     }
 }
-

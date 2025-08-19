@@ -31,7 +31,3 @@ struct AlarmSettngView: View {
         .frame(height: 56)
     }
 }
-
-#Preview {
-    AlarmSettngView()
-}

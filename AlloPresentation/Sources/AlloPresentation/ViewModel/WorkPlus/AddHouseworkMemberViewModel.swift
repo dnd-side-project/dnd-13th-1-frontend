@@ -25,6 +25,7 @@ public final class AddHouseworkMemberViewModel: ViewModelable {
     // MARK: - Properties
     var state: State
     let coordinator: Coordinator
+    // TODO: -- MEMBER USECASE 받아오기
     public init(coordinator: Coordinator, housework: Housework, tagList: [String] = []) {
         self.coordinator = coordinator
         self.state = State(housework: housework)
@@ -46,6 +47,7 @@ public final class AddHouseworkMemberViewModel: ViewModelable {
                 routine: state.housework.routine,
                 tags: state.housework.tags
             )
+            //TODO: -- 알람 처리
             coordinator.push(AppScene.houseworkPlusFinish(housework: updatedHousework))
         }
     }

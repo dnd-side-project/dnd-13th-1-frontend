@@ -10,21 +10,11 @@ import Kingfisher
 import AlloDomain
 
 public struct AddHouseworkFinishView: View {
-    let member: Member = Member(
-        id: 0,
-        name: "기본멤버",
-        profileImageUrl: URL(string: "https://randomuser.me/api/portraits/men/0.jpg")!
-    )
     @State private var viewModel: AddHouseworkFinishViewModel
     public init(viewModel: AddHouseworkFinishViewModel) {
         self._viewModel = State(initialValue: viewModel)
     }
-    private let members: [Member] = [
-        Member(id: 1, name: "김철수", profileImageUrl: URL(string: "https://randomuser.me/api/portraits/men/50.jpg")!),
-        Member(id: 2, name: "이영희", profileImageUrl: URL(string: "https://randomuser.me/api/portraits/men/51.jpg")!),
-        Member(id: 3, name: "박민수", profileImageUrl: URL(string: "https://randomuser.me/api/portraits/men/52.jpg")!)
-    ]
-
+    
     private let columns = [
         GridItem(.flexible(), spacing: 5),
         GridItem(.flexible(), spacing: 5)
@@ -32,18 +22,20 @@ public struct AddHouseworkFinishView: View {
     public var body: some View {
         VStack(spacing: 0) {
             TitleNavigationBar(title: "", onBack: {viewModel.action(.didTapBackButton)})
-            Spacer()
-            VStack(spacing: 0) {
+                .padding(.bottom, 16)
+            VStack(spacing: 12) {
                 VStack(alignment: .center) {
-                    OverlappingProfileImages(members: [
-                        Member(id: 1, name: "김철수", profileImageUrl: URL(string: "https://randomuser.me/api/portraits/men/50.jpg")!),
-                        Member(id: 2, name: "이영희", profileImageUrl: URL(string: "https://randomuser.me/api/portraits/men/51.jpg")!)
-                    ])
+                    OverlappingProfileImages(members: viewModel.state.housework.member)
                     Spacer()
-                    Text("집안일을 분담할 멤버에게\n알림을 보낼게요!")
-                        .font(.headline4)
-                        .foregroundColor(.gray900)
-                        .multilineTextAlignment(.center)
+                    Text(
+                        //TODO: -- 알람 설정 유/무로 인한 처리 수정 "나"만 택할 경우
+                        (viewModel.state.housework.member.count == 1 && viewModel.state.housework.member.first?.id == 1)
+                        ? "설정한 집안일을 체크리스트에 추가할게요"
+                        : "집안일을 분담할 멤버에게\n알림을 보낼게요!"
+                    )
+                    .font(.headline4)
+                    .foregroundColor(.gray900)
+                    .multilineTextAlignment(.center)
                 }
                 .frame(height: 164)
                 .frame(maxWidth: .infinity, alignment: .center)
@@ -53,7 +45,7 @@ public struct AddHouseworkFinishView: View {
                         Text(viewModel.state.housework.title)
                             .font(.subtitle1)
                             .foregroundColor(.gray800)
-                            .padding(.bottom, 12)
+                            .padding(.top, 20)
                         HStack {
                             Text("장소")
                                 .font(.subtitle6)
@@ -81,30 +73,47 @@ public struct AddHouseworkFinishView: View {
                                 .font(.subtitle6)
                                 .foregroundColor(.gray700)
                         }
+                        .padding(.bottom, 20)
                     }
                     .padding(.horizontal, 20)
-                    .padding(.bottom, 12)
                     .background(
                         RoundedRectangle(cornerRadius: 12)
                             .fill(.gray25)
                     )
-                    
                     VStack(alignment: .leading) {
-                        Text("집안일 기준 태그")
-                            .font(.subtitle6)
-                            .foregroundColor(.gray700)
-                        LazyVGrid(columns: columns, alignment: .leading, spacing: 12) {
-                            ForEach(viewModel.state.housework.tags, id: \.self) { tag in
-                                TagItemView(tag: tag)
+                        if !viewModel.state.housework.tags.isEmpty { // 태그가 있을 때만 표시
+                            Text("집안일 기준 태그")
+                                .font(.subtitle6)
+                                .foregroundColor(.gray700)
+                                .padding(.bottom, 5)
+                            
+                            let tags = viewModel.state.housework.tags
+                            var rows: [[String]] {
+                                stride(from: 0, to: tags.count, by: 2).map { start in
+                                    let end = min(start + 2, tags.count)
+                                    return Array(tags[start..<end])
+                                }
+                            }
+                            
+                            VStack(alignment: .leading, spacing: 15) {
+                                ForEach(rows, id: \.self) { row in
+                                    HStack(spacing: 12) {
+                                        ForEach(row, id: \.self) { tag in
+                                            TagItemView(tag: tag)
+                                        }
+                                        Spacer()
+                                    }
+                                }
                             }
                         }
-
                     }
-                    .padding(.horizontal, 20)
+                    .padding(.vertical, 20)
+                    .padding(.leading, 20)
                     .background(
                         RoundedRectangle(cornerRadius: 12)
-                            .fill(.gray25)
+                            .fill(Color.gray25)
                     )
+
                 }
                 Spacer()
             }
@@ -119,7 +128,7 @@ public struct AddHouseworkFinishView: View {
         }
         .padding(.horizontal, 20)
     }
-
+    
 }
 
 struct OverlappingProfileImages: View {
@@ -127,7 +136,7 @@ struct OverlappingProfileImages: View {
     
     var body: some View {
         HStack(spacing: -38) {
-            ForEach(members.prefix(2), id: \.id) { member in
+            ForEach(members, id: \.id) { member in
                 KFImage(member.profileImageUrl)
                     .placeholder {
                         Color.gray200
@@ -143,6 +152,7 @@ struct OverlappingProfileImages: View {
         }
     }
 }
+
 struct TagItemView: View {
     let tag: String
     
@@ -155,5 +165,6 @@ struct TagItemView: View {
                 RoundedRectangle(cornerRadius: 50)
                     .stroke(.blue400, lineWidth: 1)
             )
+            .frame(height: 28)
     }
 }

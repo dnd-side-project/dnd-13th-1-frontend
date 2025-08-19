@@ -10,10 +10,13 @@ import AlloDomain
 
 public struct PlaceSelectionSheet: View {
     var placeClickAction: (String) -> Void
+    let coordinator: Coordinator
     
-    public init(placeClickAction: @escaping (String) -> Void) {
+    public init(coordinator: Coordinator, placeClickAction: @escaping (String) -> Void) {
+        self.coordinator = coordinator
         self.placeClickAction = placeClickAction
     }
+    
     @State private var categories = ["방", "욕실", "주방", "세탁", "기타"]
     @State private var selectedCategory: String = "방"
     @State private var isAddingCategory = false
@@ -46,8 +49,6 @@ public struct PlaceSelectionSheet: View {
                 // + 버튼
                 Button {
                     isAddingCategory = true
-                    //TODO: -- fullscreen 나오게 처리
-                    //AddPlaceView
                 } label: {
                     Image(.iconPlus)
                         .frame(maxWidth: .infinity, minHeight: 56)
@@ -63,6 +64,10 @@ public struct PlaceSelectionSheet: View {
             .padding(.horizontal, 20)
             
             Spacer()
+        }
+        .fullScreenCover(isPresented: $isAddingCategory) {
+            let viewModel = AddPlaceViewModel(coordinator: coordinator)
+            AddPlaceView(viewModel: viewModel)
         }
         Spacer()
         .animation(.easeInOut(duration: 0.15), value: selectedCategory)
