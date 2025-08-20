@@ -7,12 +7,17 @@
 
 import Foundation
 
-public final class HouseworkPlace: Equatable, Identifiable {
+public final class HouseworkPlace: Equatable, Identifiable, Hashable, Sendable {
     public let placeId: String
     public let name: String
+    
     public static func == (lhs: HouseworkPlace, rhs: HouseworkPlace) -> Bool {
         lhs.id == rhs.id
     }
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(placeId)
+    }
+    
     public init(placeId: String, name: String) {
         self.placeId = placeId
         self.name = name

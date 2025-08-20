@@ -7,6 +7,6 @@
 
 import Foundation
 
-public protocol FetchPlacesUseCase {
+public protocol FetchPlacesUseCase: Sendable {
     func execute() async throws -> [HouseworkPlace]
 }

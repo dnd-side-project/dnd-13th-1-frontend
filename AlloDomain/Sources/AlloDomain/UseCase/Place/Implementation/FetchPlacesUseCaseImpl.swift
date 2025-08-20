@@ -19,4 +19,3 @@ extension FetchPlacesUseCaseImpl: FetchPlacesUseCase {
         return try await placeRepository.fetchPlaces()
     }
 }
-

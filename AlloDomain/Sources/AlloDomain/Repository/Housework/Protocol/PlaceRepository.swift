@@ -7,6 +7,6 @@
 
 import Foundation
 
-public protocol PlaceRepository {
+public protocol PlaceRepository: Sendable {
     func fetchPlaces() async throws -> [HouseworkPlace]
 }

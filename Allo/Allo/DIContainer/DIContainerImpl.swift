@@ -12,7 +12,7 @@ import AlloPresentation
 
 final class DIContainerImpl {
     private let houseworkRepository: HouseworkRepository
-    private let placeRepository : PlaceRepository
+    private let placeRepository: PlaceRepository
     init(liveData: Bool = true) {
         self.houseworkRepository = RepositoryFactory.makeHouseworkRepository(liveData: liveData)
         self.placeRepository = RepositoryFactory.makePlaceRepository(liveData: liveData)
