@@ -1,5 +1,5 @@
 //
-//  UseCaseFetchPlace.swift
+//  FetchPlacesUseCase.swift
 //  AlloDomain
 //
 //  Created by 김민솔 on 8/20/25.
