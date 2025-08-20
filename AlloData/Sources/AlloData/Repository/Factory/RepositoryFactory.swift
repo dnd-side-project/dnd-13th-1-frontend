@@ -16,4 +16,8 @@ public struct RepositoryFactory {
     public static func makePlaceRepository(liveData: Bool) -> PlaceRepository {
         liveData ? PlaceRepositoryImpl() : StubPlaceRepository()
     }
+    
+    public static func makeMemberRepository(liveData: Bool) -> MemberRepository {
+        MemberRepositoryImpl() 
+    }
 }
