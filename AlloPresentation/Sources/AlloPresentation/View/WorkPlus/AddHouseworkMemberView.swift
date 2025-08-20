@@ -14,11 +14,7 @@ public struct AddHouseworkMemberView: View {
     public init(viewModel: AddHouseworkMemberViewModel) {
         self._viewModel = State(initialValue: viewModel)
     }
-    private let members: [Member] = [
-        Member(id: 1, name: "나", profileImageUrl: URL(string: "https://randomuser.me/api/portraits/men/51.jpg")!),
-        Member(id: 2, name: "김철수", profileImageUrl: URL(string: "https://randomuser.me/api/portraits/men/50.jpg")!),
-        Member(id: 3, name: "박민수", profileImageUrl: URL(string: "https://randomuser.me/api/portraits/men/52.jpg")!)
-    ]
+    private let members: [Member] = []
     
     @State private var selectedMemberIDs: Set<Int> = []
     

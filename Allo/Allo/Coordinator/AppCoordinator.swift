@@ -64,7 +64,7 @@ final class AppCoordinator: Coordinator {
         case .houseworkMember(let housework):
             let addWorkMemberViewModel = AddHouseworkMemberViewModel(
                 coordinator: self,
-                housework: housework)
+                housework: housework, fetchMemberUscase: diContainer.resolveFetchMemberUseCase())
             AddHouseworkMemberView(viewModel: addWorkMemberViewModel)
         case .houseworkPlusFinish(let housework):
             let addHouseworkFinishViewModel = AddHouseworkFinishViewModel(

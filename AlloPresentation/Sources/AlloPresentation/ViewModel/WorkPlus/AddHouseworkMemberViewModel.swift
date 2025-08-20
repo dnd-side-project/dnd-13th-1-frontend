@@ -14,6 +14,7 @@ public final class AddHouseworkMemberViewModel: ViewModelable {
     // MARK: - State
     struct State {
         var housework: Housework
+        var members: [Member] = []
         var selectedMembers: [Member] = []
         var tagList: [String] = []
     }
@@ -25,11 +26,12 @@ public final class AddHouseworkMemberViewModel: ViewModelable {
     // MARK: - Properties
     var state: State
     let coordinator: Coordinator
+    private let fetchMemberUseCase: FetchMemberUseCase
     // TODO: -- MEMBER USECASE 받아오기
-    public init(coordinator: Coordinator, housework: Housework, tagList: [String] = []) {
+    public init(coordinator: Coordinator, housework: Housework, fetchMemberUscase: FetchMemberUseCase) {
         self.coordinator = coordinator
         self.state = State(housework: housework)
-        self.state.tagList = tagList
+        self.fetchMemberUseCase = fetchMemberUscase
     }
     
     func action(_ action: Action) {
