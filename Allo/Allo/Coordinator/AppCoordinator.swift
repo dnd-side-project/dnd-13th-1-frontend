@@ -78,14 +78,18 @@ final class AppCoordinator: Coordinator {
         }
     }
     
-    @ViewBuilder
+    @MainActor @ViewBuilder
     func buildSheet(_ sheet: AppSheet) -> some View {
         switch sheet {
         case .houseworkSelection(let worklistClickAction):
             HouseworkSelectionSheet(worklistClickAction: worklistClickAction)
 
         case .placeSelection(let placeClickAction):
-            PlaceSelectionSheet(coordinator: self, placeClickAction: placeClickAction)
+            let viewModel = PlaceSelectionViewModel(
+                coordinator: self,
+                fetchPlacesUseCase: diContainer.resolveFetchPlaceUsecase()
+            )
+            PlaceSelectionSheet(coordinator: self, viewModel: viewModel, placeClickAction: placeClickAction)
                 .presentationDetents([.height(624)])
         case .routineSelection(let completeButtonAction):
             RoutinesetSheet(completeButtonAction: completeButtonAction)

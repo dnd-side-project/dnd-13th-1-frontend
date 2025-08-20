@@ -8,17 +8,19 @@
 import SwiftUI
 import AlloDomain
 
+@Observable
+@MainActor
 public final class PlaceSelectionViewModel: ViewModelable {
     // MARK: - State
     public struct State {
-        public var places: [HouseworkPlace]
-        public init(places: [HouseworkPlace]) {
-            self.places = places
-        }
+        public var places: [HouseworkPlace] = []
+        public var selectedCategory: HouseworkPlace?
     }
     
     // MARK: - Action
     enum Action {
+        case selectPlace(HouseworkPlace)
+        case addNewPlace
     }
     
     // MARK: - Properties
@@ -27,14 +29,34 @@ public final class PlaceSelectionViewModel: ViewModelable {
     private let fetchPlacesUseCase: FetchPlacesUseCase
     var selectedCategory: HouseworkPlace?
     // MARK: - Init
-    public init(coordinator: Coordinator,places: [HouseworkPlace],
+    public init(coordinator: Coordinator, places: [HouseworkPlace] = [],
                 fetchPlacesUseCase: FetchPlacesUseCase) {
         self.coordinator = coordinator
         self.fetchPlacesUseCase = fetchPlacesUseCase
-        self.state = State(places: places)
+        self.state = State()
     }
     
     // MARK: - Action Handler
     func action(_ action: Action) {
+        switch action {
+        case .selectPlace(let place):
+            state.selectedCategory = place
+        case .addNewPlace:
+            coordinator.dismissSheet()
+            Task {
+                try? await Task.sleep(nanoseconds: 300_000_000)
+                coordinator.presentFullScreenCover(AppFullScreenCover.addHousePlace)
+            }
+        }
+    }
+    
+    public func loadPlaces() async {
+        do {
+            let fetchedPlaces = try await fetchPlacesUseCase.execute()
+            state.places = fetchedPlaces
+            state.selectedCategory = fetchedPlaces.first
+        } catch {
+            print("장소 불러오기 실패: \(error)")
+        }
     }
 }

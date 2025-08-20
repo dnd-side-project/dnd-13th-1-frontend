@@ -12,14 +12,14 @@ public struct PlaceSelectionSheet: View {
     var placeClickAction: (String) -> Void
     let coordinator: Coordinator
     @StateObject private var viewModel: PlaceSelectionViewModel
-
+    
     public init(coordinator: Coordinator, viewModel: PlaceSelectionViewModel,
                 placeClickAction: @escaping (String) -> Void) {
         self.coordinator = coordinator
         _viewModel = StateObject(wrappedValue: viewModel)
         self.placeClickAction = placeClickAction
     }
-
+    
     @State private var selectedCategory: String = "방"
     @State private var isAddingCategory = false
     @State private var newPlaceName = ""
@@ -43,18 +43,14 @@ public struct PlaceSelectionSheet: View {
                         title: place.name,
                         isSelected: viewModel.selectedCategory?.placeId == place.placeId
                     ) {
-                        viewModel.selectedCategory = place
+                        //viewModel.selectedCategory = place
+                        viewModel.action(.selectPlace(place))
                         placeClickAction(place.name)
                     }
                 }
-                
                 // + 버튼
                 Button {
-                    coordinator.dismissSheet()
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                        coordinator.presentFullScreenCover(AppFullScreenCover.addHousePlace)
-                    }
-                    isAddingCategory = true
+                    viewModel.action(.addNewPlace)
                 } label: {
                     Image(.iconPlus)
                         .frame(maxWidth: .infinity, minHeight: 56)
@@ -73,10 +69,10 @@ public struct PlaceSelectionSheet: View {
         }
         Spacer()
             .onAppear {
-                    Task {
-                        await viewModel.loadPlaces()
-                    }
+                Task {
+                    await viewModel.loadPlaces()
                 }
-        .animation(.easeInOut(duration: 0.15), value: selectedCategory)
+            }
+            .animation(.easeInOut(duration: 0.15), value: selectedCategory)
     }
 }

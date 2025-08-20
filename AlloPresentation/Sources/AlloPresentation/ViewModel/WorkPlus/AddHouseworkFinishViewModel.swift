@@ -52,7 +52,7 @@ public final class AddHouseworkFinishViewModel: ViewModelable {
             Task {
                 try await useCase.execute(housework)
                 await MainActor.run {
-                    coordinator.push(AppScene.checklist)
+                    coordinator.popToRoot()
                 }
             }
 
