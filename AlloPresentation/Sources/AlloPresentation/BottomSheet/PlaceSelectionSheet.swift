@@ -11,12 +11,15 @@ import AlloDomain
 public struct PlaceSelectionSheet: View {
     var placeClickAction: (String) -> Void
     let coordinator: Coordinator
-    
-    public init(coordinator: Coordinator, placeClickAction: @escaping (String) -> Void) {
+    @State private var viewModel: PlaceSelectionViewModel
+
+    public init(coordinator: Coordinator, viewModel: PlaceSelectionViewModel,
+                placeClickAction: @escaping (String) -> Void) {
         self.coordinator = coordinator
+        self._viewModel = State(initialValue: viewModel)
         self.placeClickAction = placeClickAction
     }
-    
+
     @State private var categories = ["방", "욕실", "주방", "세탁", "기타"]
     @State private var selectedCategory: String = "방"
     @State private var isAddingCategory = false
