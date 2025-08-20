@@ -21,4 +21,5 @@ public protocol DIContainer {
     func resolveGetHaveHouseworkUseCase() -> GetHaveHouseworkUseCase
     //MARK: -- AddHousework UseCases
     func resolveAddHouseworkUsecase() -> AddHouseworkUseCase
+    func resolveFetchPlaceUsecase() -> FetchPlacesUseCase
 }
