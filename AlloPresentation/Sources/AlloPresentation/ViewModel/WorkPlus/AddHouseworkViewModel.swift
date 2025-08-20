@@ -37,8 +37,7 @@ public final class AddHouseworkViewModel: ViewModelable {
     var state: State
     let coordinator: Coordinator
     // MARK: - Dependencies
-    private let addHouseworkUseCase: AddHouseworkUseCase
-    public init(addHouseworkUseCase: AddHouseworkUseCase, coordinator: Coordinator) {
+    public init(coordinator: Coordinator) {
         let today = Date().toKoreanDateString()
         self.state = State(
             myHouseworkTitle: "",
@@ -48,7 +47,6 @@ public final class AddHouseworkViewModel: ViewModelable {
             routine: "반복안함",
             alarm: true
         )
-        self.addHouseworkUseCase = addHouseworkUseCase
         self.coordinator = coordinator
     }
     
@@ -56,7 +54,6 @@ public final class AddHouseworkViewModel: ViewModelable {
     func action(_ action: Action) {
         addHouseWorkAction(action)
     }
-    
 }
 
 // MARK: Handling Actions

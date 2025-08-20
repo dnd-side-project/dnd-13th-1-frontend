@@ -54,7 +54,6 @@ final class AppCoordinator: Coordinator {
             MyPageView(viewModel: mypageViewModel)
         case .houseworkPlus:
             let addHouseworkViewModel = AddHouseworkViewModel(
-                addHouseworkUseCase: diContainer.resolveAddHouseworkUsecase(),
                 coordinator: self)
             AddHouseworkView(viewModel: addHouseworkViewModel)
         case .houseworkStandard(let housework):
