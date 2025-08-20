@@ -48,6 +48,10 @@ public struct PlaceSelectionSheet: View {
                 
                 // + 버튼
                 Button {
+                    coordinator.dismissSheet()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        coordinator.presentFullScreenCover(AppFullScreenCover.addHousePlace)
+                    }
                     isAddingCategory = true
                 } label: {
                     Image(.iconPlus)
@@ -64,10 +68,6 @@ public struct PlaceSelectionSheet: View {
             .padding(.horizontal, 20)
             
             Spacer()
-        }
-        .fullScreenCover(isPresented: $isAddingCategory) {
-            let viewModel = AddPlaceViewModel(coordinator: coordinator)
-            AddPlaceView(viewModel: viewModel)
         }
         Spacer()
         .animation(.easeInOut(duration: 0.15), value: selectedCategory)

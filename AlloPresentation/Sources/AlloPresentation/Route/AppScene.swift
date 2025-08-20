@@ -71,4 +71,12 @@ public enum AppFullScreenCover: AppRoute {
         case .addHousePlace: return "addHousePlace"
         }
     }
+    
+    public static func == (lhs: AppFullScreenCover, rhs: AppFullScreenCover) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
 }

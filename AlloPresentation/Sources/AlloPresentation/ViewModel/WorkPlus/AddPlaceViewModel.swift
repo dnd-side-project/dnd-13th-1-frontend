@@ -36,10 +36,9 @@ public final class AddPlaceViewModel: ViewModelable {
     func action(_ action: Action) {
         switch action {
         case .didTapBackButton:
-            coordinator.pop()
+            coordinator.dismissFullScreenCover()
         case .didTapAddPlaceButton:
-            // 새로운 장소 추가 로직
-            coordinator.push(AppScene.houseworkPlus)
+            coordinator.dismissFullScreenCover()
             if !state.newPlaceName.isEmpty {
                 state.existingPlaces.append(state.newPlaceName)
                 state.newPlaceName = ""
