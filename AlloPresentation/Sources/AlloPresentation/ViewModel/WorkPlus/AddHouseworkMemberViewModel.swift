@@ -27,7 +27,6 @@ public final class AddHouseworkMemberViewModel: ViewModelable {
     var state: State
     let coordinator: Coordinator
     private let fetchMemberUseCase: FetchMemberUseCase
-    // TODO: -- MEMBER USECASE 받아오기
     public init(coordinator: Coordinator, housework: Housework, fetchMemberUscase: FetchMemberUseCase) {
         self.coordinator = coordinator
         self.state = State(housework: housework)
@@ -53,6 +52,16 @@ public final class AddHouseworkMemberViewModel: ViewModelable {
             coordinator.push(AppScene.houseworkPlusFinish(housework: updatedHousework))
         }
     }
+    
+    func fetchMembers() async {
+        do {
+            let members = try await fetchMemberUseCase.execute()
+            state.members = members
+        } catch {
+            print("멤버 로드 실패: \(error)")
+        }
+    }
+
 }
 
 extension AddHouseworkMemberViewModel {

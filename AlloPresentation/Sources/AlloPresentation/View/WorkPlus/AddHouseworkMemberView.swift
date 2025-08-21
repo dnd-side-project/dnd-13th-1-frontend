@@ -35,7 +35,7 @@ public struct AddHouseworkMemberView: View {
             }
             .padding(.bottom, 32)
             VStack(spacing: 12) {
-                ForEach(members, id: \.id) { member in
+                ForEach(viewModel.state.members, id: \.id) { member in
                     MemberButton(
                         member: member,
                         isSelected: selectedMemberIDs.contains(member.id),
@@ -52,6 +52,9 @@ public struct AddHouseworkMemberView: View {
             .padding(.bottom, 46)
         }
         .padding(.horizontal, 20)
+        .task {
+            await viewModel.fetchMembers()
+        }
     }
     
     private func toggleSelection(for member: Member) {
