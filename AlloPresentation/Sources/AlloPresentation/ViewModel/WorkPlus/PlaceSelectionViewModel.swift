@@ -16,24 +16,23 @@ public final class PlaceSelectionViewModel: ViewModelable {
         public var places: [HouseworkPlace] = []
         public var selectedCategory: HouseworkPlace?
     }
-    
     // MARK: - Action
     enum Action {
         case selectPlace(HouseworkPlace)
         case addNewPlace
     }
-    
     // MARK: - Properties
     public var state: State
     let coordinator: Coordinator
     private let fetchPlacesUseCase: FetchPlacesUseCase
     var selectedCategory: HouseworkPlace?
     // MARK: - Init
-    public init(coordinator: Coordinator, places: [HouseworkPlace] = [],
+    public init(coordinator: Coordinator, initialPlace: String,
                 fetchPlacesUseCase: FetchPlacesUseCase) {
         self.coordinator = coordinator
         self.fetchPlacesUseCase = fetchPlacesUseCase
         self.state = State()
+        self.state.selectedCategory = HouseworkPlace(placeId: UUID().uuidString, name: initialPlace)
     }
     
     // MARK: - Action Handler
@@ -54,9 +53,20 @@ public final class PlaceSelectionViewModel: ViewModelable {
         do {
             let fetchedPlaces = try await fetchPlacesUseCase.execute()
             state.places = fetchedPlaces
-            state.selectedCategory = fetchedPlaces.first
+            
+            if let currentSelected = state.selectedCategory {
+                if let matchedPlace = fetchedPlaces.first(where: { $0.name == currentSelected.name }) {
+                    state.selectedCategory = matchedPlace
+                } else {
+                    state.selectedCategory = fetchedPlaces.first
+                }
+            } else {
+                state.selectedCategory = fetchedPlaces.first
+            }
+            
         } catch {
             print("장소 불러오기 실패: \(error)")
         }
     }
+    
 }

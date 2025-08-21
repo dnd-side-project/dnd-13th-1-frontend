@@ -82,10 +82,10 @@ final class AppCoordinator: Coordinator {
         switch sheet {
         case .houseworkSelection(let worklistClickAction):
             HouseworkSelectionSheet(worklistClickAction: worklistClickAction)
-
-        case .placeSelection(let placeClickAction):
+        case .placeSelection(let initialPlace, let placeClickAction):
             let viewModel = PlaceSelectionViewModel(
                 coordinator: self,
+                initialPlace: initialPlace,
                 fetchPlacesUseCase: diContainer.resolveFetchPlaceUsecase()
             )
             PlaceSelectionSheet(coordinator: self, viewModel: viewModel, placeClickAction: placeClickAction)
@@ -93,7 +93,6 @@ final class AppCoordinator: Coordinator {
         case .routineSelection(let initialRoutine, let completeButtonAction):
             RoutinesetSheet(initialRoutine: initialRoutine, completeButtonAction: completeButtonAction)
                 .presentationDetents([.height(624)])
-            
         case .calendarSelection(let dateClickAction):
             CalendarDateSheet(dateClickAction: dateClickAction)
                 .presentationDetents([.height(624)])

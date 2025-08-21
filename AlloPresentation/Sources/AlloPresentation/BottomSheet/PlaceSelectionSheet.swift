@@ -19,8 +19,6 @@ public struct PlaceSelectionSheet: View {
         _viewModel = StateObject(wrappedValue: viewModel)
         self.placeClickAction = placeClickAction
     }
-    
-    @State private var selectedCategory: String = "방"
     @State private var isAddingCategory = false
     @State private var newPlaceName = ""
     
@@ -41,9 +39,8 @@ public struct PlaceSelectionSheet: View {
                 ForEach(viewModel.state.places, id: \.placeId) { place in
                     PlaceButton(
                         title: place.name,
-                        isSelected: viewModel.selectedCategory?.placeId == place.placeId
+                        isSelected: viewModel.state.selectedCategory?.placeId == place.placeId
                     ) {
-                        //viewModel.selectedCategory = place
                         viewModel.action(.selectPlace(place))
                         placeClickAction(place.name)
                     }
@@ -73,6 +70,5 @@ public struct PlaceSelectionSheet: View {
                     await viewModel.loadPlaces()
                 }
             }
-            .animation(.easeInOut(duration: 0.15), value: selectedCategory)
     }
 }

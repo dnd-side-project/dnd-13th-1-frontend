@@ -69,13 +69,14 @@ extension AddHouseworkViewModel {
             }),
                                      onDismiss: {})
         case .didTapAddPlaceButton:
-            coordinator.presentSheet(AppSheet.placeSelection(placeClickAction: { [weak self] selected in
+            coordinator.presentSheet(AppSheet.placeSelection(initialPlace: state.place, placeClickAction: { [weak self] selected in
                 self?.state.place = selected
                 self?.coordinator.dismissSheet()
             }),
                                      onDismiss: {})
         case .didTapAdddRoutineButton:
-            coordinator.presentSheet(AppSheet.routineSelection(completeButtonAction: { [weak self] selected in
+            coordinator.presentSheet(AppSheet.routineSelection(initialRoutine: state.routine,
+                                                               completeButtonAction: { [weak self] selected in
                 self?.state.routine = selected
                 self?.coordinator.dismissSheet()
             }),
@@ -117,10 +118,6 @@ extension AddHouseworkViewModel {
     }
 }
 
-// MARK: - API Calls
-extension AddHouseworkViewModel {
-    
-}
 extension Date {
     func toKoreanDateString() -> String {
         let formatter = DateFormatter()
