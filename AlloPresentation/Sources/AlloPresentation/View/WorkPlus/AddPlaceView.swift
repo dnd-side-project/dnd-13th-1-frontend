@@ -8,10 +8,10 @@
 import SwiftUI
 
 public struct AddPlaceView: View {
-    @State private var viewModel: AddPlaceViewModel
+    @StateObject private var viewModel: AddPlaceViewModel
     @State private var newPlaceText: String = ""
     public init(viewModel: AddPlaceViewModel) {
-        self._viewModel = State(initialValue: viewModel)
+        _viewModel = StateObject(wrappedValue: viewModel)
     }
     public var body: some View {
         VStack(alignment: .leading) {

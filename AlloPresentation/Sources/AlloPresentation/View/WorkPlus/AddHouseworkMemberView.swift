@@ -10,9 +10,9 @@ import AlloDomain
 import Kingfisher
 
 public struct AddHouseworkMemberView: View {
-    @State private var viewModel: AddHouseworkMemberViewModel
+    @StateObject private var viewModel: AddHouseworkMemberViewModel
     public init(viewModel: AddHouseworkMemberViewModel) {
-        self._viewModel = State(initialValue: viewModel)
+        _viewModel = StateObject(wrappedValue: viewModel)
     }
     private let members: [Member] = []
     

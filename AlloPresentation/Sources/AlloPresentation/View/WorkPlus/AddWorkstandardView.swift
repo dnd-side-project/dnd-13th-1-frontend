@@ -9,9 +9,9 @@ import SwiftUI
 import AlloDomain
 
 public struct AddWorkstandardView: View {
-    @State private var viewModel: AddWorkstandardViewModel
+    @StateObject private var viewModel: AddWorkstandardViewModel
     public init(viewModel: AddWorkstandardViewModel) {
-        self._viewModel = State(initialValue: viewModel)
+        _viewModel = StateObject(wrappedValue: viewModel)
     }
     @State private var selectedStandards: Set<String> = []
     @State private var customTags: [String] = []

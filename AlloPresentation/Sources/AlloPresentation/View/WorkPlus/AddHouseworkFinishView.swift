@@ -10,9 +10,9 @@ import Kingfisher
 import AlloDomain
 
 public struct AddHouseworkFinishView: View {
-    @State private var viewModel: AddHouseworkFinishViewModel
+    @StateObject private var viewModel: AddHouseworkFinishViewModel
     public init(viewModel: AddHouseworkFinishViewModel) {
-        self._viewModel = State(initialValue: viewModel)
+        _viewModel = StateObject(wrappedValue: viewModel)
     }
     
     private let columns = [
