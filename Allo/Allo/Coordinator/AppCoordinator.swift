@@ -90,8 +90,8 @@ final class AppCoordinator: Coordinator {
             )
             PlaceSelectionSheet(coordinator: self, viewModel: viewModel, placeClickAction: placeClickAction)
                 .presentationDetents([.height(624)])
-        case .routineSelection(let completeButtonAction):
-            RoutinesetSheet(completeButtonAction: completeButtonAction)
+        case .routineSelection(let initialRoutine, let completeButtonAction):
+            RoutinesetSheet(initialRoutine: initialRoutine, completeButtonAction: completeButtonAction)
                 .presentationDetents([.height(624)])
             
         case .calendarSelection(let dateClickAction):

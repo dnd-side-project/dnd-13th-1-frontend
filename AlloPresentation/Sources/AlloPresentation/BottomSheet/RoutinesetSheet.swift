@@ -11,11 +11,13 @@ public struct RoutinesetSheet: View {
     let completeButtonAction: (String) -> Void
     private let categories = ["반복안함", "매일", "매주", "격주"]
     private let days = ["일", "월", "화", "수", "목", "금", "토"]
-    @State private var selectedCategory: String? = nil
+    @State private var selectedCategory: String?
     @State private var selectedDays: Set<String> = []
-    
-    public init(completeButtonAction: @escaping (String) -> Void) {
+    var initialRoutine: String
+    public init(initialRoutine: String, completeButtonAction: @escaping (String) -> Void) {
+        self.initialRoutine = initialRoutine
         self.completeButtonAction = completeButtonAction
+        _selectedCategory = State(initialValue: initialRoutine)
     }
     
     public var body: some View {

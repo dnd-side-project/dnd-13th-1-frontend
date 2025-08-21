@@ -18,6 +18,6 @@ public struct RepositoryFactory {
     }
     
     public static func makeMemberRepository(liveData: Bool) -> MemberRepository {
-        MemberRepositoryImpl() 
+        liveData ? MemberRepositoryImpl() : StubMemberRepository()
     }
 }

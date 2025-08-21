@@ -14,7 +14,7 @@ struct RoutineButton: View {
 
     var body: some View {
         Button {
-            action() // 클릭 시 전달된 액션 실행
+            action()
         } label: {
             HStack(spacing: 12) {
                 Image(isSelected ? .iconCheckOn : .iconCheckOff)

@@ -43,7 +43,7 @@ public enum AppScene: AppRoute {
 public enum AppSheet: AppRoute {
     case houseworkSelection(worklistClickAction: (String) -> Void)
     case placeSelection(placeClickAction: (String) -> Void)
-    case routineSelection(completeButtonAction: (String) -> Void)
+    case routineSelection(initialRoutine:String, completeButtonAction: (String) -> Void)
     case calendarSelection(dateSelectedAction: (String) -> Void)
     
     public var id: String {
