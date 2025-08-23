@@ -85,17 +85,16 @@ public enum AlloFontStyle {
             return 18
         case
                 .subtitle5, .subtitle6, .subtitle7,
-                .body1,
-                .button1:
+                .body1:
             return 16
         case
                 .body2, .body3, .body4, .body7,
-                .button2,
+                .button1,
                 .caption1, .caption2:
             return 14
         case
                 .body5, .body6,
-                .button3:
+                .button2, .button3:
             return 12
         case .caption3:
             return 11
