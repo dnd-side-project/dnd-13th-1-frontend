@@ -1,15 +1,15 @@
 //
-//  EmotionViewModel.swift
+//  EmotionThankMessageViewModel.swift
 //  AlloPresentation
 //
-//  Created by 김민솔 on 8/7/25.
+//  Created by 김민솔 on 8/23/25.
 //
 
 import SwiftUI
 import AlloDomain
 @Observable
 @MainActor
-public final class EmotionViewModel: ViewModelable {
+public final class EmotionThankMessageViewModel: ViewModelable {
     // MARK: - State
     struct State {
     }
@@ -31,7 +31,8 @@ public final class EmotionViewModel: ViewModelable {
         case .backButtonDidTap:
             coordinator.pop()
         case .didTapSendButton:
-            coordinator.push(AppScene.emotionMember)
+            coordinator.pop()
         }
     }
 }
+
