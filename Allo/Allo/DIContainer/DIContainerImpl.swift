@@ -15,11 +15,13 @@ final class DIContainerImpl {
     private let placeRepository: PlaceRepository
     private let memberRepository: MemberRepository
     private let houseworkDaysRepository: HouseworkDaysRepository
+    private let emotionRepository: EmotionRepository
     init(liveData: Bool = false) {
         self.houseworkRepository = RepositoryFactory.makeHouseworkRepository(liveData: liveData)
         self.placeRepository = RepositoryFactory.makePlaceRepository(liveData: liveData)
         self.memberRepository = RepositoryFactory.makeMemberRepository(liveData: liveData)
         self.houseworkDaysRepository = RepositoryFactory.makeHouseworkSevenDaysRepository(liveData: liveData)
+        self.emotionRepository = RepositoryFactory.makeEmotionRepository(liveData: liveData)
     }
 }
 // MARK: - DIContainer 프로토콜 구현
@@ -57,7 +59,15 @@ extension DIContainerImpl: DIContainer {
         UseCaseFactory.makeFetchMemberUseCase(memberRepository: memberRepository)
     }
     
-    func resolveFetchDaysUseCase() -> any FetchHouseworkDaysUseCase {
+    func resolveFetchDaysUseCase() -> FetchHouseworkDaysUseCase {
         UseCaseFactory.makeFetchHouseworkDaysUseCase(houseworkDaysRepository: houseworkDaysRepository)
+    }
+    
+    func resolveSendEmotionUseCase() -> SendEmotionUseCase {
+        UseCaseFactory.makeSendEmotionUseCase(emotionRepository: emotionRepository)
+    }
+    
+    func resolveGetEmotionListUseCase() -> FetchEmotionUseCase {
+        UseCaseFactory.makeGetEmotionListUseCase(emotionRepository: emotionRepository)
     }
 }

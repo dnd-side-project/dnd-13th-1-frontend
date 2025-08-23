@@ -1,0 +1,21 @@
+//
+//  SendEmotionUseCaseImpl.swift
+//  AlloDomain
+//
+//  Created by 김민솔 on 8/23/25.
+//
+
+import Foundation
+
+final class EmotionUseCaseImpl {
+    private let emotionRepository: EmotionRepository
+    init(emotionRepository: EmotionRepository) {
+        self.emotionRepository = emotionRepository
+    }
+}
+
+extension EmotionUseCaseImpl: SendEmotionUseCase {
+    public func execute() async throws -> [SendEmotion] {
+        return try await emotionRepository.sendHouseworkEmotion()
+    }
+}

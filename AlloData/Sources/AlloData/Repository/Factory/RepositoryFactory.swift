@@ -24,4 +24,8 @@ public struct RepositoryFactory {
     public static func makeHouseworkSevenDaysRepository(liveData: Bool) -> HouseworkDaysRepository {
         liveData ? HouseworkDaysRepositoryImpl() : StubHouseworkDaysRepository()
     }
+    
+    public static func makeEmotionRepository(liveData: Bool) -> EmotionRepository {
+        EmotionRepositoryimpl()
+    }
 }

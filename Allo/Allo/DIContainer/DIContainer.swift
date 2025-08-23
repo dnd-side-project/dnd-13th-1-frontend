@@ -26,4 +26,6 @@ public protocol DIContainer {
     func resolveFetchMemberUseCase() -> FetchMemberUseCase
     // MARK: -- Emotion UseCase
     func resolveFetchDaysUseCase() -> FetchHouseworkDaysUseCase
+    func resolveSendEmotionUseCase() -> SendEmotionUseCase
+    func resolveGetEmotionListUseCase() -> FetchEmotionUseCase
 }
