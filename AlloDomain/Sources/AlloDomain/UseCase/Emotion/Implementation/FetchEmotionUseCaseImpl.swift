@@ -15,7 +15,7 @@ final class FetchEmotionUseCaseImpl {
 }
 
 extension FetchEmotionUseCaseImpl: FetchEmotionUseCase {
-    public func execute() async throws -> [EmotionList] {
-        return try await emotionRepository.getEmotionList()
+    public func execute(filter: String, sorted: String) async throws -> [EmotionList] {
+        return try await emotionRepository.getEmotionList(filter: filter, sorted: sorted)
     }
 }

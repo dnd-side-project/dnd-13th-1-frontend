@@ -8,14 +8,12 @@
 import Foundation
 import AlloDomain
 
-final class EmotionRepositoryimpl: EmotionRepository  {
-    func getEmotionList() async throws -> [AlloDomain.EmotionList] {
+final class EmotionRepositoryimpl: EmotionRepository {
+    // TODO: Service 의존성 추가
+    func getEmotionList(filter: String, sorted: String) async throws -> [EmotionList] {
         return []
     }
-    
-    // TODO: Service 의존성 추가
-    public func sendHouseworkEmotion() async throws -> [SendEmotion] {
-        return [
-        ]
+    func sendHouseworkEmotion() async throws -> [SendEmotion] {
+        return []
     }
 }

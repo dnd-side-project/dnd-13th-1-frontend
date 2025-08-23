@@ -8,6 +8,5 @@
 import Foundation
 
 public protocol FetchEmotionUseCase: Sendable {
-    func execute() async throws -> [EmotionList]
+    func execute(filter: String, sorted: String) async throws -> [EmotionList]
 }
-

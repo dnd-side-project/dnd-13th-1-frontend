@@ -20,6 +20,7 @@ public final class EmotionList: Equatable, Identifiable, Sendable {
     public let senderNickName: String
     public let receiverNickName: String
     public let createdTime: Date
+    public let emotionType: String
     
     // MARK: - Initializer
     public init(
@@ -28,7 +29,8 @@ public final class EmotionList: Equatable, Identifiable, Sendable {
         content: String,
         senderNickName: String,
         receiverNickName: String,
-        createdTime: Date
+        createdTime: Date,
+        emotionType: String
     ) {
         self.id = id
         self.houseWorkName = houseWorkName
@@ -36,6 +38,6 @@ public final class EmotionList: Equatable, Identifiable, Sendable {
         self.senderNickName = senderNickName
         self.receiverNickName = receiverNickName
         self.createdTime = createdTime
+        self.emotionType = emotionType
     }
 }
-

@@ -26,6 +26,6 @@ public struct RepositoryFactory {
     }
     
     public static func makeEmotionRepository(liveData: Bool) -> EmotionRepository {
-        EmotionRepositoryimpl()
+        liveData ? EmotionRepositoryimpl() : StubEmotionListRepository()
     }
 }

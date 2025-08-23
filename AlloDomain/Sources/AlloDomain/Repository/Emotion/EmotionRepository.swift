@@ -9,5 +9,5 @@ import Foundation
 
 public protocol EmotionRepository: Sendable {
     func sendHouseworkEmotion() async throws -> [SendEmotion]
-    func getEmotionList() async throws -> ([EmotionList])
+    func getEmotionList(filter: String, sorted: String) async throws -> ([EmotionList])
 }
