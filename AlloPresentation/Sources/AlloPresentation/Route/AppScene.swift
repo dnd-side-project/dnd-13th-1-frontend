@@ -19,6 +19,12 @@ public enum AppScene: AppRoute {
     case houseworkStandard(housework: Housework)
     case houseworkMember(housework: Housework)
     case houseworkPlusFinish(housework: Housework)
+    case emotionMember
+    case houseworkSevendays
+    case emotionChoice
+    case emotionThankMessage
+    case emotionRegretMessage
+    case emotionFinish
     public var id: String {
         switch self {
         case .tabBar: return "tabBar"
@@ -30,6 +36,12 @@ public enum AppScene: AppRoute {
         case .houseworkStandard: return "houseworkStandard"
         case .houseworkMember: return "houseworkMember"
         case .houseworkPlusFinish: return "houseworkPlusFinish"
+        case .emotionMember: return "emotionMember"
+        case .houseworkSevendays: return "houseworkSevendays"
+        case .emotionChoice: return "emotionChoice"
+        case .emotionRegretMessage: return "emotionRegretMessage"
+        case .emotionThankMessage: return "emotionThankMessage"
+        case .emotionFinish: return "emotionFinish"
         }
     }
     public static func == (lhs: Self, rhs: Self) -> Bool {

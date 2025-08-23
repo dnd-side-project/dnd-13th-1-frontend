@@ -73,7 +73,33 @@ final class AppCoordinator: Coordinator {
                 housework: housework
             )
             AddHouseworkFinishView(viewModel: addHouseworkFinishViewModel)
-
+        case .emotionMember:
+            let emotionMemberViewModel = EmotionSendMemberViewModel(
+                coordinator: self,
+                fetchMemberUscase: diContainer.resolveFetchMemberUseCase())
+            EmotionSendMemberView(viewModel: emotionMemberViewModel)
+        case .houseworkSevendays:
+            let houseworkSevendaysViewModel = HouseworkSevendaysViewModel(
+                coordinator: self,
+                fetchDaysUscase: diContainer.resolveFetchDaysUseCase())
+            HouseworkSevendaysView(viewModel: houseworkSevendaysViewModel)
+        case .emotionChoice:
+            let emotionChoiceViewModel = EmotionChoiceViewModel(
+                coordinator: self,
+                fetchDaysUscase: diContainer.resolveFetchDaysUseCase())
+            EmotionChoiceView(viewModel: emotionChoiceViewModel)
+        case .emotionThankMessage:
+            let emotionThankMessageViewModel = EmotionThankMessageViewModel(
+                coordinator: self)
+            EmotionThankMessageView(viewModel: emotionThankMessageViewModel)
+        case .emotionRegretMessage:
+            let emotionRegretMessageViewModel = EmotionRegretMessageViewModel(
+                coordinator: self)
+            EmotionRegretMessageView(viewModel: emotionRegretMessageViewModel)
+        case .emotionFinish:
+            let emotionFinishViewModel = EmotionFinishViewModel(
+                coordinator: self)
+            EmotionFinishView(viewModel: emotionFinishViewModel)
         }
     }
     
