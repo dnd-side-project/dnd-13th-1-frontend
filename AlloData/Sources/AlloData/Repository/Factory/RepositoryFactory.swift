@@ -20,4 +20,8 @@ public struct RepositoryFactory {
     public static func makeMemberRepository(liveData: Bool) -> MemberRepository {
         liveData ? MemberRepositoryImpl() : StubMemberRepository()
     }
+    
+    public static func makeHouseworkSevenDaysRepository(liveData: Bool) -> HouseworkDaysRepository {
+        liveData ? HouseworkDaysRepositoryImpl() : StubHouseworkDaysRepository()
+    }
 }

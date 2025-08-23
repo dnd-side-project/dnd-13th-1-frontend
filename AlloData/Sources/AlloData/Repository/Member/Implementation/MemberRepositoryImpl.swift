@@ -14,4 +14,3 @@ final class MemberRepositoryImpl: MemberRepository {
         return []
     }
 }
-

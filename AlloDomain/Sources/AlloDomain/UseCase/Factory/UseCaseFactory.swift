@@ -39,4 +39,8 @@ public struct UseCaseFactory {
     public static func makeFetchMemberUseCase(memberRepository: MemberRepository) -> FetchMemberUseCase {
         return FetchMemberUseCaseImpl(memberRepository: memberRepository)
     }
+    
+    public static func makeFetchHouseworkDaysUseCase(houseworkDaysRepository: HouseworkDaysRepository) -> FetchHouseworkDaysUseCase {
+        return FetchHouseworkDaysUseCaseImpl(houseworkDaysRepository: houseworkDaysRepository)
+    }
 }
