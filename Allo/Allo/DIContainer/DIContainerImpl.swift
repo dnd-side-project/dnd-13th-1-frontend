@@ -12,9 +12,12 @@ import AlloPresentation
 
 final class DIContainerImpl {
     private let houseworkRepository: HouseworkRepository
-    
-    init(liveData: Bool = true) {
+    private let placeRepository: PlaceRepository
+    private let memberRepository: MemberRepository
+    init(liveData: Bool = false) {
         self.houseworkRepository = RepositoryFactory.makeHouseworkRepository(liveData: liveData)
+        self.placeRepository = RepositoryFactory.makePlaceRepository(liveData: liveData)
+        self.memberRepository = RepositoryFactory.makeMemberRepository(liveData: liveData)
     }
 }
 // MARK: - DIContainer 프로토콜 구현
@@ -38,6 +41,18 @@ extension DIContainerImpl: DIContainer {
     
     func resolveGetHaveHouseworkUseCase() -> GetHaveHouseworkUseCase {
         UseCaseFactory.makeGetHaveHouseworkUseCase(houseworkRepository: houseworkRepository)
+    }
+    
+    func resolveAddHouseworkUsecase() -> AddHouseworkUseCase {
+        UseCaseFactory.makeAddHouseworkUseCase(houseworkRepository: houseworkRepository)
+    }
+    
+    func resolveFetchPlaceUsecase() -> FetchPlacesUseCase {
+        UseCaseFactory.makeFetchPlaceUseCase(placeRepository: placeRepository)
+    }
+    
+    func resolveFetchMemberUseCase() -> FetchMemberUseCase {
+        UseCaseFactory.makeFetchMemberUseCase(memberRepository: memberRepository)
     }
     
 }

@@ -212,8 +212,7 @@ extension CheckListViewModel {
             state.checkListState.selectedHouseworks.removeAll()
             state.checkListState.isEditing = false
         case .didTapAddHouseworkButton:
-            // TODO: 집안일 추가 UI 전환
-            break
+            coordinator.push(AppScene.houseworkPlus)
         case .didTapCompletedHouseworkListButton:
             state.checkListState.showsCompleted.toggle()
         case let .didTaphousework(housework):

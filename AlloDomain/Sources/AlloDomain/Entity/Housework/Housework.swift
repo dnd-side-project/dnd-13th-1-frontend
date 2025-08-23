@@ -20,8 +20,9 @@ public final class Housework: Equatable, Identifiable, Sendable {
     public let date: Date
     public let isDone: Bool
     public let routine: HouseworkRoutine
+    public let tags: [String]
     // MARK: - Initializer
-    public init(id: Int, place: String, title: String, member: [Member], date: Date, isDone: Bool, routine: HouseworkRoutine) {
+    public init(id: Int, place: String, title: String, member: [Member], date: Date, isDone: Bool, routine: HouseworkRoutine, tags: [String]) {
         self.id = id
         self.place = place
         self.title = title
@@ -29,5 +30,6 @@ public final class Housework: Equatable, Identifiable, Sendable {
         self.date = date
         self.isDone = isDone
         self.routine = routine
+        self.tags = tags
     }
 }

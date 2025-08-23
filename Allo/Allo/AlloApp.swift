@@ -41,9 +41,17 @@ struct AlloApp: App {
                     // MARK: - 탭바
                     TabBarView(selectedTab: $selectedTab)
                 }
-                .navigationDestination(for: AppScene.self) { scene in
-                    appCoordinator.buildScene(scene)
+                .navigationDestination(for: AppScene.self) {
+                    appCoordinator.buildScene($0).navigationBarHidden(true)
                 }
+                .sheet(item: $appCoordinator.appSheet, onDismiss: appCoordinator.sheetOnDismiss) {
+                    appCoordinator.buildSheet($0)
+                }
+                .fullScreenCover(item: $appCoordinator.appFullScreenCover, onDismiss:
+                                    appCoordinator.fullScreenCoverOnDismiss) {
+                    appCoordinator.buildFullScreenCover($0)
+                }
+                .navigationBarHidden(true)
             }
         }
     }
