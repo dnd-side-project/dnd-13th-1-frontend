@@ -12,28 +12,32 @@ import AlloDomain
 public final class EmotionFinishViewModel: ViewModelable {
     // MARK: - State
     struct State {
+        var sendEmotion: SendEmotion
+        var receiverName: String
+        var houseworkTitle: String
     }
     // MARK: - Action
     enum Action {
-        case backButtonDidTap
+        case didTapBackButton
         case didTapSendButton
     }
     // MARK: - Properties
     var state: State
     let coordinator: Coordinator
-    public init(coordinator: Coordinator) {
+    //usecase
+    private let sendEmotionUseCase: SendEmotionUseCase
+    public init(coordinator: Coordinator, sendEmotionUseCase: SendEmotionUseCase,sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String) {
         self.coordinator = coordinator
-        self.state = State()
+        self.sendEmotionUseCase = sendEmotionUseCase
+        self.state = State(sendEmotion: sendEmotion, receiverName: receiverName, houseworkTitle: houseworkTitle)
     }
     
     func action(_ action: Action) {
         switch action {
-        case .backButtonDidTap:
+        case .didTapBackButton:
             coordinator.pop()
         case .didTapSendButton:
-            coordinator.pop()
+            coordinator.popToRoot()
         }
     }
 }
-
-

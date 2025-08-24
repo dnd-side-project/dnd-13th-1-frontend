@@ -12,27 +12,36 @@ import AlloDomain
 public final class EmotionRegretMessageViewModel: ViewModelable {
     // MARK: - State
     struct State {
+        var sendEmotion: SendEmotion
+        var receiverName: String
+        var houseworkTitle: String
     }
     // MARK: - Action
     enum Action {
-        case backButtonDidTap
-        case didTapSendButton
+        case didTapBackButton
+        case didTapNextButton
     }
     // MARK: - Properties
     var state: State
     let coordinator: Coordinator
-    public init(coordinator: Coordinator) {
+    //ai usecase
+    public init(coordinator: Coordinator, sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String) {
         self.coordinator = coordinator
-        self.state = State()
+        self.state = State(sendEmotion: sendEmotion, receiverName: receiverName, houseworkTitle: houseworkTitle)
     }
     
     func action(_ action: Action) {
         switch action {
-        case .backButtonDidTap:
+        case .didTapBackButton:
             coordinator.pop()
-        case .didTapSendButton:
-            coordinator.pop()
+        case .didTapNextButton:
+            let sendEmotion = SendEmotion(
+                receiverId: state.sendEmotion.receiverId,
+                houseWorkId: state.sendEmotion.houseWorkId,
+                disappointment: state.sendEmotion.disappointment,
+                compliments: state.sendEmotion.compliments
+                )
+            coordinator.push(AppScene.emotionFinish(sendEmotion: sendEmotion, receiverName: state.receiverName, houseworkTitle: state.houseworkTitle))
         }
     }
 }
-

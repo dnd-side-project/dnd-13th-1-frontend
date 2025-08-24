@@ -13,6 +13,9 @@ import AlloDomain
 public final class EmotionChoiceViewModel: ViewModelable {
     // MARK: - State
     struct State {
+        var sendEmotion: SendEmotion
+        var selectedHouseworkTitle: String
+        var receiverName: String
     }
     // MARK: - Action
     enum Action {
@@ -22,11 +25,10 @@ public final class EmotionChoiceViewModel: ViewModelable {
     // MARK: - Properties
     var state: State
     let coordinator: Coordinator
-    private let fetchDaysUscase: FetchHouseworkDaysUseCase
-    public init(coordinator: Coordinator, fetchDaysUscase: FetchHouseworkDaysUseCase) {
+    public init(coordinator: Coordinator, sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String) {
         self.coordinator = coordinator
-        self.state = State()
-        self.fetchDaysUscase = fetchDaysUscase
+        self.state = State(sendEmotion: sendEmotion, selectedHouseworkTitle: houseworkTitle, receiverName: receiverName)
+        self.state.selectedHouseworkTitle = houseworkTitle
     }
     
     func action(_ action: Action) {
@@ -34,8 +36,13 @@ public final class EmotionChoiceViewModel: ViewModelable {
         case .didTapBackButton:
             coordinator.pop()
         case .didTapNextButton:
-            coordinator.push(AppScene.emotionRegretMessage)
+            let sendEmotion = SendEmotion(
+                receiverId: state.sendEmotion.receiverId,
+                houseWorkId: state.sendEmotion.houseWorkId,
+                disappointment: "",
+                compliments: ""
+                )
+            coordinator.push(AppScene.emotionThankMessage(sendEmotion: sendEmotion, receiverName: state.receiverName, houseworkTitle: state.selectedHouseworkTitle))
         }
     }
 }
-
