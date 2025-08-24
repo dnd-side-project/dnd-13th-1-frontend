@@ -28,4 +28,8 @@ public struct RepositoryFactory {
     public static func makeEmotionRepository(liveData: Bool) -> EmotionRepository {
         liveData ? EmotionRepositoryimpl() : StubEmotionListRepository()
     }
+    
+    public static func makeAIRepository() -> AIRepository {
+        AIRepositoryImpl(apiClient: AIAPIClient(apiKey: ""))
+    }
 }
