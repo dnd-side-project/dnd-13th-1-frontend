@@ -70,7 +70,7 @@ public struct AddWorkstandardView: View {
                     style: selectedStandards.isEmpty ? .selectionNo : .bottoomMain
                 )
                 .padding(.horizontal, 20)
-                .padding(.bottom, 46)
+                .padding(.bottom, 16)
             }
             .ignoresSafeArea(.keyboard, edges: .bottom)
             /// Tip 버튼 + TipView
