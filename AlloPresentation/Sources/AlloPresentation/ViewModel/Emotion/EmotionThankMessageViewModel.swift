@@ -17,6 +17,7 @@ public final class EmotionThankMessageViewModel: ViewModelable {
         var houseworkTitle: String
         var selectedCompliments: Set<Compliments> = []
         var customCompliment: String = ""
+        var initialEmotion: EmotionType
     }
     // MARK: - Action
     enum Action {
@@ -27,9 +28,9 @@ public final class EmotionThankMessageViewModel: ViewModelable {
     // MARK: - Properties
     var state: State
     let coordinator: Coordinator
-    public init(coordinator: Coordinator, sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String) {
+    public init(coordinator: Coordinator, sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String, initialEmotion: EmotionType) {
         self.coordinator = coordinator
-        self.state = State(sendEmotion: sendEmotion, receiverName: receiverName, houseworkTitle: houseworkTitle)
+        self.state = State(sendEmotion: sendEmotion, receiverName: receiverName, houseworkTitle: houseworkTitle, initialEmotion: initialEmotion)
     }
     
     func action(_ action: Action) {
@@ -49,7 +50,26 @@ public final class EmotionThankMessageViewModel: ViewModelable {
                 disappointment: "",
                 compliments: state.selectedCompliments.map { $0.rawValue }
             )
-            coordinator.push(AppScene.emotionRegretMessage(sendEmotion: sendEmotion, receiverName: state.receiverName, houseworkTitle: state.houseworkTitle))
+            switch state.initialEmotion {
+            case .thank:
+                coordinator.push(
+                    AppScene.emotionFinish(
+                        sendEmotion: sendEmotion,
+                        receiverName: state.receiverName,
+                        houseworkTitle: state.houseworkTitle
+                    )
+                )
+            case .both:
+                coordinator.push(
+                    AppScene.emotionRegretMessage(
+                        sendEmotion: sendEmotion,
+                        receiverName: state.receiverName,
+                        houseworkTitle: state.houseworkTitle
+                    )
+                )
+            case .regret:
+                break
+            }
         }
     }
 }

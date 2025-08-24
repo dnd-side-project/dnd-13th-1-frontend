@@ -22,7 +22,7 @@ public enum AppScene: AppRoute {
     case emotionMember
     case houseworkSevendays(sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String)
     case emotionChoice(sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String)
-    case emotionThankMessage(sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String)
+    case emotionThankMessage(sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String, initialEmotion: EmotionType)
     case emotionRegretMessage(sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String)
     case emotionFinish(sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String)
     public var id: String {

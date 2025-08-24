@@ -91,7 +91,7 @@ struct SendEmotionButton: View {
                     .foregroundColor(isSelected ? .blue400 : .gray900)
                 Spacer()
             }
-            .frame(maxWidth: .infinity, minHeight: 76) // 전체 width 확보
+            .frame(maxWidth: .infinity, minHeight: 76)
             .padding(.horizontal, 16)
             .background(
                 RoundedRectangle(cornerRadius: 12)
@@ -103,6 +103,6 @@ struct SendEmotionButton: View {
             )
         }
         .buttonStyle(.plain)
-        .contentShape(Rectangle()) // 배경 전체를 터치 영역으로
+        .contentShape(Rectangle())
     }
 }

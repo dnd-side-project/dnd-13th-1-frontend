@@ -28,10 +28,12 @@ public struct EmotionFinishView: View {
                 .font(.headline4)
                 .foregroundStyle(.gray900)
                 .padding(.top, 16)
-            Image(.iconBoth)
-                .resizable()
-                .frame(width: 150, height: 150)
-            HStack() {
+            VStack(alignment: .center) {
+                Image(.iconBoth)
+                    .resizable()
+                    .frame(width: 150, height: 150)
+            }
+            HStack(spacing: 5) {
                 Image(.iconThank)
                     .resizable()
                     .frame(width: 24, height: 24)
@@ -51,7 +53,7 @@ public struct EmotionFinishView: View {
                 }
             }
             .padding(.vertical, 16)
-            HStack() {
+            HStack(spacing: 5) {
                 Image(.iconRegret)
                     .resizable()
                     .frame(width: 24, height: 24)

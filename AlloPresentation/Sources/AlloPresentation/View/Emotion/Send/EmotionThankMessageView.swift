@@ -105,14 +105,17 @@ struct ComplimentsButton: View {
     let title: String
     let isSelected: Bool
     let action: () -> Void
-    
+
     var body: some View {
         Button(action: action) {
-            Text(title)
-                .font(.subtitle7)
-                .foregroundColor(isSelected ? .blue400 : .gray700)
-                .frame(maxWidth: .infinity, minHeight: 48, alignment: .leading)
-                .padding(.leading, 20)
+            HStack {
+                Text(title)
+                    .font(.subtitle7)
+                    .foregroundColor(isSelected ? .blue400 : .gray700)
+                    .frame(maxWidth: .infinity, minHeight: 48, alignment: .leading)
+                    .padding(.leading, 20)
+            }
+            .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
         .background(

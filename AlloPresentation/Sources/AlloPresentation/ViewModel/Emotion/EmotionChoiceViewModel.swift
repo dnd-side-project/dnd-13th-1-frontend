@@ -24,11 +24,6 @@ public final class EmotionChoiceViewModel: ViewModelable {
         case didTapNextButton
         case selectEmotion(EmotionType)
     }
-    enum EmotionType {
-        case thank
-        case regret
-        case both
-    }
     // MARK: - Properties
     var state: State
     let coordinator: Coordinator
@@ -56,7 +51,8 @@ public final class EmotionChoiceViewModel: ViewModelable {
                     AppScene.emotionThankMessage(
                         sendEmotion: sendEmotion,
                         receiverName: state.receiverName,
-                        houseworkTitle: state.selectedHouseworkTitle
+                        houseworkTitle: state.selectedHouseworkTitle,
+                        initialEmotion: selectedEmotion
                     )
                 )
             case .regret:
