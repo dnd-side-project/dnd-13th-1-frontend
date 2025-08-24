@@ -20,11 +20,11 @@ public enum AppScene: AppRoute {
     case houseworkMember(housework: Housework)
     case houseworkPlusFinish(housework: Housework)
     case emotionMember
-    case houseworkSevendays
-    case emotionChoice
-    case emotionThankMessage
-    case emotionRegretMessage
-    case emotionFinish
+    case houseworkSevendays(sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String)
+    case emotionChoice(sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String)
+    case emotionThankMessage(sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String)
+    case emotionRegretMessage(sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String)
+    case emotionFinish(sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String)
     public var id: String {
         switch self {
         case .tabBar: return "tabBar"
