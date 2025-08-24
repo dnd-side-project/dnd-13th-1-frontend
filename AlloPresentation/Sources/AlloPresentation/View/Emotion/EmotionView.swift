@@ -8,74 +8,45 @@
 import SwiftUI
 
 public struct EmotionView: View {
-    @State private var viewModel: EmotionViewModel
+    @StateObject private var viewModel: EmotionViewModel
     @State private var selectedTab: TabType = .received
     @State private var sortType: SortType = .latest
     
     public init(viewModel: EmotionViewModel) {
-        self._viewModel = State(initialValue: viewModel)
+        _viewModel = StateObject(wrappedValue: viewModel)
     }
     
     public var body: some View {
         VStack(alignment: .leading) {
-            VStack(alignment: .leading) {
-                if selectedTab == .received {
-                    Text("주현님,")
-                        .font(.headline4)
-                        .foregroundColor(.gray900)
-
-                    (
-                        Text("0")
-                            .font(.headline4)
-                            .foregroundColor(.blue400)
-                        +
-                        Text("개의 마음이 도착해있어요!")
-                            .font(.headline4)
-                            .foregroundColor(.gray900)
-                    )
-                    .font(.headline4)
-
-                } else if selectedTab == .sent {
-                    (
-                        Text("주현님이 \n")
-                            .font(.headline4)
-                            .foregroundColor(.gray900)
-                        +
-                        Text("지금까지 보낸 마음 ")
-                            .font(.headline4)
-                            .foregroundColor(.gray900)
-                        +
-                        Text("0 ")
-                            .font(.headline4)
-                            .foregroundColor(.blue400)
-                        +
-                        Text("개")
-                            .font(.headline4)
-                            .foregroundColor(.gray900)
-                    )
-                    .font(.headline4)
-                }
-            }
-            .frame(height: 100)
-            .padding(.top, 32)
-
-            // Header
+            headerSection
             EmotionHeaderView(
                 selectedTab: $selectedTab,
                 sortType: $sortType
             )
             .padding(.top, 10)
-            
+            .onChange(of: selectedTab) { _, newTab in
+                viewModel.state.selectedFilter = (newTab == .received) ? "from" : "to"
+                Task { await viewModel.loadEmotionList() }
+            }
+            .onChange(of: sortType) { _, newSort in
+                viewModel.state.sortOrder = (newSort == .latest) ? "desc" : "asc"
+                Task { await viewModel.loadEmotionList() }
+            }
             // 리스트 (스크롤뷰)
             ScrollView {
-                VStack(spacing: 12) {
-//                    ForEach(viewModel.items) { item in
-//                        EmotionCell(item: item)
-//                    }
+                LazyVStack(alignment: .leading, spacing: 12) {
+                    ForEach(viewModel.state.emotions) { emotion in
+                        EmotionCell(emotion: emotion)
+                    }
                 }
-                .padding(.vertical, 8)
             }
-        }.padding(.leading, 20)
+        }
+        .padding(.horizontal, 20)
+        .onAppear {
+            Task {
+                await viewModel.loadEmotionList()
+            }
+        }
         .overlay(alignment: .bottomTrailing) {
                 EmotionFloatingButton(viewModel: viewModel)
                 .padding(.trailing, 20)
@@ -83,7 +54,43 @@ public struct EmotionView: View {
         }
     }
 }
+extension EmotionView {
+    private var headerSection: some View {
+            VStack(alignment: .leading) {
+                if selectedTab == .received {
+                    Text("주현님,")
+                        .font(.headline4)
+                        .foregroundColor(.gray900)
 
+                    (
+                        Text("\(viewModel.state.emotions.count)")
+                            .foregroundColor(.blue400)
+                        +
+                        Text("개의 마음이 도착해있어요!")
+                            .foregroundColor(.gray900)
+                    )
+                    .font(.headline4)
+
+                } else if selectedTab == .sent {
+                    (
+                        Text("주현님이 \n")
+                            .foregroundColor(.gray900)
+                        +
+                        Text("지금까지 보낸 마음 ")
+                            .foregroundColor(.gray900)
+                        +
+                        Text("\(viewModel.state.emotions.count) ")
+                            .foregroundColor(.blue400)
+                        +
+                        Text("개")
+                            .foregroundColor(.gray900)
+                    )
+                    .font(.headline4)
+                }
+            }
+            .padding(.top, 32)
+        }
+}
 // MARK: - Header
 struct EmotionHeaderView: View {
     @Binding var selectedTab: TabType
@@ -97,8 +104,8 @@ struct EmotionHeaderView: View {
                 } label: {
                     Text("받은 마음")
                         .font(.button2)
-                        .padding(.horizontal, 15)
-                        .padding(.vertical, 10)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 12)
                         .foregroundColor(selectedTab == .received ? .white : .gray600)
                         .background(selectedTab == .received ? .blue400 : Color.white)
                         .cornerRadius(50)
@@ -114,8 +121,8 @@ struct EmotionHeaderView: View {
                 } label: {
                     Text("보낸 마음")
                         .font(.button2)
-                        .padding(.horizontal, 15)
-                        .padding(.vertical, 10)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 12)
                         .foregroundColor(selectedTab == .sent ? .white : .gray600)
                         .background(selectedTab == .sent ? .blue400 : Color.white)
                         .cornerRadius(50)
@@ -146,24 +153,6 @@ struct EmotionHeaderView: View {
     }
 }
 
-// MARK: - Cell (예시)
-struct EmotionCell: View {
-    let item: EmotionItem
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(item.title)
-                .font(.headline)
-            Text("From. \(item.sender)")
-                .font(.caption)
-                .foregroundColor(.gray)
-        }
-        .padding()
-        .background(Color(.systemGray6))
-        .cornerRadius(12)
-        .padding(.horizontal, 16)
-    }
-}
 struct EmotionFloatingButton: View {
     @ObservedObject var viewModel: EmotionViewModel
     
