@@ -8,7 +8,7 @@
 import Foundation
 import AlloDomain
 
-public struct StubHouseworkRepository: HouseworkRepository {
+struct StubHouseworkRepository: HouseworkRepository {
     // 더미 데이터: Member
     private let members: [Member] = [
         Member(id: 1, name: "김철수", profileImageUrl: URL(string: "https://randomuser.me/api/portraits/men/50.jpg")!),
@@ -77,7 +77,7 @@ public struct StubHouseworkRepository: HouseworkRepository {
         ]
     }()
     
-    public func getHaveHousework(from: Date, to: Date) async throws -> [Date: Bool] {
+    func getHaveHousework(from: Date, to: Date) async throws -> [Date: Bool] {
         var result: [Date: Bool] = [:]
         let calendar = Calendar.current
         
@@ -95,7 +95,7 @@ public struct StubHouseworkRepository: HouseworkRepository {
         return result
     }
     
-    public func getHouseworkList(_ date: Date) async throws -> (myHouseworksLeft: [Housework], ourHouseworksLeft: [Housework], myHouseworksCompleted: [Housework], ourHouseworksCompleted: [Housework]) {
+    func getHouseworkList(_ date: Date) async throws -> (myHouseworksLeft: [Housework], ourHouseworksLeft: [Housework], myHouseworksCompleted: [Housework], ourHouseworksCompleted: [Housework]) {
         let calendar = Calendar.current
         let startOfDay = calendar.startOfDay(for: date)
         
@@ -124,15 +124,15 @@ public struct StubHouseworkRepository: HouseworkRepository {
         return (myHouseworksLeft, ourHouseworksLeft, myHouseworksCompleted, ourHouseworksCompleted)
     }
     
-    public func completeHousework(_ housework: Housework) async throws {
+    func completeHousework(_ housework: Housework) async throws {
         dump("Completed housework: \(housework.title)")
     }
     
-    public func addHousework(_ housework: Housework) async throws {
+    func addHousework(_ housework: Housework) async throws {
         dump("Added housework: \(housework.title)")
     }
     
-    public func deleteHousework(_ housework: Housework) async throws {
+    func deleteHousework(_ housework: Housework) async throws {
         dump("Deleted housework: \(housework.title)")
     }
 }

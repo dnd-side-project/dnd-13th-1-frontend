@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		090F32232E5ACD820073AE58 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 090F32222E5ACD820073AE58 /* Config.xcconfig */; };
 		09AA8BC02E48A1C400A93BD3 /* AlloData in Frameworks */ = {isa = PBXBuildFile; productRef = 09AA8BBF2E48A1C400A93BD3 /* AlloData */; };
 		09AA8BC32E48A1CA00A93BD3 /* AlloPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 09AA8BC22E48A1CA00A93BD3 /* AlloPresentation */; };
 		09AA8BC62E48A1D400A93BD3 /* AlloDomain in Frameworks */ = {isa = PBXBuildFile; productRef = 09AA8BC52E48A1D400A93BD3 /* AlloDomain */; };
@@ -14,12 +15,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		090F32222E5ACD820073AE58 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		094C23842E3DDA8F009EF33E /* Allo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Allo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		094C23922E3DDAB3009EF33E /* AlloPresentation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = AlloPresentation; path = ../AlloPresentation; sourceTree = SOURCE_ROOT; };
 		094C23932E3DDAC2009EF33E /* AlloDomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = AlloDomain; path = ../AlloDomain; sourceTree = SOURCE_ROOT; };
 		094C23942E3DDACE009EF33E /* AlloData */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = AlloData; path = ../AlloData; sourceTree = SOURCE_ROOT; };
 		094C23952E3DDBBE009EF33E /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; name = .gitignore; path = ../.gitignore; sourceTree = SOURCE_ROOT; };
-		09943AF32E51863F00E028CC /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		09FCAFF42E3F46D500EA9C36 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -63,7 +64,7 @@
 			isa = PBXGroup;
 			children = (
 				09FCAFF42E3F46D500EA9C36 /* .swiftlint.yml */,
-				09943AF32E51863F00E028CC /* Config.xcconfig */,
+				090F32222E5ACD820073AE58 /* Config.xcconfig */,
 				094C23952E3DDBBE009EF33E /* .gitignore */,
 				094C23942E3DDACE009EF33E /* AlloData */,
 				094C23932E3DDAC2009EF33E /* AlloDomain */,
@@ -156,6 +157,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				090F32232E5ACD820073AE58 /* Config.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,7 +198,7 @@
 /* Begin XCBuildConfiguration section */
 		094C238D2E3DDA8F009EF33E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 09943AF32E51863F00E028CC /* Config.xcconfig */;
+			baseConfigurationReference = 090F32222E5ACD820073AE58 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -261,7 +263,7 @@
 		};
 		094C238E2E3DDA8F009EF33E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 09943AF32E51863F00E028CC /* Config.xcconfig */;
+			baseConfigurationReference = 090F32222E5ACD820073AE58 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -319,10 +321,11 @@
 		};
 		094C23902E3DDA8F009EF33E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 09943AF32E51863F00E028CC /* Config.xcconfig */;
+			baseConfigurationReference = 090F32222E5ACD820073AE58 /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				BASE_URL = "https://al-lo.shop";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -354,10 +357,11 @@
 		};
 		094C23912E3DDA8F009EF33E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 09943AF32E51863F00E028CC /* Config.xcconfig */;
+			baseConfigurationReference = 090F32222E5ACD820073AE58 /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				BASE_URL = "https://al-lo.shop";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
