@@ -12,6 +12,9 @@ import AlloDomain
 public final class EmotionViewModel: ViewModelable {
     // MARK: - State
     struct State {
+        var emotions: [EmotionList] = []
+        var selectedFilter: String = "from"
+        var sortOrder: String = "desc"
     }
     // MARK: - Action
     enum Action {
@@ -21,9 +24,11 @@ public final class EmotionViewModel: ViewModelable {
     // MARK: - Properties
     var state: State
     let coordinator: Coordinator
-    public init(coordinator: Coordinator) {
+    private let getEmotionListUscase: FetchEmotionUseCase
+    public init(coordinator: Coordinator, getEmotionListUscase: FetchEmotionUseCase) {
         self.coordinator = coordinator
         self.state = State()
+        self.getEmotionListUscase = getEmotionListUscase
     }
     
     func action(_ action: Action) {
@@ -34,4 +39,17 @@ public final class EmotionViewModel: ViewModelable {
             coordinator.push(AppScene.emotionMember)
         }
     }
+    
+    public func loadEmotionList() async {
+        do {
+            let result = try await getEmotionListUscase.execute(
+                filter: state.selectedFilter,
+                sorted: state.sortOrder
+            )
+            self.state.emotions = result
+        } catch {
+            print("failed to fetch houseworks")
+        }
+    }
+
 }

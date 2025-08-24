@@ -45,12 +45,7 @@ public struct EmotionSendMemberView: View {
         }
     }
     private func toggleSelection(for member: Member) {
-        if selectedMemberIDs.contains(member.id) {
-            selectedMemberIDs.remove(member.id)
-            viewModel.toggleMember(member)
-        } else {
-            selectedMemberIDs.insert(member.id)
-            viewModel.toggleMember(member)
-        }
+        selectedMemberIDs = [member.id]
+        viewModel.state.selectedMembers = [member]
     }
 }

@@ -33,7 +33,7 @@ public struct HouseworkSevendaysView: View {
                     .font(.subtitle6)
                     .foregroundColor(.gray500)
             }
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading) {
                     ForEach(viewModel.state.sevenDaysHouseworks, id: \.date) { day in
                         HouseworkDaySection(day: day, viewModel: viewModel)
@@ -118,6 +118,8 @@ struct HouseworEmotionkButton: View {
                     .frame(maxWidth: .infinity, minHeight: 56, alignment: .leading)
                     .padding(.leading, 10)
             }
+            .frame(maxWidth: .infinity)
+            .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
         .background(

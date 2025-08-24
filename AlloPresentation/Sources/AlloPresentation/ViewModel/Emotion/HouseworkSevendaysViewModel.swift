@@ -13,6 +13,11 @@ import AlloDomain
 public final class HouseworkSevendaysViewModel: ViewModelable {
     // MARK: - State
     struct State {
+        var sendEmotion: SendEmotion
+        var receiverName: String
+        var houseworTitle: String
+        var selectedHouseworks: Set<Int> = []
+        var sevenDaysHouseworks: [HouseworkSevendays] = []
     }
     // MARK: - Action
     enum Action {
@@ -23,18 +28,51 @@ public final class HouseworkSevendaysViewModel: ViewModelable {
     var state: State
     let coordinator: Coordinator
     private let fetchDaysUscase: FetchHouseworkDaysUseCase
-    public init(coordinator: Coordinator, fetchDaysUscase: FetchHouseworkDaysUseCase) {
+    public init(
+        coordinator: Coordinator,
+        fetchDaysUscase: FetchHouseworkDaysUseCase,
+        sendEmotion: SendEmotion,
+        receiverName: String,
+        houseworTitle: String
+    ) {
         self.coordinator = coordinator
-        self.state = State()
+        self.state = State(sendEmotion: sendEmotion, receiverName: receiverName, houseworTitle: houseworTitle)
         self.fetchDaysUscase = fetchDaysUscase
     }
-    
+
     func action(_ action: Action) {
         switch action {
         case .didTapBackButton:
             coordinator.pop()
         case .didTapNextButton:
-            coordinator.push(AppScene.emotionChoice)
+            guard let houseworkId = state.selectedHouseworks.first else { return }
+            let sendEmotion = SendEmotion(
+                receiverId: state.sendEmotion.receiverId,
+                houseWorkId: houseworkId,
+                disappointment: "",
+                compliments: []
+            )
+            coordinator.push(AppScene.emotionChoice(sendEmotion: sendEmotion, receiverName: state.receiverName, houseworkTitle: state.houseworTitle))
         }
     }
+    
+    public func loadSevenDaysHouseworks() async {
+        do {
+            let result = try await fetchDaysUscase.execute()
+            self.state.sevenDaysHouseworks = result
+        } catch {
+            print("failed to fetch houseworks")
+        }
+    }
+    
+    func toggleHousework(_ housework: HouseworkRecent) {
+        if state.selectedHouseworks.contains(housework.id) {
+            state.selectedHouseworks.removeAll()
+            state.houseworTitle = ""
+        } else {
+            state.selectedHouseworks = [housework.id]
+            state.houseworTitle = housework.title
+        }
+    }
+
 }

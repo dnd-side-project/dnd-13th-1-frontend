@@ -8,7 +8,8 @@
 import SwiftUI
 
 public struct EmotionRegretMessageView: View {
-     @StateObject private var viewModel: EmotionRegretMessageViewModel
+    @StateObject private var viewModel: EmotionRegretMessageViewModel
+    @FocusState private var isTextEditorFocused: Bool
     @State private var contentText: String = ""
     
     private let maxCharacters = 200
@@ -20,7 +21,7 @@ public struct EmotionRegretMessageView: View {
     public var body: some View {
         VStack(alignment: .leading) {
             // MARK: - Navigation / Title
-            TitleNavigationBar(title: "", onBack: { print("") })
+            TitleNavigationBar(title: "", onBack: { viewModel.action(.didTapBackButton) })
             
             Text("아쉬운 마음을 남겨주세요.")
                 .font(.headline4)
@@ -32,7 +33,7 @@ public struct EmotionRegretMessageView: View {
                 Image(.iconCheck)
                     .resizable()
                     .frame(width: 24, height: 24)
-                Text("가스레인지랑 인덕션 주위 청소")
+                Text(viewModel.state.houseworkTitle)
                     .font(.subtitle6)
                     .foregroundColor(.gray500)
             }
@@ -43,11 +44,11 @@ public struct EmotionRegretMessageView: View {
                     .resizable()
                     .frame(width: 24, height: 24)
                     .clipShape(Circle())
-                Text("To. 유재석")
+                Text("To. \(viewModel.state.receiverName)")
                     .font(.body1)
                     .foregroundStyle(.gray600)
             }
-            .padding(.top, 50)
+            .padding(.top, 30)
             
             ZStack(alignment: .topLeading) {
                 if contentText.isEmpty {
@@ -55,25 +56,38 @@ public struct EmotionRegretMessageView: View {
                         .foregroundColor(.gray400)
                         .padding(EdgeInsets(top: 12, leading: 12, bottom: 12, trailing: 12))
                 }
-                
+
                 TextEditor(text: $contentText)
+                    .focused($isTextEditorFocused)
                     .frame(height: 290)
                     .padding(4)
                     .overlay(
                         RoundedRectangle(cornerRadius: 20)
-                            .stroke(.gray300, lineWidth: 1)
+                            .stroke(isTextEditorFocused ? .blue400 : .gray300, lineWidth: 1)
                     )
                     .font(.body1)
-                HStack {
+                
+                VStack {
                     Spacer()
-                    Text("\(contentText.count)/\(maxCharacters)자")
-                        .font(.caption)
-                        .foregroundColor(.gray500)
+                    HStack {
+                        Image(.iconRotate)
+                            .resizable()
+                            .frame(width: 16, height: 16)
+                            .padding(.leading, 8)
+                            .padding(.bottom, 8)
+                        
+                        Spacer()
+                        Text("\(contentText.count)/\(maxCharacters)자")
+                            .font(.caption)
+                            .foregroundColor(.gray500)
+                            .padding(.trailing, 8)
+                            .padding(.bottom, 8)
+                    }
                 }
             }
-            
+            .frame(height: 290)
             // MARK: - 글자 수 / AI 말투 버튼
-            HStack() {
+            HStack(spacing: 10) {
                 Spacer()
                 Button(action: {
                    // viewModel.action(.aiToneAdjustDidTap)
@@ -95,10 +109,10 @@ public struct EmotionRegretMessageView: View {
             Spacer()
             MainButton(
                 title: "작성 완료",
-                action: { print("") },
+                action: { viewModel.action(.didTapNextButton) },
                 style: .bottoomMain
             )
-            .padding(.bottom, 46)
+            .padding(.bottom, 16)
         }
         .padding(.horizontal, 20)
     }

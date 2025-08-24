@@ -39,23 +39,27 @@ public struct EmotionChoiceView: View {
             VStack(spacing: 12) {
                 SendEmotionButton(
                     title: "고마운 마음 전하기",
-                    isSelected: false
+                    icon: .iconThank,
+                    isSelected: viewModel.state.selectedEmotion == .thank
                 ) {
-                    //viewModel.selectEmotion(.thank)
+                    viewModel.action(.selectEmotion(.thank))
                 }
                 SendEmotionButton(
                     title: "아쉬운 마음 전하기",
-                    isSelected: false
+                    icon: .iconRegret,
+                    isSelected: viewModel.state.selectedEmotion == .regret
                 ) {
-                   // viewModel.selectEmotion(.regret)
+                    viewModel.action(.selectEmotion(.regret))
                 }
                 SendEmotionButton(
                     title: "두 마음 다 전하기",
-                    isSelected: false
+                    icon: .iconBoth,
+                    isSelected: viewModel.state.selectedEmotion == .both
                 ) {
-                    //viewModel.selectEmotion(.both)
+                    viewModel.action(.selectEmotion(.both))
                 }
             }
+            .padding(.top, 32)
             Spacer()
             MainButton(
                 title: "다음으로",
@@ -63,19 +67,21 @@ public struct EmotionChoiceView: View {
                 style: .bottoomMain
             )
             .padding(.bottom, 16)
-        }.padding(.horizontal, 20)
+        }
+        .padding(.horizontal, 20)
     }
 }
 
 struct SendEmotionButton: View {
     let title: String
+    let icon: ImageResource
     let isSelected: Bool
     let action: () -> Void
 
     var body: some View {
         Button(action: action) {
             HStack(spacing: 12) {
-                Image(.iconBoth)
+                Image(icon)
                     .resizable()
                     .scaledToFill()
                     .frame(width: 32, height: 32)
@@ -85,17 +91,18 @@ struct SendEmotionButton: View {
                     .foregroundColor(isSelected ? .blue400 : .gray900)
                 Spacer()
             }
-            .padding(.vertical, 12)
+            .frame(maxWidth: .infinity, minHeight: 76) // 전체 width 확보
             .padding(.horizontal, 16)
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(isSelected ? .blue50 : .gray25)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(isSelected ? .blue400 : .gray25, lineWidth: 2)
+            )
         }
         .buttonStyle(.plain)
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(isSelected ? .blue50 : .gray25)
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(isSelected ? .blue400 : .gray25, lineWidth: 2)
-        )
+        .contentShape(Rectangle()) // 배경 전체를 터치 영역으로
     }
 }

@@ -16,11 +16,18 @@ public final class EmotionChoiceViewModel: ViewModelable {
         var sendEmotion: SendEmotion
         var selectedHouseworkTitle: String
         var receiverName: String
+        var selectedEmotion: EmotionType? = nil
     }
     // MARK: - Action
     enum Action {
         case didTapBackButton
         case didTapNextButton
+        case selectEmotion(EmotionType)
+    }
+    enum EmotionType {
+        case thank
+        case regret
+        case both
     }
     // MARK: - Properties
     var state: State
@@ -36,13 +43,33 @@ public final class EmotionChoiceViewModel: ViewModelable {
         case .didTapBackButton:
             coordinator.pop()
         case .didTapNextButton:
+            guard let selectedEmotion = state.selectedEmotion else { return }
             let sendEmotion = SendEmotion(
                 receiverId: state.sendEmotion.receiverId,
                 houseWorkId: state.sendEmotion.houseWorkId,
                 disappointment: "",
-                compliments: ""
+                compliments: []
+            )
+            switch selectedEmotion {
+            case .thank, .both:
+                coordinator.push(
+                    AppScene.emotionThankMessage(
+                        sendEmotion: sendEmotion,
+                        receiverName: state.receiverName,
+                        houseworkTitle: state.selectedHouseworkTitle
+                    )
                 )
-            coordinator.push(AppScene.emotionThankMessage(sendEmotion: sendEmotion, receiverName: state.receiverName, houseworkTitle: state.selectedHouseworkTitle))
+            case .regret:
+                coordinator.push(
+                    AppScene.emotionRegretMessage(
+                        sendEmotion: sendEmotion,
+                        receiverName: state.receiverName,
+                        houseworkTitle: state.selectedHouseworkTitle
+                    )
+                )
+            }
+        case .selectEmotion(let emotion):
+            state.selectedEmotion = emotion
         }
     }
 }

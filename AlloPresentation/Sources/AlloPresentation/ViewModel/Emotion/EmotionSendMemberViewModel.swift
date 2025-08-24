@@ -36,7 +36,14 @@ public final class EmotionSendMemberViewModel: ViewModelable {
         case .didTapBackButton:
             coordinator.pop()
         case .didTapNextButton:
-            coordinator.push(AppScene.houseworkSevendays)
+            guard let selectedMember = state.selectedMembers.first else { return }
+            let sendEmotion = SendEmotion(
+                receiverId: selectedMember.id,
+                houseWorkId: 0,
+                disappointment: "",
+                compliments: []
+                )
+            coordinator.push(AppScene.houseworkSevendays(sendEmotion: sendEmotion, receiverName: selectedMember.name, houseworkTitle: ""))
         }
     }
     
@@ -49,14 +56,4 @@ public final class EmotionSendMemberViewModel: ViewModelable {
         }
     }
     
-}
-
-extension EmotionSendMemberViewModel {
-    func toggleMember(_ member: Member) {
-        if state.selectedMembers.contains(member) {
-            state.selectedMembers.removeAll { $0 == member }
-        } else {
-            state.selectedMembers.append(member)
-        }
-    }
 }
