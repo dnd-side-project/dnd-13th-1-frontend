@@ -20,17 +20,7 @@ public enum AppScene: AppRoute {
     case houseworkMember(housework: Housework)
     case houseworkPlusFinish(housework: Housework)
     public var id: String {
-        switch self {
-        case .tabBar: return "tabBar"
-        case .home: return "home"
-        case .checklist: return "checklist"
-        case .emotion: return "emotion"
-        case .mypage: return "mypage"
-        case .houseworkPlus: return "houseworkPlus"
-        case .houseworkStandard: return "houseworkStandard"
-        case .houseworkMember: return "houseworkMember"
-        case .houseworkPlusFinish: return "houseworkPlusFinish"
-        }
+        String(describing: self)
     }
     public static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.id == rhs.id

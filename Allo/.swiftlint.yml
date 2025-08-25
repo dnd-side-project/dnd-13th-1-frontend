@@ -7,6 +7,7 @@ included:
 disabled_rules:
   - large_tuple
   - trailing_whitespace
+  - identifier_name
   
 vertical_whitespace:
   max_empty_lines: 1
