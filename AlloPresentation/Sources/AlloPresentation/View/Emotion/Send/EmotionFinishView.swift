@@ -9,67 +9,99 @@ import SwiftUI
 
 public struct EmotionFinishView: View {
     @StateObject private var viewModel: EmotionFinishViewModel
-    @State private var contentText: String = ""
-    
-    private let maxCharacters = 200
     
     public init(viewModel: EmotionFinishViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
     
     public var body: some View {
-        VStack(alignment: .leading) {
-            // MARK: - Navigation / Title
-            TitleNavigationBar(title: "", onBack: { viewModel.action(.didTapBackButton)})
-            Text(viewModel.state.houseworkTitle)
-                .font(.button3)
-                .foregroundStyle(.blue400)
-            Text("To. \(viewModel.state.receiverName)님께 마음을 보냈어요.")
-                .font(.headline4)
-                .foregroundStyle(.gray900)
-                .padding(.top, 16)
-            VStack(alignment: .center) {
-                Image(.iconEmotionCat)
-                    .resizable()
-                    .frame(width: 150, height: 150)
-            }
-            .frame(maxWidth: .infinity)
-            HStack(spacing: 5) {
-                Image(.iconThank)
-                    .resizable()
-                    .frame(width: 24, height: 24)
-                Text("고마운 마음")
-                    .font(.body1)
-                    .foregroundStyle(.gray900)
-            }
-            VStack(spacing: 8) {
-                ForEach(viewModel.state.sendEmotion.compliments, id: \.self) { compliment in
-                    Text(compliment)
-                    .font(.body1)
-                    .foregroundStyle(.gray900)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 12)
-                    .background(Color.gray25) // 배경색
-                    .cornerRadius(12)
+        VStack(spacing: 0) {
+            ScrollView(showsIndicators: false) {
+                VStack(alignment: .leading, spacing: 16) {
+                    Text(viewModel.state.houseworkTitle)
+                        .font(.button3)
+                        .foregroundStyle(.blue400)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 1)
+                        .background(
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(.blue50)
+                        )
+                        .padding(.top, 44)
+                    (
+                        Text("To. ")
+                            .foregroundColor(.gray300)
+                        +
+                        Text("\(viewModel.state.receiverName)님께 마음을 보냈어요.")
+                            .foregroundColor(.gray900)
+                    )
+                    .font(.headline4)
+                    .padding(.top, 2)
+                    
+                    HStack {
+                        Spacer()
+                        Image(.iconEmotionCat)
+                            .resizable()
+                            .frame(width: 207, height: 201)
+                        Spacer()
+                    }
+                    
+                    VStack(alignment: .leading, spacing: 12) {
+                        if !viewModel.state.sendEmotion.compliments.isEmpty {
+                            HStack(spacing: 5) {
+                                Image(.iconThank)
+                                    .resizable()
+                                    .frame(width: 24, height: 24)
+                                Text("고마운 마음")
+                                    .font(.body1)
+                                    .foregroundStyle(.gray900)
+                            }
+                            ForEach(viewModel.state.sendEmotion.compliments, id: \.self) { compliment in
+                                Text(compliment)
+                                    .font(.subtitle7)
+                                    .foregroundStyle(.gray900)
+                                    .padding(.horizontal, 16)
+                                    .padding(.vertical, 12)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .background(.gray25)
+                                    .cornerRadius(12)
+                            }
+                        }
+                    }
+                    VStack(alignment: .leading, spacing: 12) {
+                        if !viewModel.state.sendEmotion.disappointment.isEmpty {
+                            HStack(spacing: 5) {
+                                Image(.iconRegret)
+                                    .resizable()
+                                    .frame(width: 24, height: 24)
+                                Text("아쉬운 마음")
+                                    .font(.body1)
+                                    .foregroundStyle(.gray900)
+                            }
+                            
+                            Text(viewModel.state.sendEmotion.disappointment)
+                                .font(.subtitle7)
+                                .foregroundStyle(.gray900)
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 12)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .background(.gray25)
+                                .cornerRadius(12)
+                        }
+                    }
+                    
+                    Spacer()
+                        .frame(height: 50)
                 }
+                .padding(.horizontal, 20)
             }
-            .padding(.vertical, 16)
-            HStack(spacing: 5) {
-                Image(.iconRegret)
-                    .resizable()
-                    .frame(width: 24, height: 24)
-                Text("아쉬운 마음")
-                    .font(.body1)
-                    .foregroundStyle(.gray900)
-            }
-            Spacer()
             MainButton(
                 title: "마음함으로",
-                action: { viewModel.action(.didTapSendButton)},
+                action: { viewModel.action(.didTapSendButton) },
                 style: .bottoomMain
             )
+            .padding(.horizontal, 20)
             .padding(.bottom, 16)
         }
-        .padding(.horizontal, 20)
     }
 }

@@ -32,7 +32,7 @@ public final class EmotionRegretMessageViewModel: ViewModelable {
     var state: State
     let aiUseCase: AIUseCase
     let coordinator: Coordinator
-    public init(coordinator: Coordinator,aiUseCase: AIUseCase, sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String, receiverImg: URL) {
+    public init(coordinator: Coordinator, aiUseCase: AIUseCase, sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String, receiverImg: URL) {
         self.coordinator = coordinator
         self.aiUseCase = aiUseCase
         self.state = State(sendEmotion: sendEmotion, receiverName: receiverName, houseworkTitle: houseworkTitle, receiverImg: receiverImg)
@@ -46,7 +46,7 @@ public final class EmotionRegretMessageViewModel: ViewModelable {
             let sendEmotion = SendEmotion(
                 receiverId: state.sendEmotion.receiverId,
                 houseWorkId: state.sendEmotion.houseWorkId,
-                disappointment: state.sendEmotion.disappointment,
+                disappointment: state.contentText,
                 compliments: state.sendEmotion.compliments
                 )
             coordinator.push(AppScene.emotionFinish(sendEmotion: sendEmotion, receiverName: state.receiverName, houseworkTitle: state.houseworkTitle))

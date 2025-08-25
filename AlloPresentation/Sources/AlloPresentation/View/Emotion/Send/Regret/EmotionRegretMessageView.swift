@@ -26,7 +26,7 @@ public struct EmotionRegretMessageView: View {
             Text("아쉬운 마음을 남겨주세요.")
                 .font(.headline4)
                 .foregroundStyle(.gray900)
-                .padding(.top, 16)
+                .padding(.top, 10)
             
             // MARK: - 체크된 작업
             HStack(spacing: 8) {
@@ -39,17 +39,17 @@ public struct EmotionRegretMessageView: View {
             }
             
             // MARK: - 받는 사람
-            HStack(spacing: 8) {
+            HStack(spacing: 12) {
                 AsyncImage(url: viewModel.state.receiverImg) { phase in
                     switch phase {
                     case .empty:
                         ProgressView()
-                            .frame(width: 24, height: 24)
+                            .frame(width: 28, height: 28)
                     case .success(let image):
                         image
                             .resizable()
                             .scaledToFill()
-                            .frame(width: 24, height: 24)
+                            .frame(width: 28, height: 28)
                             .clipShape(Circle())
                     case .failure:
                         EmptyView()
@@ -61,13 +61,11 @@ public struct EmotionRegretMessageView: View {
                     .font(.body1)
                     .foregroundStyle(.gray600)
             }
-
             .padding(.top, 30)
-            
             ZStack(alignment: .topLeading) {
                 if contentText.isEmpty {
                     Text("내용을 작성해주세요.")
-                        .foregroundColor(.gray400)
+                        .foregroundColor(.gray300)
                         .padding(EdgeInsets(top: 12, leading: 12, bottom: 12, trailing: 12))
                 }
                 
@@ -82,32 +80,34 @@ public struct EmotionRegretMessageView: View {
                     RoundedRectangle(cornerRadius: 20)
                         .stroke(isTextEditorFocused ? .blue400 : .gray300, lineWidth: 2)
                 )
-                .font(.body1)
-                .foregroundColor(viewModel.state.isAITransformed ? .blue400 : .gray900)
+                .font(.subtitle7)
+                .foregroundColor(viewModel.state.isAITransformed ? .blue400 : .gray700)
                 
                 VStack {
                     Spacer()
                     HStack {
-                        Button(action: {
-                            viewModel.action(.didTapRotateButton)
-                        }) {
-                            Image(.iconRotate)
-                                .resizable()
-                                .frame(width: 16, height: 16)
-                                .padding(.leading, 8)
-                                .padding(.bottom, 8)
+                        if viewModel.state.isAITransformed {
+                            Button(action: {
+                                viewModel.action(.didTapRotateButton)
+                            }) {
+                                Image(.iconRotate)
+                                    .resizable()
+                                    .frame(width: 24, height: 24)
+                                    .padding(.leading, 24)
+                                    .padding(.bottom, 10)
+                            }
                         }
                         Spacer()
-                        Text("\(contentText.count)/\(maxCharacters)자")
+                        Text("\(viewModel.state.contentText.count)/\(maxCharacters)자")
                             .font(.caption)
                             .foregroundColor(.gray500)
-                            .padding(.trailing, 8)
-                            .padding(.bottom, 8)
+                            .padding(.trailing, 24)
+                            .padding(.bottom, 10)
                     }
                 }
             }
             .frame(height: 290)
-            // MARK: - 글자 수 / AI 말투 버튼
+            // MARK: - AI 말투 버튼
             Button(action: {
                 viewModel.action(.didTapAIToneButton)
             }) {
@@ -117,19 +117,22 @@ public struct EmotionRegretMessageView: View {
                         .frame(width: 20, height: 20)
                 } else {
                     HStack(spacing: 4) {
+                        Spacer()
                         Image(.iconAI)
                             .resizable()
                             .frame(width: 16, height: 16)
                         Text("AI 말투 다듬기")
                             .font(.button1)
                             .foregroundStyle(.white)
+                            .lineLimit(1)
                     }
+                    .frame(width: 133, height: 42)
+                    .padding(10)
+                    .background(
+                        RoundedRectangle(cornerRadius: 50).fill(.blue400)
+                    )
                 }
             }
-            .background(
-                RoundedRectangle(cornerRadius: 50).fill(.blue400)
-            )
-            .padding(.top, 20)
             Spacer()
             MainButton(
                 title: "작성 완료",
