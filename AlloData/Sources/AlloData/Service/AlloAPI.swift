@@ -43,7 +43,6 @@ enum AlloAPI {
 extension AlloAPI: TargetType {
     
     var accessToken: String? {
-        //        return "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzU2MDE4MTQ4LCJleHAiOjE3NTYwMjE3NDh9.4kys8GuVbDfiFqzd-QjZ_dmg1nlZsL_iZr441eW6Pl4"
         try? KeychainService.get(key: "accessToken")
     }
     

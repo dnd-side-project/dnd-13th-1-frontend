@@ -9,5 +9,5 @@ import Foundation
 
 struct AddTagResponseDTO: Decodable {
     let tagId: Int
-    let tagName: String
+    let name: String
 }
