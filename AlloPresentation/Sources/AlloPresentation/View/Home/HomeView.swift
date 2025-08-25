@@ -9,9 +9,9 @@ import Foundation
 import SwiftUI
 
 public struct HomeView: View {
-    @State private var viewModel: HomeViewModel
+    @StateObject var viewModel: HomeViewModel
     public init(viewModel: HomeViewModel) {
-        self._viewModel = State(initialValue: viewModel)
+        self._viewModel = StateObject(wrappedValue: viewModel)
     }
     
     public var body: some View {
