@@ -127,7 +127,8 @@ final class AppCoordinator: Coordinator {
         }
     }
 
-    @MainActor @ViewBuilder
+    @MainActor
+    @ViewBuilder
     func buildSheet(_ sheet: AppSheet) -> some View {
         switch sheet {
         case .houseworkSelection(let worklistClickAction):
@@ -149,7 +150,8 @@ final class AppCoordinator: Coordinator {
         }
     }
     
-    @MainActor @ViewBuilder
+    @MainActor
+    @ViewBuilder
     func buildFullScreenCover(_ fullScreenCover: AppFullScreenCover) -> some View {
         switch fullScreenCover {
         case .addHousePlace:
