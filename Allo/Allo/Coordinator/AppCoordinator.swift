@@ -46,9 +46,6 @@ final class AppCoordinator: Coordinator {
                 coordinator: self
             )
             CheckListView(viewModel: checkListViewModel)
-        case .emotion:
-            let emotionViewModel = EmotionViewModel(coordinator: self, getEmotionListUscase: diContainer.resolveGetEmotionListUseCase())
-            EmotionView(viewModel: emotionViewModel)
         case .mypage:
             let mypageViewModel = MyPageViewModel(coordinator: self)
             MyPageView(viewModel: mypageViewModel)
@@ -73,11 +70,6 @@ final class AppCoordinator: Coordinator {
                 housework: housework
             )
             AddHouseworkFinishView(viewModel: addHouseworkFinishViewModel)
-        case .emotionMember:
-            let emotionMemberViewModel = EmotionSendMemberViewModel(
-                coordinator: self,
-                fetchMemberUscase: diContainer.resolveFetchMemberUseCase())
-            EmotionSendMemberView(viewModel: emotionMemberViewModel)
         case .houseworkSevendays(let sendEmotion, let receiverName, let houseworkTitle):
             let houseworkSevendaysViewModel = HouseworkSevendaysViewModel(
                 coordinator: self,
@@ -87,26 +79,50 @@ final class AppCoordinator: Coordinator {
                 houseworTitle: houseworkTitle
             )
             HouseworkSevendaysView(viewModel: houseworkSevendaysViewModel)
-        case .emotionChoice(let sendEmotion, let receiverName, let houseworkTitle):
-            let emotionChoiceViewModel = EmotionChoiceViewModel(
+        case .emotion:
+            let viewModel = EmotionViewModel(
                 coordinator: self,
-                sendEmotion: sendEmotion, receiverName: receiverName, houseworkTitle: houseworkTitle)
-            EmotionChoiceView(viewModel: emotionChoiceViewModel)
-        case .emotionThankMessage(let sendEmotion, let receiverName, let houseworkTitle):
-            let emotionThankMessageViewModel = EmotionThankMessageViewModel(
-                coordinator: self, sendEmotion: sendEmotion, receiverName: receiverName, houseworkTitle: houseworkTitle)
-            EmotionThankMessageView(viewModel: emotionThankMessageViewModel)
+                getEmotionListUscase: diContainer.resolveGetEmotionListUseCase())
+            EmotionView(viewModel: viewModel)
+        case .emotionMember:
+            let emotionMemberViewModel = EmotionSendMemberViewModel(
+                coordinator: self,
+                fetchMemberUscase: diContainer.resolveFetchMemberUseCase())
+            EmotionSendMemberView(viewModel: emotionMemberViewModel)
+        case .emotionChoice(let sendEmotion, let receiverName, let houseworkTitle):
+            let viewModel = EmotionChoiceViewModel(
+                coordinator: self,
+                sendEmotion: sendEmotion,
+                receiverName: receiverName,
+                houseworkTitle: houseworkTitle)
+            EmotionChoiceView(viewModel: viewModel)
+        case .emotionThankMessage(let sendEmotion, let receiverName, let houseworkTitle, let initialEmotion):
+            let viewModel = EmotionThankMessageViewModel(
+                coordinator: self,
+                sendEmotion: sendEmotion,
+                receiverName: receiverName,
+                houseworkTitle: houseworkTitle,
+                initialEmotion: initialEmotion)
+            EmotionThankMessageView(viewModel: viewModel)
         case .emotionRegretMessage(let sendEmotion, let receiverName, let houseworkTitle):
-            let emotionRegretMessageViewModel = EmotionRegretMessageViewModel(
-                coordinator: self, sendEmotion: sendEmotion, receiverName: receiverName, houseworkTitle: houseworkTitle)
-            EmotionRegretMessageView(viewModel: emotionRegretMessageViewModel)
+            let viewModel = EmotionRegretMessageViewModel(
+                coordinator: self,
+                aiUseCase: diContainer.resolvetransformAiUseCase(),
+                sendEmotion: sendEmotion,
+                receiverName: receiverName,
+                houseworkTitle: houseworkTitle)
+            EmotionRegretMessageView(viewModel: viewModel)
         case .emotionFinish(let sendEmotion, let receiverName, let houseworkTitle):
-            let emotionFinishViewModel = EmotionFinishViewModel(
-                coordinator: self, sendEmotionUseCase: diContainer.resolveSendEmotionUseCase(), sendEmotion: sendEmotion, receiverName: receiverName, houseworkTitle: houseworkTitle)
-            EmotionFinishView(viewModel: emotionFinishViewModel)
+            let viewModel = EmotionFinishViewModel(
+                coordinator: self,
+                sendEmotionUseCase: diContainer.resolveSendEmotionUseCase(),
+                sendEmotion: sendEmotion,
+                receiverName: receiverName,
+                houseworkTitle: houseworkTitle)
+            EmotionFinishView(viewModel: viewModel)
         }
     }
-    
+
     @MainActor @ViewBuilder
     func buildSheet(_ sheet: AppSheet) -> some View {
         switch sheet {
@@ -128,7 +144,7 @@ final class AppCoordinator: Coordinator {
                 .presentationDetents([.height(624)])
         }
     }
-
+    
     @MainActor @ViewBuilder
     func buildFullScreenCover(_ fullScreenCover: AppFullScreenCover) -> some View {
         switch fullScreenCover {

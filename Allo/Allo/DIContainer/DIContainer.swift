@@ -28,4 +28,5 @@ public protocol DIContainer {
     func resolveFetchDaysUseCase() -> FetchHouseworkDaysUseCase
     func resolveSendEmotionUseCase() -> SendEmotionUseCase
     func resolveGetEmotionListUseCase() -> FetchEmotionUseCase
+    func resolvetransformAiUseCase() -> AIUseCase
 }

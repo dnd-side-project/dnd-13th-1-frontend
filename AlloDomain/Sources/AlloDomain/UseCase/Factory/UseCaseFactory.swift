@@ -51,4 +51,8 @@ public struct UseCaseFactory {
     public static func makeGetEmotionListUseCase(emotionRepository: EmotionRepository) -> FetchEmotionUseCase {
         return FetchEmotionUseCaseImpl(emotionRepository: emotionRepository)
     }
+    
+    public static func makeTransformAiUseCase(aiRepository: AIRepository) -> AIUseCase {
+        return AIUseCaseImpl(aiRepository: aiRepository)
+    }
 }

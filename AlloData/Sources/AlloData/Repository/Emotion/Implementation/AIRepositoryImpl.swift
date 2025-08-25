@@ -20,8 +20,7 @@ final class AIRepositoryImpl: AIRepository {
     }
 }
 
-
-final class AIAPIClient {
+final class AIAPIClient: Sendable {
     private let apiKey: String
     private let url: URL = URL(string: "https://api.openai.com/v1/chat/completions")!
 
@@ -48,9 +47,15 @@ final class AIAPIClient {
         request.httpBody = try JSONSerialization.data(withJSONObject: body)
 
         let (data, response) = try await URLSession.shared.data(for: request)
-        guard let httpResponse = response as? HTTPURLResponse,
-              httpResponse.statusCode == 200 else {
-            throw URLError(.badServerResponse)
+
+        // 상태 코드 및 에러 메시지 확인
+        if let httpResponse = response as? HTTPURLResponse {
+            if httpResponse.statusCode != 200 {
+                let errorMessage = String(data: data, encoding: .utf8) ?? "No error message"
+                print("HTTP Status Code: \(httpResponse.statusCode)")
+                print("Response Body: \(errorMessage)")
+                throw URLError(.badServerResponse)
+            }
         }
 
         let decoded = try JSONDecoder().decode(OpenAIResponse.self, from: data)
