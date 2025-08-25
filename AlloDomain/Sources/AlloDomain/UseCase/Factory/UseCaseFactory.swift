@@ -37,4 +37,12 @@ public struct UseCaseFactory {
     public static func makeGenerateCalendarDateUseCase() -> GenerateCalendarDateUseCase {
         return GenerateCalendarDateUseCaseImpl()
     }
+    
+    public static func makeFetchPlaceUseCase(placeRepository: PlaceRepository) -> FetchPlacesUseCase {
+        return FetchPlacesUseCaseImpl(placeRepository: placeRepository)
+    }
+    
+    public static func makeFetchMemberUseCase(memberRepository: MemberRepository) -> FetchMemberUseCase {
+        return FetchMemberUseCaseImpl(memberRepository: memberRepository)
+    }
 }

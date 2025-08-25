@@ -12,7 +12,4 @@ public enum HouseworkRoutine: String, CaseIterable, Sendable {
     case everyday = "매일"
     case everyWeek = "매주"
     case biweek = "격주"
-    case everyMonth = "매달"
-    case threeMonths = "3개월"
-    case sixMonths = "6개월"
 }

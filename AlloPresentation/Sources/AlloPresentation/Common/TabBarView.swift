@@ -25,14 +25,21 @@ public struct TabBarView: View {
                                 .frame(width: 24, height: 24)
                             Text(item.title)
                                 .font(.caption3)
-                                .foregroundColor(selectedTab == item ? item.selectedTitleColor : item.normalTitleColor)
+                                .foregroundStyle(selectedTab == item ? item.selectedTitleColor : item.normalTitleColor)
                         }
                     }
                     .frame(maxWidth: .infinity)
                 }
             }
             .frame(height: 48)
+            .padding(.top, 4)
             .padding(.bottom, 34)
             .background(Color.white)
+            .overlay(
+                Rectangle()
+                    .frame(height: 0.5)
+                    .foregroundColor(Color.gray200),
+                alignment: .top
+            )
     }
 }

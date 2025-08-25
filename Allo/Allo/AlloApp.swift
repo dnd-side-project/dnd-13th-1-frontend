@@ -29,7 +29,7 @@ struct AlloApp: App {
         KakaoSDK.initSDK(appKey: kakaoAppKey)
         
         Fonts.registerCustomFonts()
-        self.diContainer = DIContainerImpl()
+        self.diContainer = DIContainerImpl(liveData: true)
         appCoordinator = AppCoordinator(diContainer: diContainer)
         onBoardingCoordinator = OnboardingCoordinator(diContainer: diContainer)
     }
@@ -60,6 +60,14 @@ struct AlloApp: App {
                             .navigationDestination(for: AppScene.self) { scene in
                                 appCoordinator.buildScene(scene)
                             }
+                            .sheet(item: $appCoordinator.appSheet, onDismiss: appCoordinator.sheetOnDismiss) {
+                                appCoordinator.buildSheet($0)
+                            }
+                            .fullScreenCover(item: $appCoordinator.appFullScreenCover, onDismiss:
+                                                appCoordinator.fullScreenCoverOnDismiss) {
+                                appCoordinator.buildFullScreenCover($0)
+                            }
+                            .navigationBarHidden(true)
                         }
                     } else {
                         // MARK: 그룹 가입 전
