@@ -40,15 +40,18 @@ public struct HouseworkSevendaysView: View {
                     }
                 }
                 .padding(.top, 10)
+                .padding(.bottom, 32)
             }
             .padding(.top, 32)
             Spacer()
-            MainButton(
-                title: "다음으로",
-                action: { viewModel.action(.didTapNextButton)},
-                style: .bottoomMain
-            )
-            .padding(.bottom, 16)
+            if !viewModel.state.selectedHouseworks.isEmpty {
+                MainButton(
+                    title: "다음으로",
+                    action: { viewModel.action(.didTapNextButton)},
+                    style: .bottoomMain
+                )
+                .padding(.bottom, 16)
+            }
         }
         .padding(.horizontal, 20)
         .task {

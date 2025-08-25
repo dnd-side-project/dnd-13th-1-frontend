@@ -29,10 +29,11 @@ public struct EmotionFinishView: View {
                 .foregroundStyle(.gray900)
                 .padding(.top, 16)
             VStack(alignment: .center) {
-                Image(.iconBoth)
+                Image(.iconEmotionCat)
                     .resizable()
                     .frame(width: 150, height: 150)
             }
+            .frame(maxWidth: .infinity)
             HStack(spacing: 5) {
                 Image(.iconThank)
                     .resizable()

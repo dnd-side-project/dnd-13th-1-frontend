@@ -40,14 +40,28 @@ public struct EmotionRegretMessageView: View {
             
             // MARK: - 받는 사람
             HStack(spacing: 8) {
-                Image(.icEmotionUnselected) // 프로필 이미지
-                    .resizable()
-                    .frame(width: 24, height: 24)
-                    .clipShape(Circle())
+                AsyncImage(url: viewModel.state.receiverImg) { phase in
+                    switch phase {
+                    case .empty:
+                        ProgressView()
+                            .frame(width: 24, height: 24)
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 24, height: 24)
+                            .clipShape(Circle())
+                    case .failure:
+                        EmptyView()
+                    @unknown default:
+                        EmptyView()
+                    }
+                }
                 Text("To. \(viewModel.state.receiverName)")
                     .font(.body1)
                     .foregroundStyle(.gray600)
             }
+
             .padding(.top, 30)
             
             ZStack(alignment: .topLeading) {
@@ -56,26 +70,33 @@ public struct EmotionRegretMessageView: View {
                         .foregroundColor(.gray400)
                         .padding(EdgeInsets(top: 12, leading: 12, bottom: 12, trailing: 12))
                 }
-
-                TextEditor(text: $contentText)
-                    .focused($isTextEditorFocused)
-                    .frame(height: 290)
-                    .padding(4)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 20)
-                            .stroke(isTextEditorFocused ? .blue400 : .gray300, lineWidth: 1)
-                    )
-                    .font(.body1)
+                
+                TextEditor(text: Binding(
+                    get: { viewModel.state.contentText },
+                    set: { viewModel.action(.updateContentText($0)) }
+                ))
+                .focused($isTextEditorFocused)
+                .frame(height: 290)
+                .padding(4)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(isTextEditorFocused ? .blue400 : .gray300, lineWidth: 2)
+                )
+                .font(.body1)
+                .foregroundColor(viewModel.state.isAITransformed ? .blue400 : .gray900)
                 
                 VStack {
                     Spacer()
                     HStack {
-                        Image(.iconRotate)
-                            .resizable()
-                            .frame(width: 16, height: 16)
-                            .padding(.leading, 8)
-                            .padding(.bottom, 8)
-                        
+                        Button(action: {
+                            viewModel.action(.didTapRotateButton)
+                        }) {
+                            Image(.iconRotate)
+                                .resizable()
+                                .frame(width: 16, height: 16)
+                                .padding(.leading, 8)
+                                .padding(.bottom, 8)
+                        }
                         Spacer()
                         Text("\(contentText.count)/\(maxCharacters)자")
                             .font(.caption)
@@ -87,13 +108,16 @@ public struct EmotionRegretMessageView: View {
             }
             .frame(height: 290)
             // MARK: - 글자 수 / AI 말투 버튼
-            HStack(spacing: 10) {
-                Spacer()
-                Button(action: {
-                   // viewModel.action(.aiToneAdjustDidTap)
-                }) {
+            Button(action: {
+                viewModel.action(.didTapAIToneButton)
+            }) {
+                if viewModel.state.isLoading {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                        .frame(width: 20, height: 20)
+                } else {
                     HStack(spacing: 4) {
-                        Image(.iconAI) // AI 아이콘
+                        Image(.iconAI)
                             .resizable()
                             .frame(width: 16, height: 16)
                         Text("AI 말투 다듬기")
@@ -101,10 +125,10 @@ public struct EmotionRegretMessageView: View {
                             .foregroundStyle(.white)
                     }
                 }
-                .background(
-                    RoundedRectangle(cornerRadius: 50).fill(.blue400)
-                )
             }
+            .background(
+                RoundedRectangle(cornerRadius: 50).fill(.blue400)
+            )
             .padding(.top, 20)
             Spacer()
             MainButton(

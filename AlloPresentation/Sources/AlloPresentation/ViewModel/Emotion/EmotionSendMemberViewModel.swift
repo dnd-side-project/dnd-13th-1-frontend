@@ -43,7 +43,7 @@ public final class EmotionSendMemberViewModel: ViewModelable {
                 disappointment: "",
                 compliments: []
                 )
-            coordinator.push(AppScene.houseworkSevendays(sendEmotion: sendEmotion, receiverName: selectedMember.name, houseworkTitle: ""))
+            coordinator.push(AppScene.houseworkSevendays(sendEmotion: sendEmotion, receiverName: selectedMember.name, houseworkTitle: "", receiverImg: selectedMember.profileImageUrl))
         }
     }
     

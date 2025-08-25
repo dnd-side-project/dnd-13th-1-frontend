@@ -32,12 +32,14 @@ public struct EmotionSendMemberView: View {
             }
             .padding(.top, 32)
             Spacer()
-            MainButton(
-                title: "다음으로",
-                action: { viewModel.action(.didTapNextButton)},
-                style: .bottoomMain
-            )
-            .padding(.bottom, 16)
+            if !selectedMemberIDs.isEmpty {
+                MainButton(
+                    title: "다음으로",
+                    action: { viewModel.action(.didTapNextButton)},
+                    style: .bottoomMain
+                )
+                .padding(.bottom, 16)
+            }
         }
         .padding(.horizontal, 20)
         .task {

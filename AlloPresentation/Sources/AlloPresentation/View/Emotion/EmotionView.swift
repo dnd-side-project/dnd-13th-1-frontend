@@ -33,7 +33,7 @@ public struct EmotionView: View {
                 Task { await viewModel.loadEmotionList() }
             }
             // 리스트 (스크롤뷰)
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 LazyVStack(alignment: .leading, spacing: 12) {
                     ForEach(viewModel.state.emotions) { emotion in
                         EmotionCell(emotion: emotion)

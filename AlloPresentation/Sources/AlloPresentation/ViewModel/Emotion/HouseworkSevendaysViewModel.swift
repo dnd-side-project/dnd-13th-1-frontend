@@ -18,6 +18,7 @@ public final class HouseworkSevendaysViewModel: ViewModelable {
         var houseworTitle: String
         var selectedHouseworks: Set<Int> = []
         var sevenDaysHouseworks: [HouseworkSevendays] = []
+        var receiverImg: URL
     }
     // MARK: - Action
     enum Action {
@@ -33,10 +34,11 @@ public final class HouseworkSevendaysViewModel: ViewModelable {
         fetchDaysUscase: FetchHouseworkDaysUseCase,
         sendEmotion: SendEmotion,
         receiverName: String,
-        houseworTitle: String
+        houseworTitle: String,
+        receiverImg: URL
     ) {
         self.coordinator = coordinator
-        self.state = State(sendEmotion: sendEmotion, receiverName: receiverName, houseworTitle: houseworTitle)
+        self.state = State(sendEmotion: sendEmotion, receiverName: receiverName, houseworTitle: houseworTitle, receiverImg: receiverImg)
         self.fetchDaysUscase = fetchDaysUscase
     }
 
@@ -52,7 +54,7 @@ public final class HouseworkSevendaysViewModel: ViewModelable {
                 disappointment: "",
                 compliments: []
             )
-            coordinator.push(AppScene.emotionChoice(sendEmotion: sendEmotion, receiverName: state.receiverName, houseworkTitle: state.houseworTitle))
+            coordinator.push(AppScene.emotionChoice(sendEmotion: sendEmotion, receiverName: state.receiverName, houseworkTitle: state.houseworTitle, receiverImg: state.receiverImg))
         }
     }
     

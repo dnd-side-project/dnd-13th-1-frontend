@@ -17,6 +17,7 @@ public final class EmotionChoiceViewModel: ViewModelable {
         var selectedHouseworkTitle: String
         var receiverName: String
         var selectedEmotion: EmotionType? = nil
+        var receiverImg: URL
     }
     // MARK: - Action
     enum Action {
@@ -27,9 +28,9 @@ public final class EmotionChoiceViewModel: ViewModelable {
     // MARK: - Properties
     var state: State
     let coordinator: Coordinator
-    public init(coordinator: Coordinator, sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String) {
+    public init(coordinator: Coordinator, sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String, receiverImg: URL) {
         self.coordinator = coordinator
-        self.state = State(sendEmotion: sendEmotion, selectedHouseworkTitle: houseworkTitle, receiverName: receiverName)
+        self.state = State(sendEmotion: sendEmotion, selectedHouseworkTitle: houseworkTitle, receiverName: receiverName, receiverImg: receiverImg)
         self.state.selectedHouseworkTitle = houseworkTitle
     }
     
@@ -52,7 +53,8 @@ public final class EmotionChoiceViewModel: ViewModelable {
                         sendEmotion: sendEmotion,
                         receiverName: state.receiverName,
                         houseworkTitle: state.selectedHouseworkTitle,
-                        initialEmotion: selectedEmotion
+                        initialEmotion: selectedEmotion,
+                        receiverImg: state.receiverImg
                     )
                 )
             case .regret:
@@ -60,7 +62,8 @@ public final class EmotionChoiceViewModel: ViewModelable {
                     AppScene.emotionRegretMessage(
                         sendEmotion: sendEmotion,
                         receiverName: state.receiverName,
-                        houseworkTitle: state.selectedHouseworkTitle
+                        houseworkTitle: state.selectedHouseworkTitle,
+                        receiverImg: state.receiverImg
                     )
                 )
             }

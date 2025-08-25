@@ -18,6 +18,7 @@ public final class EmotionThankMessageViewModel: ViewModelable {
         var selectedCompliments: Set<Compliments> = []
         var customCompliment: String = ""
         var initialEmotion: EmotionType
+        var receiverImg: URL
     }
     // MARK: - Action
     enum Action {
@@ -28,9 +29,9 @@ public final class EmotionThankMessageViewModel: ViewModelable {
     // MARK: - Properties
     var state: State
     let coordinator: Coordinator
-    public init(coordinator: Coordinator, sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String, initialEmotion: EmotionType) {
+    public init(coordinator: Coordinator, sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String, initialEmotion: EmotionType, receiverImg: URL) {
         self.coordinator = coordinator
-        self.state = State(sendEmotion: sendEmotion, receiverName: receiverName, houseworkTitle: houseworkTitle, initialEmotion: initialEmotion)
+        self.state = State(sendEmotion: sendEmotion, receiverName: receiverName, houseworkTitle: houseworkTitle, initialEmotion: initialEmotion, receiverImg: receiverImg)
     }
     
     func action(_ action: Action) {
@@ -64,7 +65,8 @@ public final class EmotionThankMessageViewModel: ViewModelable {
                     AppScene.emotionRegretMessage(
                         sendEmotion: sendEmotion,
                         receiverName: state.receiverName,
-                        houseworkTitle: state.houseworkTitle
+                        houseworkTitle: state.houseworkTitle,
+                        receiverImg: state.receiverImg
                     )
                 )
             case .regret:
