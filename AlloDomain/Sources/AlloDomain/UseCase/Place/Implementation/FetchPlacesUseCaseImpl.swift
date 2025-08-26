@@ -15,7 +15,7 @@ final class FetchPlacesUseCaseImpl {
 }
 
 extension FetchPlacesUseCaseImpl: FetchPlacesUseCase {
-    public func execute() async throws -> [HouseworkPlace] {
-        return try await placeRepository.fetchPlaces()
+    func execute(groupId: Int) async throws -> [HouseworkPlace] {
+        return try await placeRepository.fetchPlaces(groupId: groupId)
     }
 }

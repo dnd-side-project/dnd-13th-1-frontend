@@ -6,11 +6,19 @@
 //
 
 import Foundation
+import Moya
 import AlloDomain
 
 final class PlaceRepositoryImpl: PlaceRepository {
-    // TODO: Service 의존성 추가
-    func fetchPlaces() async throws -> [HouseworkPlace] {
-        return []
+    
+    private let networkService: NetworkService
+    
+    init(networkService: NetworkService) {
+        self.networkService = networkService
+    }
+    
+    func fetchPlaces(groupId: Int) async throws -> [HouseworkPlace] {
+        let dto = try await networkService.getPlaceList(groupId)
+        return dto.map { HouseworkPlace(placeId: $0.placeId, name: $0.name) }
     }
 }

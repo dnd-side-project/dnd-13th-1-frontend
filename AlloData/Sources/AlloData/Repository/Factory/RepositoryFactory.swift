@@ -25,7 +25,7 @@ public struct RepositoryFactory {
     }
     
     public func makePlaceRepository(liveData: Bool) -> PlaceRepository {
-        liveData ? PlaceRepositoryImpl() : StubPlaceRepository()
+        PlaceRepositoryImpl()
     }
     
     public func makeMemberRepository(liveData: Bool) -> MemberRepository {

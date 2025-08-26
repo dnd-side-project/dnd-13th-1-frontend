@@ -8,5 +8,5 @@
 import Foundation
 
 public protocol PlaceRepository: Sendable {
-    func fetchPlaces() async throws -> [HouseworkPlace]
+    func fetchPlaces(groupId: Int) async throws -> [HouseworkPlace]
 }
