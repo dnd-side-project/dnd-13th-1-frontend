@@ -9,27 +9,29 @@ import Foundation
 import AlloDomain
 
 public struct RepositoryFactory {
-    public static func makeHouseworkRepository(liveData: Bool) -> HouseworkRepository {
+    public init() {
+    }
+    public func makeHouseworkRepository(liveData: Bool) -> HouseworkRepository {
         liveData ? HouseworkRepositoryImpl() : StubHouseworkRepository()
     }
     
-    public static func makePlaceRepository(liveData: Bool) -> PlaceRepository {
+    public func makePlaceRepository(liveData: Bool) -> PlaceRepository {
         liveData ? PlaceRepositoryImpl() : StubPlaceRepository()
     }
     
-    public static func makeMemberRepository(liveData: Bool) -> MemberRepository {
+    public func makeMemberRepository(liveData: Bool) -> MemberRepository {
         liveData ? MemberRepositoryImpl() : StubMemberRepository()
     }
     
-    public static func makeHouseworkSevenDaysRepository(liveData: Bool) -> HouseworkDaysRepository {
+    public func makeHouseworkSevenDaysRepository(liveData: Bool) -> HouseworkDaysRepository {
         liveData ? HouseworkDaysRepositoryImpl() : StubHouseworkDaysRepository()
     }
     
-    public static func makeEmotionRepository(liveData: Bool) -> EmotionRepository {
+    public func makeEmotionRepository(liveData: Bool) -> EmotionRepository {
         liveData ? EmotionRepositoryimpl() : StubEmotionListRepository()
     }
     
-    public static func makeAIRepository() -> AIRepository {
+    public func makeAIRepository() -> AIRepository {
         guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "OPENAI_API_KEY") as? String else {
             fatalError("OPENAI_API_KEY가 Info.plist에 없습니다.")
         }

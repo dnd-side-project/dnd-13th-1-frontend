@@ -11,20 +11,19 @@ import AlloDomain
 import AlloPresentation
 
 final class DIContainerImpl {
-    private let houseworkRepository: HouseworkRepository
-    private let placeRepository: PlaceRepository
-    private let memberRepository: MemberRepository
-    private let houseworkDaysRepository: HouseworkDaysRepository
-    private let emotionRepository: EmotionRepository
-    private let aiRepository: AIRepository
-    init(liveData: Bool = false) {
-        self.houseworkRepository = RepositoryFactory.makeHouseworkRepository(liveData: liveData)
-        self.placeRepository = RepositoryFactory.makePlaceRepository(liveData: liveData)
-        self.memberRepository = RepositoryFactory.makeMemberRepository(liveData: liveData)
-        self.houseworkDaysRepository = RepositoryFactory.makeHouseworkSevenDaysRepository(liveData: liveData)
-        self.emotionRepository = RepositoryFactory.makeEmotionRepository(liveData: liveData)
-        self.aiRepository = RepositoryFactory.makeAIRepository()
+    let liveData: Bool
+    let repositoryFactory = RepositoryFactory()
+
+    init(liveData: Bool) {
+        self.liveData = liveData
     }
+
+    private lazy var houseworkRepository: HouseworkRepository = repositoryFactory.makeHouseworkRepository(liveData: liveData)
+    private lazy var placeRepository: PlaceRepository = repositoryFactory.makePlaceRepository(liveData: liveData)
+    private lazy var memberRepository: MemberRepository = repositoryFactory.makeMemberRepository(liveData: liveData)
+    private lazy var houseworkDaysRepository: HouseworkDaysRepository = repositoryFactory.makeHouseworkSevenDaysRepository(liveData: liveData)
+    private lazy var emotionRepository: EmotionRepository = repositoryFactory.makeEmotionRepository(liveData: liveData)
+    private lazy var aiRepository: AIRepository = repositoryFactory.makeAIRepository()
 }
 // MARK: - DIContainer 프로토콜 구현
 extension DIContainerImpl: DIContainer {
