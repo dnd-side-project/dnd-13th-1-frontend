@@ -29,17 +29,19 @@ public struct EmotionView: View {
                 Task { await viewModel.loadEmotionList() }
             }
             .onChange(of: sortType) { _, newSort in
-                viewModel.state.sortOrder = (newSort == .latest) ? "desc" : "asc"
-                Task { await viewModel.loadEmotionList() }
+                viewModel.sortEmotions(by: newSort)
             }
             // 리스트 (스크롤뷰)
             ScrollView(showsIndicators: false) {
                 LazyVStack(alignment: .leading, spacing: 12) {
                     ForEach(viewModel.state.emotions) { emotion in
-                        EmotionCell(emotion: emotion)
+                        EmotionCell(emotion: emotion) {
+                            viewModel.action(.didTapEmotionCard(id: emotion.id))
+                        }
                     }
                 }
             }
+            .padding(.top, 10)
         }
         .padding(.horizontal, 20)
         .onAppear {
@@ -70,6 +72,7 @@ extension EmotionView {
                             .foregroundColor(.gray900)
                     )
                     .font(.headline4)
+                    .fixedSize(horizontal: false, vertical: true) // 높이 고정
 
                 } else if selectedTab == .sent {
                     (
@@ -86,8 +89,11 @@ extension EmotionView {
                             .foregroundColor(.gray900)
                     )
                     .font(.headline4)
+                    .fixedSize(horizontal: false, vertical: true) // 높이 고정
                 }
             }
+            .frame(height: 100)
+            .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.top, 32)
         }
 }
@@ -105,7 +111,7 @@ struct EmotionHeaderView: View {
                     Text("받은 마음")
                         .font(.button2)
                         .padding(.horizontal, 12)
-                        .padding(.vertical, 12)
+                        .padding(.vertical, 6)
                         .foregroundColor(selectedTab == .received ? .white : .gray600)
                         .background(selectedTab == .received ? .blue400 : Color.white)
                         .cornerRadius(50)
@@ -122,7 +128,7 @@ struct EmotionHeaderView: View {
                     Text("보낸 마음")
                         .font(.button2)
                         .padding(.horizontal, 12)
-                        .padding(.vertical, 12)
+                        .padding(.vertical, 6)
                         .foregroundColor(selectedTab == .sent ? .white : .gray600)
                         .background(selectedTab == .sent ? .blue400 : Color.white)
                         .cornerRadius(50)
@@ -135,9 +141,7 @@ struct EmotionHeaderView: View {
             }
             
             Spacer()
-            // 정렬 버튼
             Button {
-                // 버튼 누를 때 토글
                 sortType = (sortType == .latest) ? .oldest : .latest
             } label: {
                 HStack(spacing: 4) {
@@ -148,7 +152,7 @@ struct EmotionHeaderView: View {
                 }
             }
             .padding(.vertical, 8)
-            .padding(.trailing, 25)
+            .padding(.trailing, 20)
         }
     }
 }
