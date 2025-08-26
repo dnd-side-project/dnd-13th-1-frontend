@@ -11,7 +11,8 @@ public struct EmotionRegretMessageView: View {
     @StateObject private var viewModel: EmotionRegretMessageViewModel
     @FocusState private var isTextEditorFocused: Bool
     @State private var contentText: String = ""
-    
+    @State private var showMainButton = false
+
     private let maxCharacters = 200
     
     public init(viewModel: EmotionRegretMessageViewModel) {
@@ -43,8 +44,7 @@ public struct EmotionRegretMessageView: View {
                 AsyncImage(url: viewModel.state.receiverImg) { phase in
                     switch phase {
                     case .empty:
-                        ProgressView()
-                            .frame(width: 28, height: 28)
+                        EmptyView()
                     case .success(let image):
                         image
                             .resizable()
@@ -62,6 +62,7 @@ public struct EmotionRegretMessageView: View {
                     .foregroundStyle(.gray600)
             }
             .padding(.top, 30)
+            .padding(.bottom, 10)
             ZStack(alignment: .topLeading) {
                 if contentText.isEmpty {
                     Text("내용을 작성해주세요.")
@@ -80,6 +81,15 @@ public struct EmotionRegretMessageView: View {
                     RoundedRectangle(cornerRadius: 20)
                         .stroke(isTextEditorFocused ? .blue400 : .gray300, lineWidth: 2)
                 )
+                .onChange(of: isTextEditorFocused) { focused in
+                    if !focused && !viewModel.state.contentText.isEmpty {
+                        // 키보드 내려가고 내용이 있으면 버튼 노출
+                        withAnimation { showMainButton = true }
+                    } else {
+                        // 입력 중이면 버튼 숨김
+                        showMainButton = false
+                    }
+                }
                 .font(.subtitle7)
                 .foregroundColor(viewModel.state.isAITransformed ? .blue400 : .gray700)
                 
@@ -117,7 +127,7 @@ public struct EmotionRegretMessageView: View {
                         .frame(width: 20, height: 20)
                 } else {
                     HStack(spacing: 4) {
-                        Spacer()
+                        
                         Image(.iconAI)
                             .resizable()
                             .frame(width: 16, height: 16)
@@ -126,20 +136,22 @@ public struct EmotionRegretMessageView: View {
                             .foregroundStyle(.white)
                             .lineLimit(1)
                     }
-                    .frame(width: 133, height: 42)
-                    .padding(10)
+                    .frame(width: 120, height: 35)
+                    .padding(.horizontal, 10)
                     .background(
                         RoundedRectangle(cornerRadius: 50).fill(.blue400)
                     )
                 }
             }
             Spacer()
-            MainButton(
-                title: "작성 완료",
-                action: { viewModel.action(.didTapNextButton) },
-                style: .bottoomMain
-            )
-            .padding(.bottom, 16)
+            if showMainButton {
+                MainButton(
+                    title: "작성 완료",
+                    action: { viewModel.action(.didTapNextButton) },
+                    style: .bottoomMain
+                )
+                .padding(.bottom, 16)
+            }
         }
         .padding(.horizontal, 20)
     }

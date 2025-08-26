@@ -10,6 +10,7 @@ import AlloDomain
 
 struct EmotionCell: View {
     let emotion: EmotionList
+    var onTap: (() -> Void)?
 
     private func icon(for type: String) -> Image {
         switch type {
@@ -56,6 +57,9 @@ struct EmotionCell: View {
             RoundedRectangle(cornerRadius: 12)
                 .fill(.gray25)
         )
+        .onTapGesture {
+            onTap?()
+        }
     }
 
     private func dateString(from date: Date) -> String {
