@@ -30,6 +30,9 @@ public struct RepositoryFactory {
     }
     
     public static func makeAIRepository() -> AIRepository {
-        AIRepositoryImpl(apiClient: AIAPIClient(apiKey: ""))
+        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "OPENAI_API_KEY") as? String else {
+            fatalError("OPENAI_API_KEY가 Info.plist에 없습니다.")
+        }
+        return AIRepositoryImpl(apiClient: AIAPIClient(apiKey: apiKey))
     }
 }
