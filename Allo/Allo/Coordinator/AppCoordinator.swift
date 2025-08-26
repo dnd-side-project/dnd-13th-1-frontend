@@ -186,7 +186,7 @@ final class AppCoordinator: Coordinator {
                 .presentationDetents([.height(624)])
         }
     }
-    
+
     @MainActor
     @ViewBuilder
     func buildFullScreenCover(_ fullScreenCover: AppFullScreenCover) -> some View {

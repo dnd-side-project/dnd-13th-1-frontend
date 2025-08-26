@@ -14,8 +14,13 @@ public struct RepositoryFactory {
     public init() {
         networkService = NetworkService()
     }
+  
     public func makeHouseworkRepository(liveData: Bool) -> HouseworkRepository {
         liveData ? HouseworkRepositoryImpl() : StubHouseworkRepository()
+    }
+
+    public func makeKakaoLoginRepository() -> KakaoLoginRepository {
+        KakaoLoginRepositoryImpl(networkService: networkService)
     }
     
     public func makePlaceRepository(liveData: Bool) -> PlaceRepository {

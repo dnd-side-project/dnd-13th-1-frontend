@@ -13,7 +13,7 @@ import AlloPresentation
 final class DIContainerImpl {
     let liveData: Bool
     let repositoryFactory = RepositoryFactory()
-
+  
     init(liveData: Bool) {
         self.liveData = liveData
     }
@@ -28,6 +28,10 @@ final class DIContainerImpl {
 }
 // MARK: - DIContainer 프로토콜 구현
 extension DIContainerImpl: DIContainer {
+    func resolveKakaoLoginUseCase() -> KakaoLoginUseCase {
+        UseCaseFactory.makeKakaoLoginUseCase(kakaoLoginRepository: kakaoLoginRepository)
+    }
+    
     func resolveGenerateCalendarDateUseCase() -> GenerateCalendarDateUseCase {
         UseCaseFactory.makeGenerateCalendarDateUseCase()
     }
