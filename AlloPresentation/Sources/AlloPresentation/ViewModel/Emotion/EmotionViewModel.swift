@@ -20,15 +20,18 @@ public final class EmotionViewModel: ViewModelable {
     enum Action {
         case backButtonDidTap
         case didTapSendButton
+        case didTapEmotionCard(id: Int)
     }
     // MARK: - Properties
     var state: State
     let coordinator: Coordinator
     private let getEmotionListUscase: FetchEmotionUseCase
-    public init(coordinator: Coordinator, getEmotionListUscase: FetchEmotionUseCase) {
+    private let emotionDetailUseCase: EmotionDetailUseCase
+    public init(coordinator: Coordinator, getEmotionListUscase: FetchEmotionUseCase, emotionDetailUseCase: EmotionDetailUseCase) {
         self.coordinator = coordinator
         self.state = State()
         self.getEmotionListUscase = getEmotionListUscase
+        self.emotionDetailUseCase = emotionDetailUseCase
     }
     
     func action(_ action: Action) {
@@ -37,9 +40,21 @@ public final class EmotionViewModel: ViewModelable {
             coordinator.pop()
         case .didTapSendButton:
             coordinator.push(AppScene.emotionMember)
+        case .didTapEmotionCard(let id):
+           didSelectEmotion(id: id)
         }
     }
     
+    func didSelectEmotion(id: Int) {
+        Task {
+            do {
+                let detail = try await emotionDetailUseCase.execute(id: id)
+                coordinator.push(AppScene.emotionDetails(detailEmotion: detail, isReceived: state.selectedFilter == "from"))
+            } catch {
+                print("Error: \(error)")
+            }
+        }
+    }
     public func loadEmotionList() async {
         do {
             let result = try await getEmotionListUscase.execute(
@@ -51,5 +66,14 @@ public final class EmotionViewModel: ViewModelable {
             print("failed to fetch houseworks")
         }
     }
-
+}
+extension EmotionViewModel {
+    func sortEmotions(by sortType: SortType) {
+        switch sortType {
+        case .latest:
+            state.emotions.sort { $0.createdTime > $1.createdTime }
+        case .oldest:
+            state.emotions.sort { $0.createdTime < $1.createdTime }
+        }
+    }
 }
