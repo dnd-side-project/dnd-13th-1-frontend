@@ -9,7 +9,10 @@ import Foundation
 import AlloDomain
 
 public struct RepositoryFactory {
+    private let networkService: NetworkService
+    
     public init() {
+        networkService = NetworkService()
     }
     public func makeHouseworkRepository(liveData: Bool) -> HouseworkRepository {
         liveData ? HouseworkRepositoryImpl() : StubHouseworkRepository()
