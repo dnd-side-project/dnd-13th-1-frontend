@@ -25,24 +25,9 @@ public enum AppScene: AppRoute {
     case emotionThankMessage(sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String, initialEmotion: EmotionType, receiverImg: URL)
     case emotionRegretMessage(sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String, receiverImg: URL)
     case emotionFinish(sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String)
+    case emotionDetails(detailEmotion: EmotionDetail, isReceived: Bool)
     public var id: String {
-        switch self {
-        case .tabBar: return "tabBar"
-        case .home: return "home"
-        case .checklist: return "checklist"
-        case .emotion: return "emotion"
-        case .mypage: return "mypage"
-        case .houseworkPlus: return "houseworkPlus"
-        case .houseworkStandard: return "houseworkStandard"
-        case .houseworkMember: return "houseworkMember"
-        case .houseworkPlusFinish: return "houseworkPlusFinish"
-        case .emotionMember: return "emotionMember"
-        case .houseworkSevendays: return "houseworkSevendays"
-        case .emotionChoice: return "emotionChoice"
-        case .emotionRegretMessage: return "emotionRegretMessage"
-        case .emotionThankMessage: return "emotionThankMessage"
-        case .emotionFinish: return "emotionFinish"
-        }
+        String(describing: self)
     }
     public static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.id == rhs.id
