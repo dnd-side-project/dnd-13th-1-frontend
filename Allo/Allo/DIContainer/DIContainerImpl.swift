@@ -20,8 +20,8 @@ final class DIContainerImpl {
     
     private lazy var houseworkRepository: HouseworkRepository = repositoryFactory.makeHouseworkRepository(liveData: liveData)
     private lazy var kakaoLoginRepository: KakaoLoginRepository = repositoryFactory.makeKakaoLoginRepository()
-    private lazy var placeRepository: PlaceRepository = repositoryFactory.makePlaceRepository(liveData: liveData)
-    private lazy var memberRepository: MemberRepository = repositoryFactory.makeMemberRepository(liveData: liveData)
+    private lazy var placeRepository: PlaceRepository = repositoryFactory.makePlaceRepository()
+    private lazy var memberRepository: MemberRepository = repositoryFactory.makeMemberRepository()
 }
 // MARK: - DIContainer 프로토콜 구현
 extension DIContainerImpl: DIContainer {

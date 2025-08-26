@@ -8,5 +8,5 @@
 import Foundation
 
 public protocol MemberRepository: Sendable {
-    func fetchMembers() async throws -> [Member]
+    func getMemberList(groupId: Int) async throws -> [Member]
 }

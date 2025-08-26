@@ -67,7 +67,7 @@ public struct PlaceSelectionSheet: View {
         Spacer()
             .onAppear {
                 Task {
-                    await viewModel.loadPlaces()
+                    await viewModel.loadPlaces(groupId: 123)
                 }
             }
     }

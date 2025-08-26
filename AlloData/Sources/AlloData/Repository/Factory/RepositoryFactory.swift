@@ -24,11 +24,11 @@ public struct RepositoryFactory {
         KakaoLoginRepositoryImpl(networkService: networkService)
     }
     
-    public func makePlaceRepository(liveData: Bool) -> PlaceRepository {
-        PlaceRepositoryImpl()
+    public func makePlaceRepository() -> PlaceRepository {
+        PlaceRepositoryImpl(networkService: networkService)
     }
     
-    public func makeMemberRepository(liveData: Bool) -> MemberRepository {
-        liveData ? MemberRepositoryImpl() : StubMemberRepository()
+    public func makeMemberRepository() -> MemberRepository {
+        MemberRepositoryImpl(networkService: networkService)
     }
 }

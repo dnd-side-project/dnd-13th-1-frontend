@@ -25,14 +25,14 @@ public final class PlaceSelectionViewModel: ViewModelable {
     public var state: State
     let coordinator: Coordinator
     private let fetchPlacesUseCase: FetchPlacesUseCase
-    var selectedCategory: HouseworkPlace?
+   // var selectedCategory: HouseworkPlace?
     // MARK: - Init
     public init(coordinator: Coordinator, initialPlace: String,
                 fetchPlacesUseCase: FetchPlacesUseCase) {
         self.coordinator = coordinator
         self.fetchPlacesUseCase = fetchPlacesUseCase
         self.state = State()
-        self.state.selectedCategory = HouseworkPlace(placeId: UUID().uuidString, name: initialPlace)
+//        self.state.selectedCategory = HouseworkPlace(placeId: UUID(), name: initialPlace)
     }
     
     // MARK: - Action Handler
@@ -49,9 +49,9 @@ public final class PlaceSelectionViewModel: ViewModelable {
         }
     }
     
-    public func loadPlaces() async {
+    public func loadPlaces(groupId: Int) async {
         do {
-            let fetchedPlaces = try await fetchPlacesUseCase.execute()
+            let fetchedPlaces = try await fetchPlacesUseCase.execute(groupId: groupId)
             state.places = fetchedPlaces
             
             if let currentSelected = state.selectedCategory {
