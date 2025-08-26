@@ -19,6 +19,7 @@ final class DIContainerImpl {
     }
 
     private lazy var houseworkRepository: HouseworkRepository = repositoryFactory.makeHouseworkRepository(liveData: liveData)
+    private lazy var kakaoLoginRepository: KakaoLoginRepository = repositoryFactory.makeKakaoLoginRepository()
     private lazy var placeRepository: PlaceRepository = repositoryFactory.makePlaceRepository(liveData: liveData)
     private lazy var memberRepository: MemberRepository = repositoryFactory.makeMemberRepository(liveData: liveData)
     private lazy var houseworkDaysRepository: HouseworkDaysRepository = repositoryFactory.makeHouseworkSevenDaysRepository(liveData: liveData)
