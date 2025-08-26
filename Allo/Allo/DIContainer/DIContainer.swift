@@ -29,4 +29,5 @@ public protocol DIContainer {
     func resolveSendEmotionUseCase() -> SendEmotionUseCase
     func resolveGetEmotionListUseCase() -> FetchEmotionUseCase
     func resolvetransformAiUseCase() -> AIUseCase
+    func resolveDetailEmotionUseCase() -> EmotionDetailUseCase
 }

@@ -76,4 +76,8 @@ extension DIContainerImpl: DIContainer {
     func resolvetransformAiUseCase() -> AIUseCase {
         UseCaseFactory.makeTransformAiUseCase(aiRepository: aiRepository)
     }
+    
+    func resolveDetailEmotionUseCase() -> EmotionDetailUseCase {
+        UseCaseFactory.makeDetailEmotionUseCase(emotionRepository: emotionRepository)
+    }
 }
