@@ -36,7 +36,7 @@ struct HomeCharacterStatusBarView: View {
         }
         .padding(.horizontal, 18)
         .frame(maxWidth: .infinity)
-        .frame(height: 47)
+        .frame(height: 48)
         .background(color)
         .cornerRadius(.radius2)
     }

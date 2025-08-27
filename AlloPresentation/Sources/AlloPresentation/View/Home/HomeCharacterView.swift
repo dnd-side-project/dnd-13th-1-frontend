@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct HomeCharacterView: View {
-    let message: String
     let onTapMessage: () -> Void
     let characterStatus: CharacterStatus
     let onTapInfo: () -> Void
@@ -16,12 +15,13 @@ struct HomeCharacterView: View {
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
             HomeCharacterMessageView(
-                message: message,
+                message: characterStatus.characterMessage,
                 onTapMessage: onTapMessage
             )
-            Image(.icMyPageUnSelected)
+            Image(characterStatus.characterImage)
                 .resizable()
-                .frame(width: 260, height: 260)
+                .frame(height: 260)
+                .aspectRatio(contentMode: .fill)
             HomeCharacterStatusBarView(
                 description: characterStatus.description,
                 color: characterStatus.backgroundColor,
@@ -63,5 +63,30 @@ enum CharacterStatus {
             return "반짝반짝 깨끗해요"
         }
     }
+    
+    var characterImage: ImageResource {
+        switch self {
+        case .bored:
+            return .illustrationCatNone
+        case .dirty:
+            return .illustrationCatFirst
+        case .littleClean:
+            return .illustrationCatSecond
+        case .veryClean:
+            return .illustrationCatThird
+        }
+    }
+    
+    var characterMessage: String {
+        switch self {
+        case .bored:
+            "어서와~ 집안일을 등록해봐!"
+        case .dirty:
+            "먼지가 나랑 친구하자고 하겠어!"
+        case .littleClean:
+            "슬슬 할일을 해야할 시간이야!"
+        case .veryClean:
+            "우와~ 반짝반짝 파티네!"
+        }
+    }
 }
-

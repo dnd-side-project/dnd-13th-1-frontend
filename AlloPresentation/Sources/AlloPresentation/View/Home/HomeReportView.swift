@@ -22,16 +22,20 @@ struct HomeReportView: View {
                         .font(.body3)
                         .foregroundStyle(.gray600)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    // TODO: 폴딩 아이콘 추가
+                    Image(.iconCheckEmpty)
+                        .resizable()
+                        .frame(width: 24, height: 24)
                 }
                 // 숫자
-                HStack {
-                    Text("\(completed)") // FIXME: 폰트 디자인 수정
+                HStack(alignment: .bottom, spacing: 0) {
+                    Text("\(completed)")
+                        .font(.headline5)
                         .foregroundStyle(.blue400)
                     Text("/\(total)")
                         .font(.subtitle2)
                         .foregroundStyle(.gray300)
                 }
+                .frame(maxWidth: .infinity, alignment: .bottomLeading)
                 // 상태 메시지
                 HStack {
                     Text("오늘 집안일이 없어요!")
@@ -43,10 +47,10 @@ struct HomeReportView: View {
             .padding(.horizontal, 14)
             .padding(.top, 14)
             .padding(.bottom, 16)
-            .cornerRadius(.radius2)
             .background(.white)
             .frame(height: 124)
             .frame(maxWidth: .infinity)
+            .cornerRadius(.radius2)
             .shadow(color: .black.opacity(0.04), radius: 12, x: 0, y: 2)
             VStack {
                 // 텍스트
@@ -60,13 +64,15 @@ struct HomeReportView: View {
                         .frame(width: 20, height: 20)
                 }
                 // 숫자
-                HStack {
-                    Text("\(cleanliness)") // FIXME: 폰트 디자인 수정
+                HStack(alignment: .bottom, spacing: 0) {
+                    Text("\(cleanliness)")
+                        .font(.headline5)
                         .foregroundStyle(.blue400)
                     Text("%")
                         .font(.subtitle2)
                         .foregroundStyle(.blue400)
                 }
+                .frame(maxWidth: .infinity, alignment: .bottomLeading)
                 // 프로그레스바
                 ZStack {
                     GeometryReader { geo in
@@ -87,11 +93,12 @@ struct HomeReportView: View {
             .padding(.horizontal, 14)
             .padding(.top, 14)
             .padding(.bottom, 16)
-            .cornerRadius(.radius2)
             .background(.white)
             .frame(height: 124)
             .frame(maxWidth: .infinity)
+            .cornerRadius(.radius2)
             .shadow(color: .black.opacity(0.04), radius: 12, x: 0, y: 2)
         }
+        .padding(.horizontal, 20)
     }
 }
