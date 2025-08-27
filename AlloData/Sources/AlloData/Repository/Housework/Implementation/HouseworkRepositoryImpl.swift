@@ -9,7 +9,12 @@ import Foundation
 import AlloDomain
 
 final class HouseworkRepositoryImpl: HouseworkRepository {
-    // TODO: Service 의존성 추가
+    private let networkService: NetworkService
+    
+    init(networkService: NetworkService) {
+        self.networkService = networkService
+    }
+    
     func getHaveHousework(from: Date, to: Date) async throws -> [Date : Bool] {
         return [:]
     }
@@ -32,8 +37,19 @@ final class HouseworkRepositoryImpl: HouseworkRepository {
         
     }
     
-    func addHousework(_ housework: Housework) async throws {
-        
+    func addHousework(groupId: Int, housework: Housework) async throws {
+        let requestDTO = AddHouseworkScheduleRequestDTO(
+            houseWorkName: housework.houseWorkName,
+            placeId: housework.placeAdd,
+            tags: housework.tagsAdd,
+            members: housework.members,
+            startDate: housework.startDate,
+            dueDate: housework.dueDate,
+            routinePolicy: housework.routineAdd.rawValue,
+            dayOfTheWeek: housework.dayOfTheWeek.map { $0.rawValue },
+            isNotified: housework.isNotified
+        )
+        _ = try await networkService.addHouseworkSchedule(groupId, requestDTO)
     }
     
     func deleteHousework(_ housework: Housework) async throws {

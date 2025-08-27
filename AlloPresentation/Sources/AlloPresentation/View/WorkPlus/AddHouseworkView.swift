@@ -45,7 +45,7 @@ public struct AddHouseworkView: View {
                     },
                     title: "루틴 설정",
                     style: .routine,
-                    value: $viewModel.state.routine
+                    value: $viewModel.state.routineText
                 )
                 // 마감일 선택
                 UnderlineTextView(

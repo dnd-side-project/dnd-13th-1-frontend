@@ -49,8 +49,9 @@ public final class AddHouseworkFinishViewModel: ViewModelable {
         case .didTapNextButton:
             let useCase = addHouseworkUseCase
             let housework = state.housework
+            let groupId = 0
             Task {
-                try await useCase.execute(housework)
+                try await useCase.execute(groupId: groupId,housework: housework)
                 await MainActor.run {
                     coordinator.popToRoot()
                 }

@@ -38,18 +38,27 @@ public final class AddHouseworkMemberViewModel: ViewModelable {
         case .didTapBackButton:
             coordinator.pop()
         case .didTapNextButton:
-            let updatedHousework = Housework(
-                id: state.housework.id,
-                place: state.housework.place,
-                title: state.housework.title,
-                member: state.selectedMembers,
-                date: state.housework.date,
-                isDone: state.housework.isDone,
-                routine: state.housework.routine,
-                tags: state.housework.tags
+            // 선택된 멤버 id 추출
+            let selectedMemberIds = state.selectedMembers.map { $0.id }
+            // TODO: 태그 id 추출, 현재 임시로 [0] 사용
+            let selectedTagIds: [Int] = [0]
+            
+            // 서버 전송용 Housework 생성
+            let housework = Housework(
+                houseWorkName: state.housework.title,
+                placeAdd: 0,                  // 선택된 place index
+                tagsAdd: selectedTagIds,
+                members: selectedMemberIds,
+                startDate: state.housework.startDate,
+                dueDate: state.housework.dueDate,
+                routineAdd: state.housework.routineAdd,
+                dayOfTheWeek: state.housework.dayOfTheWeek,
+                isNotified: state.housework.isNotified
             )
-            //TODO: -- 알람 처리
-            coordinator.push(AppScene.houseworkPlusFinish(housework: updatedHousework))
+            
+            // 화면 이동 시 서버 전송용 Housework 전달
+            coordinator.push(AppScene.houseworkPlusFinish(housework: housework))
+
         }
     }
     

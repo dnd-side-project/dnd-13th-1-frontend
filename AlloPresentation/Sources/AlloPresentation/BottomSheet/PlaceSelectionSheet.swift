@@ -9,19 +9,18 @@ import SwiftUI
 import AlloDomain
 
 public struct PlaceSelectionSheet: View {
-    var placeClickAction: (String) -> Void
+    var placeClickAction: (String, Int) -> Void
     let coordinator: Coordinator
     @StateObject private var viewModel: PlaceSelectionViewModel
     
     public init(coordinator: Coordinator, viewModel: PlaceSelectionViewModel,
-                placeClickAction: @escaping (String) -> Void) {
+                placeClickAction: @escaping (String, Int) -> Void) {
         self.coordinator = coordinator
         _viewModel = StateObject(wrappedValue: viewModel)
         self.placeClickAction = placeClickAction
     }
     @State private var isAddingCategory = false
     @State private var newPlaceName = ""
-    
     public var body: some View {
         VStack(spacing: 0) {
             Capsule()
@@ -42,7 +41,7 @@ public struct PlaceSelectionSheet: View {
                         isSelected: viewModel.state.selectedCategory?.placeId == place.placeId
                     ) {
                         viewModel.action(.selectPlace(place))
-                        placeClickAction(place.name)
+                        placeClickAction(place.name, place.placeId)
                     }
                 }
                 // + 버튼

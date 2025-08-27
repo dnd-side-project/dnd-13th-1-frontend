@@ -17,7 +17,7 @@ public struct RepositoryFactory {
     }
     
     public func makeHouseworkRepository(liveData: Bool) -> HouseworkRepository {
-        liveData ? HouseworkRepositoryImpl() : StubHouseworkRepository()
+        HouseworkRepositoryImpl(networkService: networkService)
     }
 
     public func makeKakaoLoginRepository() -> KakaoLoginRepository {
@@ -30,5 +30,13 @@ public struct RepositoryFactory {
     
     public func makeMemberRepository() -> MemberRepository {
         MemberRepositoryImpl(networkService: networkService)
+    }
+    
+    public func makeTagListRepository() -> TagListRepository {
+        TagListRepositoryImpl()
+    }
+    
+    public func makeAddTagRepository() -> TagAddRespository {
+        TagAddRespositoryImpl(networkService: networkService)
     }
 }

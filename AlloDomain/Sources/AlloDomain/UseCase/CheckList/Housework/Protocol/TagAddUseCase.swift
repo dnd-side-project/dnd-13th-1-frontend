@@ -7,6 +7,6 @@
 
 import Foundation
 
-public protocol TagAddUseCase {
+public protocol TagAddUseCase: Sendable {
     func execute(groupId: Int, tagName: String) async throws -> TagList
 }

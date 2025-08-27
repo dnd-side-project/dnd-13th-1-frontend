@@ -45,4 +45,16 @@ public struct UseCaseFactory {
     public static func makeFetchMemberUseCase(memberRepository: MemberRepository) -> FetchMemberUseCase {
         return FetchMemberUseCaseImpl(memberRepository: memberRepository)
     }
+    
+    public static func makeAddPlaceUseCase(placeRepository : PlaceRepository) -> AddPlaceUseCase {
+        return AddPlaceUseCaseImpl(placeRepository: placeRepository)
+    }
+    
+    public static func makeTagListUseCase(tagListRepository: TagListRepository) -> TagListUseCase {
+        return TagListUseCaseImpl(tagListRepository: tagListRepository)
+    }
+    
+    public static func makeAddTagUseCase(tagAddRespository: TagAddRespository) -> TagAddUseCase {
+        return TagAddUseCaseImpl(tagAddRespository: tagAddRespository)
+    }
 }

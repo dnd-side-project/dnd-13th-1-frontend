@@ -6,20 +6,22 @@
 //
 
 import SwiftUI
+import AlloDomain
 
 public struct RoutinesetSheet: View {
-    let completeButtonAction: (String) -> Void
+    let completeButtonAction: (String, [String], String) -> Void
     private let categories = ["반복안함", "매일", "매주", "격주"]
     private let days = ["일", "월", "화", "수", "목", "금", "토"]
     @State private var selectedCategory: String?
     @State private var selectedDays: Set<String> = []
     var initialRoutine: String
-    public init(initialRoutine: String, completeButtonAction: @escaping (String) -> Void) {
+
+    public init(initialRoutine: String, completeButtonAction: @escaping (String, [String], String) -> Void) {
         self.initialRoutine = initialRoutine
         self.completeButtonAction = completeButtonAction
         _selectedCategory = State(initialValue: initialRoutine)
     }
-    
+
     public var body: some View {
         VStack(spacing: 0) {
             Capsule()
@@ -38,18 +40,17 @@ public struct RoutinesetSheet: View {
                     Spacer()
                     Button(action: {
                         guard let category = selectedCategory else { return }
-
-                        var routineString = category
-
-                        if category == "매주" || category == "격주" {
-                            if selectedDays.count == days.count {
-                                routineString = "매일"
-                            } else if !selectedDays.isEmpty {
-                                let sortedDays = days.filter { selectedDays.contains($0) }
-                                routineString += " (" + sortedDays.joined(separator: ",") + ")"
-                            }
+                        
+                        let selectedDaysArray = selectedDays.sorted()
+                        
+                        let routineText: String
+                        if category == "매주" || category == "격주", !selectedDaysArray.isEmpty {
+                            routineText = "\(category) (\(selectedDaysArray.joined(separator: ",")))"
+                        } else {
+                            routineText = category
                         }
-                        completeButtonAction(routineString)
+                        
+                        completeButtonAction(category, selectedDaysArray, routineText)
                     }) {
                         Text("완료")
                             .font(.button2)
@@ -101,5 +102,4 @@ public struct RoutinesetSheet: View {
             Spacer()
         }
     }
-
 }

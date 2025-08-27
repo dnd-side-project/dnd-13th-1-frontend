@@ -23,7 +23,7 @@ public struct AddPlaceView: View {
             Text("장소는 최대 10개까지 생성할 수 있어요.")
                 .font(.body4)
                 .foregroundStyle(.gray600)
-            UnderlineTextField(text: $newPlaceText)
+            UnderlineTextField(text: $viewModel.state.newPlaceName)
                 .padding(.top, 28)
             Spacer()
             MainButton(

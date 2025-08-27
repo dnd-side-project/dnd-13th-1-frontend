@@ -44,8 +44,10 @@ public struct AddWorkstandardView: View {
                     .focused($isTextFieldFocused)
                 // 태그 영역 스크롤
                 ScrollView(.vertical, showsIndicators: false) {
-                    TagFlowView(tags: HouseworkStandard.allCases.map { $0.rawValue } + customTags,
-                                selectedTags: $selectedStandards)
+                    TagFlowView(
+                        tags: viewModel.state.fetchedTags.map { $0.name } + customTags,
+                        selectedTags: $selectedStandards
+                    )
                     .padding(.top, 2)
                     .padding(.leading, 2)
                     .padding(.bottom, 120)
@@ -101,6 +103,15 @@ public struct AddWorkstandardView: View {
             .padding(.trailing, 35)
             .padding(.bottom, 117)
             .ignoresSafeArea(.keyboard, edges: .bottom)
+        }
+            .onAppear {
+            Task {
+                await viewModel.loadTags(groupId: 123) // 실제 groupId로 변경
+                print("fetchedTags count:", viewModel.state.fetchedTags.count)
+                        viewModel.state.fetchedTags.forEach { tag in
+                            print("tagId:", tag.tagId, "name:", tag.name)
+                        }
+            }
         }
     }
 }

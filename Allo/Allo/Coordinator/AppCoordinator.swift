@@ -59,7 +59,9 @@ final class AppCoordinator: Coordinator {
         case .houseworkStandard(let housework):
             let addWorkstandardViewModel = AddWorkstandardViewModel(
                 coordinator: self,
-                housework: housework)
+                housework: housework,
+                tagUseCase: diContainer.resolveGetTagListUseCase(),
+                addTagUseCase: diContainer.resolveAddTagUseCase())
             AddWorkstandardView(viewModel: addWorkstandardViewModel)
         case .houseworkMember(let housework):
             let addWorkMemberViewModel = AddHouseworkMemberViewModel(
@@ -105,7 +107,8 @@ final class AppCoordinator: Coordinator {
     func buildFullScreenCover(_ fullScreenCover: AppFullScreenCover) -> some View {
         switch fullScreenCover {
         case .addHousePlace:
-            let viewModel = AddPlaceViewModel(coordinator: self)
+            let addPlaceUseCase = diContainer.resolveAddPlaceUseCase()
+            let viewModel = AddPlaceViewModel(coordinator: self, usecase: addPlaceUseCase)
             AddPlaceView(viewModel: viewModel)
         }
     }

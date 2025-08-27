@@ -22,6 +22,9 @@ final class DIContainerImpl {
     private lazy var kakaoLoginRepository: KakaoLoginRepository = repositoryFactory.makeKakaoLoginRepository()
     private lazy var placeRepository: PlaceRepository = repositoryFactory.makePlaceRepository()
     private lazy var memberRepository: MemberRepository = repositoryFactory.makeMemberRepository()
+    private lazy var tagListRepository: TagListRepository = repositoryFactory.makeTagListRepository()
+    private lazy var tagAddRepository: TagAddRespository = repositoryFactory.makeAddTagRepository()
+
 }
 // MARK: - DIContainer 프로토콜 구현
 extension DIContainerImpl: DIContainer {
@@ -60,6 +63,18 @@ extension DIContainerImpl: DIContainer {
     
     func resolveFetchMemberUseCase() -> FetchMemberUseCase {
         UseCaseFactory.makeFetchMemberUseCase(memberRepository: memberRepository)
+    }
+    
+    func resolveAddPlaceUseCase() -> AddPlaceUseCase {
+        UseCaseFactory.makeAddPlaceUseCase(placeRepository: placeRepository)
+    }
+    
+    func resolveGetTagListUseCase() -> TagListUseCase {
+        UseCaseFactory.makeTagListUseCase(tagListRepository: tagListRepository)
+    }
+    
+    func resolveAddTagUseCase() -> TagAddUseCase {
+        UseCaseFactory.makeAddTagUseCase(tagAddRespository: tagAddRepository)
     }
     
 }

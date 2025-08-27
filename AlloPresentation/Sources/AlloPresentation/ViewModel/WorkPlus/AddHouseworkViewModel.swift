@@ -15,10 +15,13 @@ public final class AddHouseworkViewModel: ViewModelable {
     struct State {
         var myHouseworkTitle: String
         var place: String
+        var selectedPlaceId: Int?
         var startDate: String
         var endDate: String
         var routine: String
+        var selectedDays: [String] = []
         var alarm: Bool
+        var routineText: String
     }
     // MARK: - Action
     enum Action {
@@ -45,7 +48,8 @@ public final class AddHouseworkViewModel: ViewModelable {
             startDate: today,
             endDate: today,
             routine: "반복안함",
-            alarm: true
+            alarm: true,
+            routineText: "반복안함"
         )
         self.coordinator = coordinator
     }
@@ -69,18 +73,25 @@ extension AddHouseworkViewModel {
             }),
                                      onDismiss: {})
         case .didTapAddPlaceButton:
-            coordinator.presentSheet(AppSheet.placeSelection(initialPlace: state.place, placeClickAction: { [weak self] selected in
-                self?.state.place = selected
-                self?.coordinator.dismissSheet()
-            }),
-                                     onDismiss: {})
+            coordinator.presentSheet(
+                AppSheet.placeSelection(initialPlace: state.place, placeClickAction: { [weak self] selected, placeId in
+                    self?.state.place = selected
+                    self?.state.selectedPlaceId = placeId
+                    self?.coordinator.dismissSheet()
+                }),
+                onDismiss: {}
+            )
         case .didTapAdddRoutineButton:
-            coordinator.presentSheet(AppSheet.routineSelection(initialRoutine: state.routine,
-                                                               completeButtonAction: { [weak self] selected in
-                self?.state.routine = selected
-                self?.coordinator.dismissSheet()
-            }),
-                                     onDismiss: {})
+            coordinator.presentSheet(AppSheet.routineSelection(
+                initialRoutine: state.routine,
+                completeButtonAction: { [weak self] selected, selectedDays, routineText in
+                    self?.state.routine = selected
+                    self?.state.selectedDays = selectedDays   // 선택된 요일 저장
+                    self?.state.routineText = routineText
+                    self?.coordinator.dismissSheet()
+                }
+            ), onDismiss: {})
+
         case .didTapCalendarButton:
             coordinator.presentSheet(AppSheet.calendarSelection(dateSelectedAction: { [weak self] selected in
                 self?.state.startDate = selected
@@ -98,24 +109,30 @@ extension AddHouseworkViewModel {
 // MARK: - Function
 extension AddHouseworkViewModel {
     func makeHousework() -> Housework? {
-        // Date 변환 (startDate 사용)
+        // Date 변환
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko_KR")
         formatter.dateFormat = "yyyy.MM.dd(EE)"
-        
         guard let date = formatter.date(from: state.startDate) else { return nil }
-        
-        return Housework(
-            id: Int.random(in: 1...999999),
-            place: state.place,
-            title: state.myHouseworkTitle,
-            member: [],
-            date: date,
-            isDone: false,
-            routine: HouseworkRoutine(rawValue: state.routine) ?? .none,
-            tags: []
+        print("routine", state.routineEnum)
+        print("dayOfTheWeek", state.selectedDays.map { $0.toDayOfWeek()})
+
+        // 서버 전송용 데이터 생성
+        let housework = Housework(
+            houseWorkName: state.myHouseworkTitle,
+            placeAdd: state.selectedPlaceId ?? 0,
+            tagsAdd: [0],
+            members: [0],
+            startDate: state.startDate,
+            dueDate: state.endDate,
+            routineAdd: state.routineEnum,
+            dayOfTheWeek: state.selectedDays.map { $0.toDayOfWeek() },
+            isNotified: state.alarm
         )
+        
+        return housework
     }
+
 }
 
 extension Date {
@@ -124,5 +141,35 @@ extension Date {
         formatter.locale = Locale(identifier: "ko_KR")
         formatter.dateFormat = "yyyy.MM.dd(EE)"
         return formatter.string(from: self)
+    }
+}
+extension AddHouseworkViewModel.State {
+    var routineEnum: Routine {
+        switch routine {
+        case "반복안함":
+            return .none
+        case "매일":
+            return .everyDay
+        case "매주":
+            return .everyWeek
+        case "격주":
+            return .biWeek
+        default:
+            return .none
+        }
+    }
+}
+extension String {
+    func toDayOfWeek() -> AddDayOfTheWeek {
+        switch self {
+        case "월": return .monday
+        case "화": return .tuesday
+        case "수": return .wednesday
+        case "목": return .thursday
+        case "금": return .friday
+        case "토": return .saturday
+        case "일": return .sunday
+        default: return .monday
+        }
     }
 }
