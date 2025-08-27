@@ -8,16 +8,16 @@
 import SwiftUI
 
 public final class MyPageViewModel: ViewModelable {
-    @Published var state = State()
-    let coordinator: Coordinator
-    public init(coordinator: Coordinator) {
-        self.coordinator = coordinator
-    }
     struct State {
     }
     enum Action {
         case backButtonDidTap
         case myPageDidTap
+    }
+    @Published var state = State()
+    let coordinator: Coordinator
+    public init(coordinator: Coordinator) {
+        self.coordinator = coordinator
     }
     func action(_ action: Action) {
         switch action {

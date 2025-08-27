@@ -9,9 +9,9 @@ import Foundation
 import SwiftUI
 
 public struct MyPageView: View {
-    @State private var viewModel: MyPageViewModel
+    @StateObject private var viewModel: MyPageViewModel
     public init(viewModel: MyPageViewModel) {
-        self._viewModel = State(initialValue: viewModel)
+        self._viewModel = StateObject(wrappedValue: viewModel)
     }
     public var body: some View {
         VStack {
