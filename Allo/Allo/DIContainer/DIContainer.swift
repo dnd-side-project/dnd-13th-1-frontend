@@ -32,10 +32,6 @@ public protocol DIContainer {
     // MARK: - Tag UseCases
     func resolveFetchTagsUseCase() -> FetchTagsUseCase
     func resolveAddTagUseCase() -> AddTagUseCase
-    // MARK: - Emotion UseCases
-    func resolveSendEmotionCardUseCase() -> SendEmotionCardUseCase
-    func resolveGetEmotionCardDetailUseCase() -> GetEmotionCardDetailUseCase
-    func resolveGetEmotionCardListUseCase() -> GetEmotionCardListUseCase
     // MARK: - Stats UseCases
     func resolveGetCleanlinessUseCase() -> GetCleanlinessUseCase
     func resolveGetMyContributionUseCase() -> GetMyContributionUseCase
@@ -47,4 +43,10 @@ public protocol DIContainer {
     func resolveGetHouseworkDetailUseCase() -> GetHouseworkDetailUseCase
     func resolveGetMyRecentHouseworkUseCase() -> GetMyRecentHouseworkUseCase
     func resolveGetTodayPlaceHouseworkUseCase() -> GetTodayPlaceHouseworkUseCase
+    // MARK: -- Emotion UseCase
+    func resolveFetchDaysUseCase() -> FetchHouseworkDaysUseCase
+    func resolveSendEmotionUseCase() -> SendEmotionUseCase
+    func resolveGetEmotionListUseCase() -> FetchEmotionUseCase
+    func resolvetransformAiUseCase() -> AIUseCase
+    func resolveDetailEmotionUseCase() -> EmotionDetailUseCase
 }

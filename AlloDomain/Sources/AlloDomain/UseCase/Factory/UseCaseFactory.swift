@@ -65,17 +65,6 @@ public struct UseCaseFactory {
         return AddTagUseCaseImpl(repo: tagRepository)
     }
     
-    // MARK: Emotion
-    public static func makeSendEmotionCardUseCase(emotionRepository: EmotionRepository) -> SendEmotionCardUseCase {
-        return SendEmotionCardUseCaseImpl(repo: emotionRepository)
-    }
-    public static func makeGetEmotionCardDetailUseCase(emotionRepository: EmotionRepository) -> GetEmotionCardDetailUseCase {
-        return GetEmotionCardDetailUseCaseImpl(repo: emotionRepository)
-    }
-    public static func makeGetEmotionCardListUseCase(emotionRepository: EmotionRepository) -> GetEmotionCardListUseCase {
-        return GetEmotionCardListUseCaseImpl(repo: emotionRepository)
-    }
-    
     // MARK: Stats
     public static func makeGetCleanlinessUseCase(statsRepository: StatsRepository) -> GetCleanlinessUseCase { GetCleanlinessUseCaseImpl(repo: statsRepository) }
     public static func makeGetMyContributionUseCase(statsRepository: StatsRepository) -> GetMyContributionUseCase { GetMyContributionUseCaseImpl(repo: statsRepository) }
@@ -88,4 +77,24 @@ public struct UseCaseFactory {
     public static func makeGetHouseworkDetailUseCase(houseworkRepository: HouseworkRepository) -> GetHouseworkDetailUseCase { GetHouseworkDetailUseCaseImpl(repo: houseworkRepository) }
     public static func makeGetMyRecentHouseworkUseCase(houseworkRepository: HouseworkRepository) -> GetMyRecentHouseworkUseCase { GetMyRecentHouseworkUseCaseImpl(repo: houseworkRepository) }
     public static func makeGetTodayPlaceHouseworkUseCase(houseworkRepository: HouseworkRepository) -> GetTodayPlaceHouseworkUseCase { GetTodayPlaceHouseworkUseCaseImpl(repo: houseworkRepository) }
+    
+    public static func makeFetchHouseworkDaysUseCase(houseworkDaysRepository: HouseworkDaysRepository) -> FetchHouseworkDaysUseCase {
+        return FetchHouseworkDaysUseCaseImpl(houseworkDaysRepository: houseworkDaysRepository)
+    }
+    
+    public static func makeSendEmotionUseCase(emotionRepository: EmotionRepository) -> SendEmotionUseCase {
+        return EmotionUseCaseImpl(emotionRepository: emotionRepository)
+    }
+    
+    public static func makeGetEmotionListUseCase(emotionRepository: EmotionRepository) -> FetchEmotionUseCase {
+        return FetchEmotionUseCaseImpl(emotionRepository: emotionRepository)
+    }
+    
+    public static func makeTransformAiUseCase(aiRepository: AIRepository) -> AIUseCase {
+        return AIUseCaseImpl(aiRepository: aiRepository)
+    }
+    
+    public static func makeDetailEmotionUseCase(emotionRepository: EmotionRepository) -> EmotionDetailUseCase {
+        return EmotionDetailUseCaseImpl(emotionDetailRepository: emotionRepository)
+    }
 }

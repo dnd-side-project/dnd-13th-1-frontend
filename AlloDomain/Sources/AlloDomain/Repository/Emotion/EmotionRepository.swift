@@ -2,15 +2,13 @@
 //  EmotionRepository.swift
 //  AlloDomain
 //
-//  Created by Assistant on 8/27/25.
+//  Created by 김민솔 on 8/23/25.
 //
 
 import Foundation
 
 public protocol EmotionRepository: Sendable {
-    func sendEmotionCard(houseWorkId: Int, receiverId: Int, compliments: [String], disappointment: String?) async throws -> Int
-    func fetchEmotionCardDetail(id: Int) async throws -> EmotionCard
-    func fetchEmotionCardList(filter: String, sorted: String) async throws -> [EmotionCard]
+    func sendHouseworkEmotion() async throws -> [SendEmotion]
+    func getEmotionList(filter: String, sorted: String) async throws -> ([EmotionList])
+    func emotionDetail(for id: Int) async throws -> EmotionDetail
 }
-
-
