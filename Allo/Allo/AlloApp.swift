@@ -18,8 +18,8 @@ struct AlloApp: App {
     @State private var onBoardingCoordinator: OnboardingCoordinator
     @State private var selectedTab: TabBarItem = .home
     
-    /// 앱 내에 저장되는
-    @AppStorage("isSignedIn") var isSignedIn: Bool = true
+    /// 앱 내에 저장되는 로그인 관련 프로퍼티
+    @AppStorage("isSignedIn") var isSignedIn: Bool = false
     @AppStorage("groupId") var groupId: Int?
     
     private let diContainer: DIContainerImpl
@@ -33,6 +33,9 @@ struct AlloApp: App {
         self.diContainer = DIContainerImpl(liveData: true)
         appCoordinator = AppCoordinator(diContainer: diContainer)
         onBoardingCoordinator = OnboardingCoordinator(diContainer: diContainer)
+        
+        /// Keychain에서 accessToken을 확인하여 로그인 상태를 설정합니다
+        checkLoginStatusFromKeychain()
         
         /// 그룹 정보를 가져옵니다
         if isSignedIn { getGroupInformation() }
@@ -48,7 +51,8 @@ struct AlloApp: App {
                         TabbedMainView(appCoordinator: appCoordinator, selectedTab: $selectedTab)
                     } else {
                         // MARK: 그룹 가입 전
-                        OnboardingNavView(onboardingCoordinator: onBoardingCoordinator)
+                        TabbedMainView(appCoordinator: appCoordinator, selectedTab: $selectedTab)
+//                        OnboardingNavView(onboardingCoordinator: onBoardingCoordinator)
                     }
                 } else {
                     // MARK: 로그아웃 상태
@@ -82,6 +86,20 @@ struct AlloApp: App {
             } catch {
                 dump(error)
             }
+        }
+    }
+    
+    /// Keychain에서 accessToken을 확인하여 로그인 상태를 설정합니다
+    private func checkLoginStatusFromKeychain() {
+        do {
+            if let accessToken = try KeychainService.get(key: "accessToken"), !accessToken.isEmpty {
+                isSignedIn = true
+            } else {
+                isSignedIn = false
+            }
+        } catch {
+            // Keychain 접근 오류 시 로그아웃 상태로 설정
+            isSignedIn = false
         }
     }
 }
