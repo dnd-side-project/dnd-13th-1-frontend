@@ -29,7 +29,7 @@ enum AlloAPI {
     case deleteHousework(houseworkId: Int) // 특정 집안일 삭제
     case getHouseworkDetail(houseworkId: Int) // 집안일 상세 조회
     //    case editHousework(houseworkId: Int) // 특정 집안일 편집
-    case getEmotionCardList(from: String, to: String, sorted: String) // 내 마음카드 목록 조회
+    case getEmotionCardList(filter: String, sorted: String) // 내 마음카드 목록 조회
     //    case getCharacterStatus(groupId: Int) // 그룹 캐릭터 상태 조회
     case getCleanliness(groupId: Int) // 홈/우리집 청결도 조회
     case getTodayPlaceHousework(placeId: Int) // 홈/특정 장소의 오늘의 할 일 조회
@@ -43,7 +43,6 @@ enum AlloAPI {
 extension AlloAPI: TargetType {
     
     var accessToken: String? {
-        //        return "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzU2MDE4MTQ4LCJleHAiOjE3NTYwMjE3NDh9.4kys8GuVbDfiFqzd-QjZ_dmg1nlZsL_iZr441eW6Pl4"
         try? KeychainService.get(key: "accessToken")
     }
     
@@ -213,8 +212,8 @@ extension AlloAPI: TargetType {
                 .requestPlain
         case .getHouseworkDetail:
                 .requestPlain
-        case let .getEmotionCardList(from, to, sorted):
-                .requestParameters(parameters: ["from": from, "to": to, "sorted": sorted], encoding: URLEncoding.queryString)
+        case let .getEmotionCardList(filter, sorted):
+                .requestParameters(parameters: ["filter": filter, "sorted": sorted], encoding: URLEncoding.queryString)
         case .getCleanliness:
                 .requestPlain
         case .getTodayPlaceHousework:

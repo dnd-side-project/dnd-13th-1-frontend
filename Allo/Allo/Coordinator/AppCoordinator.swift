@@ -32,7 +32,10 @@ final class AppCoordinator: Coordinator {
     @ViewBuilder
     func buildScene(_ scene: AppScene, selectedTab: Binding<TabBarItem>? = nil) -> some View {
         switch scene {
-        case .tabBar, .home, .checklist, .mypage:
+        case let .home(selectedTab): // Binding이 필요하기 때문에 따로 관리
+            let homeViewModel = HomeViewModel(coordinator: self)
+            HomeView(viewModel: homeViewModel, selectedTab: selectedTab)
+        case .tabBar, .checklist, .mypage:
             buildTabScene(scene, selectedTab: selectedTab)
         case .houseworkPlus, .houseworkStandard, .houseworkMember, .houseworkPlusFinish, .houseworkSevendays:
             buildHouseworkScene(scene)
@@ -47,9 +50,6 @@ final class AppCoordinator: Coordinator {
         switch scene {
         case .tabBar:
             TabBarView(selectedTab: selectedTab ?? .constant(.home))
-        case .home:
-            let homeViewModel = HomeViewModel(coordinator: self)
-            HomeView(viewModel: homeViewModel)
         case .checklist:
             let checkListViewModel = CheckListViewModel(
                 generateCalendarDateUseCase: diContainer.resolveGenerateCalendarDateUseCase(),

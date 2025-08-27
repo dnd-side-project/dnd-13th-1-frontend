@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		098E46552E5F7144007A8E02 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 098E46542E5F7144007A8E02 /* Config.xcconfig */; };
 		09AA8BC02E48A1C400A93BD3 /* AlloData in Frameworks */ = {isa = PBXBuildFile; productRef = 09AA8BBF2E48A1C400A93BD3 /* AlloData */; };
 		09AA8BC32E48A1CA00A93BD3 /* AlloPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 09AA8BC22E48A1CA00A93BD3 /* AlloPresentation */; };
 		09AA8BC62E48A1D400A93BD3 /* AlloDomain in Frameworks */ = {isa = PBXBuildFile; productRef = 09AA8BC52E48A1D400A93BD3 /* AlloDomain */; };
@@ -19,6 +20,7 @@
 		094C23932E3DDAC2009EF33E /* AlloDomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = AlloDomain; path = ../AlloDomain; sourceTree = SOURCE_ROOT; };
 		094C23942E3DDACE009EF33E /* AlloData */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = AlloData; path = ../AlloData; sourceTree = SOURCE_ROOT; };
 		094C23952E3DDBBE009EF33E /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; name = .gitignore; path = ../.gitignore; sourceTree = SOURCE_ROOT; };
+		098E46542E5F7144007A8E02 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		09FCAFF42E3F46D500EA9C36 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		58760AE52E5F04EB007A24FD /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -62,7 +64,7 @@
 		094C237B2E3DDA8F009EF33E = {
 			isa = PBXGroup;
 			children = (
-				58760AE52E5F04EB007A24FD /* Config.xcconfig */,
+				098E46542E5F7144007A8E02 /* Config.xcconfig */,
 				09FCAFF42E3F46D500EA9C36 /* .swiftlint.yml */,
 				094C23952E3DDBBE009EF33E /* .gitignore */,
 				094C23942E3DDACE009EF33E /* AlloData */,
@@ -156,6 +158,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				098E46552E5F7144007A8E02 /* Config.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

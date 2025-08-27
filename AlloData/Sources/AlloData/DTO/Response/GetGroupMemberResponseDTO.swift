@@ -11,6 +11,6 @@ typealias GetGroupMemberResponseDTO = [GetGroupMemberResponseDTOElement]
 
 struct GetGroupMemberResponseDTOElement: Decodable {
     let memberId: Int
-    let name: String
-    let profileImageUrl: String?
+    let memberNickName: String
+    let memberProfileImageUrl: String?
 }

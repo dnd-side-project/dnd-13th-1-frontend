@@ -9,8 +9,17 @@ import Foundation
 import AlloDomain
 
 final class PlaceRepositoryImpl: PlaceRepository {
-    // TODO: Service 의존성 추가
+    private let networkService: NetworkService
+    
+    init(networkService: NetworkService) {
+        self.networkService = networkService
+    }
+    
     func fetchPlaces() async throws -> [HouseworkPlace] {
-        return []
+        guard let groupId = UserDefaultsService.groupId else { return [] }
+        let dto = try await networkService.getPlaceList(groupId)
+        return dto.map { element in
+            HouseworkPlace(placeId: String(element.placeId), name: element.name)
+        }
     }
 }

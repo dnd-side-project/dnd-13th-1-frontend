@@ -11,7 +11,7 @@ import AlloDomain
 
 public enum AppScene: AppRoute {
     case tabBar
-    case home
+    case home(Binding<TabBarItem>)
     case checklist
     case emotion
     case mypage
