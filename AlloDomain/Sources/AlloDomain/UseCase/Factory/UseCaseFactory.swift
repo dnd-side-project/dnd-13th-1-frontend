@@ -45,4 +45,24 @@ public struct UseCaseFactory {
     public static func makeFetchMemberUseCase(memberRepository: MemberRepository) -> FetchMemberUseCase {
         return FetchMemberUseCaseImpl(memberRepository: memberRepository)
     }
+    
+    public static func makeFetchHouseworkDaysUseCase(houseworkDaysRepository: HouseworkDaysRepository) -> FetchHouseworkDaysUseCase {
+        return FetchHouseworkDaysUseCaseImpl(houseworkDaysRepository: houseworkDaysRepository)
+    }
+    
+    public static func makeSendEmotionUseCase(emotionRepository: EmotionRepository) -> SendEmotionUseCase {
+        return EmotionUseCaseImpl(emotionRepository: emotionRepository)
+    }
+    
+    public static func makeGetEmotionListUseCase(emotionRepository: EmotionRepository) -> FetchEmotionUseCase {
+        return FetchEmotionUseCaseImpl(emotionRepository: emotionRepository)
+    }
+    
+    public static func makeTransformAiUseCase(aiRepository: AIRepository) -> AIUseCase {
+        return AIUseCaseImpl(aiRepository: aiRepository)
+    }
+    
+    public static func makeDetailEmotionUseCase(emotionRepository: EmotionRepository) -> EmotionDetailUseCase {
+        return EmotionDetailUseCaseImpl(emotionDetailRepository: emotionRepository)
+    }
 }

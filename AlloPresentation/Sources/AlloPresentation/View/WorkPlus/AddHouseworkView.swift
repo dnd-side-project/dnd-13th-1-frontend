@@ -64,7 +64,7 @@ public struct AddHouseworkView: View {
                 action: { viewModel.action(.didTapNextButton) },
                 style: .bottoomMain
             )
-            .padding(.bottom, 46)
+            .padding(.bottom, 16)
             .contentShape(Rectangle())
         }
         .onTapGesture {

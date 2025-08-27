@@ -13,15 +13,18 @@ import AlloPresentation
 final class DIContainerImpl {
     let liveData: Bool
     let repositoryFactory = RepositoryFactory()
-    
+  
     init(liveData: Bool) {
         self.liveData = liveData
     }
-    
+
     private lazy var houseworkRepository: HouseworkRepository = repositoryFactory.makeHouseworkRepository(liveData: liveData)
     private lazy var kakaoLoginRepository: KakaoLoginRepository = repositoryFactory.makeKakaoLoginRepository()
     private lazy var placeRepository: PlaceRepository = repositoryFactory.makePlaceRepository(liveData: liveData)
     private lazy var memberRepository: MemberRepository = repositoryFactory.makeMemberRepository(liveData: liveData)
+    private lazy var houseworkDaysRepository: HouseworkDaysRepository = repositoryFactory.makeHouseworkSevenDaysRepository(liveData: liveData)
+    private lazy var emotionRepository: EmotionRepository = repositoryFactory.makeEmotionRepository(liveData: liveData)
+    private lazy var aiRepository: AIRepository = repositoryFactory.makeAIRepository()
 }
 // MARK: - DIContainer 프로토콜 구현
 extension DIContainerImpl: DIContainer {
@@ -62,4 +65,23 @@ extension DIContainerImpl: DIContainer {
         UseCaseFactory.makeFetchMemberUseCase(memberRepository: memberRepository)
     }
     
+    func resolveFetchDaysUseCase() -> FetchHouseworkDaysUseCase {
+        UseCaseFactory.makeFetchHouseworkDaysUseCase(houseworkDaysRepository: houseworkDaysRepository)
+    }
+    
+    func resolveSendEmotionUseCase() -> SendEmotionUseCase {
+        UseCaseFactory.makeSendEmotionUseCase(emotionRepository: emotionRepository)
+    }
+    
+    func resolveGetEmotionListUseCase() -> FetchEmotionUseCase {
+        UseCaseFactory.makeGetEmotionListUseCase(emotionRepository: emotionRepository)
+    }
+    
+    func resolvetransformAiUseCase() -> AIUseCase {
+        UseCaseFactory.makeTransformAiUseCase(aiRepository: aiRepository)
+    }
+    
+    func resolveDetailEmotionUseCase() -> EmotionDetailUseCase {
+        UseCaseFactory.makeDetailEmotionUseCase(emotionRepository: emotionRepository)
+    }
 }

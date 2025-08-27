@@ -124,7 +124,7 @@ public struct AddHouseworkFinishView: View {
                 action: { viewModel.action(.didTapNextButton) },
                 style: .bottoomMain
             )
-            .padding(.bottom, 46)
+            .padding(.bottom, 16)
         }
         .padding(.horizontal, 20)
     }
