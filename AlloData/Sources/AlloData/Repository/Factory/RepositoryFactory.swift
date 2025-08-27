@@ -57,4 +57,19 @@ public struct RepositoryFactory {
         }
         return AIRepositoryImpl(apiClient: AIAPIClient(apiKey: apiKey))
     }
+    
+    public func makeHouseworkSevenDaysRepository(liveData: Bool) -> HouseworkDaysRepository {
+        liveData ? HouseworkDaysRepositoryImpl() : StubHouseworkDaysRepository()
+    }
+    
+    public func makeEmotionRepository(liveData: Bool) -> EmotionRepository {
+        liveData ? EmotionRepositoryimpl() : StubEmotionListRepository()
+    }
+    
+    public func makeAIRepository() -> AIRepository {
+        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "OPENAI_API_KEY") as? String else {
+            fatalError("OPENAI_API_KEY가 Info.plist에 없습니다.")
+        }
+        return AIRepositoryImpl(apiClient: AIAPIClient(apiKey: apiKey))
+    }
 }

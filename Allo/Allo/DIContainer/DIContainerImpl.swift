@@ -144,4 +144,23 @@ extension DIContainerImpl: DIContainer {
         UseCaseFactory.makeFetchMemberUseCase(memberRepository: memberRepository)
     }
     
+    func resolveFetchDaysUseCase() -> FetchHouseworkDaysUseCase {
+        UseCaseFactory.makeFetchHouseworkDaysUseCase(houseworkDaysRepository: houseworkDaysRepository)
+    }
+    
+    func resolveSendEmotionUseCase() -> SendEmotionUseCase {
+        UseCaseFactory.makeSendEmotionUseCase(emotionRepository: emotionRepository)
+    }
+    
+    func resolveGetEmotionListUseCase() -> FetchEmotionUseCase {
+        UseCaseFactory.makeGetEmotionListUseCase(emotionRepository: emotionRepository)
+    }
+    
+    func resolvetransformAiUseCase() -> AIUseCase {
+        UseCaseFactory.makeTransformAiUseCase(aiRepository: aiRepository)
+    }
+    
+    func resolveDetailEmotionUseCase() -> EmotionDetailUseCase {
+        UseCaseFactory.makeDetailEmotionUseCase(emotionRepository: emotionRepository)
+    }
 }
