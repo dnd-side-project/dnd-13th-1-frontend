@@ -10,6 +10,7 @@ import KakaoSDKCommon
 import KakaoSDKAuth
 import AlloPresentation
 import AlloDomain
+import AlloData
 
 @main
 struct AlloApp: App {
@@ -18,8 +19,8 @@ struct AlloApp: App {
     @State private var selectedTab: TabBarItem = .home
     
     /// 앱 내에 저장되는
-    @AppStorage("isSignedIn") var isSignedIn: Bool = false
-    @AppStorage("groupId") var groupId: String?
+    @AppStorage("isSignedIn") var isSignedIn: Bool = true
+    @AppStorage("groupId") var groupId: Int?
     
     private let diContainer: DIContainerImpl
     
@@ -32,6 +33,9 @@ struct AlloApp: App {
         self.diContainer = DIContainerImpl(liveData: true)
         appCoordinator = AppCoordinator(diContainer: diContainer)
         onBoardingCoordinator = OnboardingCoordinator(diContainer: diContainer)
+        
+        /// 그룹 정보를 가져옵니다
+        if isSignedIn { getGroupInformation() }
     }
     
     var body: some Scene {
@@ -41,54 +45,22 @@ struct AlloApp: App {
                     // MARK: 로그인 상태
                     if groupId != nil {
                         // MARK: 그룹 가입 완료
-                        NavigationStack(path: $appCoordinator.path) {
-                            VStack(spacing: 0) {
-                                Group {
-                                    switch selectedTab {
-                                    case .home:
-                                        appCoordinator.buildScene(.home)
-                                    case .checklist:
-                                        appCoordinator.buildScene(.checklist)
-                                    case .emotion:
-                                        appCoordinator.buildScene(.emotion)
-                                    case .mypage:
-                                        appCoordinator.buildScene(.mypage)
-                                    }
-                                }
-                                TabBarView(selectedTab: $selectedTab)
-                            }
-                            .navigationDestination(for: AppScene.self) { scene in
-                                appCoordinator.buildScene(scene)
-                            }
-                            .sheet(item: $appCoordinator.appSheet, onDismiss: appCoordinator.sheetOnDismiss) {
-                                appCoordinator.buildSheet($0)
-                            }
-                            .fullScreenCover(item: $appCoordinator.appFullScreenCover, onDismiss:
-                                                appCoordinator.fullScreenCoverOnDismiss) {
-                                appCoordinator.buildFullScreenCover($0)
-                            }
-                            .navigationBarHidden(true)
-                        }
+                        TabbedMainView(appCoordinator: appCoordinator, selectedTab: $selectedTab)
                     } else {
                         // MARK: 그룹 가입 전
-                        NavigationStack(path: $onBoardingCoordinator.path) {
-                            onBoardingCoordinator.buildScene(.login)
-                                .navigationDestination(for: OnboardingScene.self) { scene in
-                                    onBoardingCoordinator.buildScene(scene)
-                                }
-                        }
+                        OnboardingNavView(onboardingCoordinator: onBoardingCoordinator)
                     }
                 } else {
                     // MARK: 로그아웃 상태
-                    NavigationStack(path: $onBoardingCoordinator.path) {
-                        onBoardingCoordinator.buildScene(.login)
-                            .navigationDestination(for: OnboardingScene.self) { scene in
-                                onBoardingCoordinator.buildScene(scene)
-                            }
-                    }
+                    OnboardingNavView(onboardingCoordinator: onBoardingCoordinator)
                 }
             }
             .onOpenURL { handleURL($0) }
+            .onChange(of: isSignedIn, initial: true) { _, _ in
+                if isSignedIn && groupId == nil {
+                    getGroupInformation()
+                }
+            }
         }
     }
     
@@ -100,6 +72,16 @@ struct AlloApp: App {
             // SDK는 AppDelegate의 openURL 메서드에서 Bool 값을 반환하도록 설계되어 있지만,
             // SwiftUI App 구조에서는 해당 반환값이 필요하지 않으므로 무시합니다.
             _ = AuthController.handleOpenUrl(url: url)
+        }
+    }
+    
+    private func getGroupInformation() {
+        Task {
+            do {
+                let myGroup = try await diContainer.resolveGetMyGroupUseCase().execute()
+            } catch {
+                dump(error)
+            }
         }
     }
 }

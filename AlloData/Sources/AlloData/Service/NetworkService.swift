@@ -30,6 +30,7 @@ struct NetworkService: Sendable {
         let response = try await provider.request(.enterGroup(inviteCode: inviteCode))
         let responseDTO = try JSONDecoder().decode(EnterGroupResponseDTO.self, from: response)
         dump(responseDTO)
+        UserDefaultsService.groupId = responseDTO.groupId
         return responseDTO
     }
     
