@@ -29,13 +29,11 @@ final class AppCoordinator: Coordinator {
     }
     @MainActor
     @ViewBuilder
-    func buildScene(_ scene: AppScene, selectedTab: Binding<TabBarItem>? = nil) -> some View {
+    func buildScene(_ scene: AppScene) -> some View {
         switch scene {
-        case .tabBar:
-            TabBarView(selectedTab: selectedTab ?? .constant(.home))
-        case .home:
+        case let .home(selectedTab):
             let homeViewModel = HomeViewModel(coordinator: self)
-            HomeView(viewModel: homeViewModel)
+            HomeView(viewModel: homeViewModel, selectedTab: selectedTab)
         case .checklist:
             let checkListViewModel = CheckListViewModel(
                 generateCalendarDateUseCase: diContainer.resolveGenerateCalendarDateUseCase(),

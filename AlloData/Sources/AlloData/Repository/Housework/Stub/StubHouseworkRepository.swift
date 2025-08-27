@@ -135,4 +135,20 @@ struct StubHouseworkRepository: HouseworkRepository {
     func deleteHousework(_ housework: Housework) async throws {
         dump("Deleted housework: \(housework.title)")
     }
+    
+    func getHouseworkDetail(id: Int) async throws -> HouseworkDetail {
+        let members = [Member(id: 1, name: "김철수", profileImageUrl: URL(string: "https://example.com/1.png")!)]
+        return HouseworkDetail(id: id, title: "샘플 집안일", tags: ["정리"], date: Date(), members: members)
+    }
+    
+    func getMyRecentHousework(receiverId: Int) async throws -> [RecentHouseworkDay] {
+        let today = Calendar.current.startOfDay(for: Date())
+        let items = [RecentHouseworkItem(id: 100, name: "청소", placeName: "거실"), RecentHouseworkItem(id: 101, name: "설거지", placeName: "주방")]
+        return [RecentHouseworkDay(date: today, items: items)]
+    }
+    
+    func getTodayPlaceHousework(placeId: Int) async throws -> TodayPlaceHousework {
+        let urls = [URL(string: "https://example.com/1.png")!, URL(string: "https://example.com/2.png")!]
+        return TodayPlaceHousework(my: [TodayHouseworkItem(id: 1, title: "서랍 정리", memberProfileImageUrls: urls)], our: [TodayHouseworkItem(id: 2, title: "바닥 청소", memberProfileImageUrls: urls)])
+    }
 }

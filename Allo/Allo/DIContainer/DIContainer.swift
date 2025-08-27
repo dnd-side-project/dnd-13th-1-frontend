@@ -25,4 +25,26 @@ public protocol DIContainer {
     func resolveFetchPlaceUsecase() -> FetchPlacesUseCase
     // MARK: - Member UseCase
     func resolveFetchMemberUseCase() -> FetchMemberUseCase
+    // MARK: - Group UseCases
+    func resolveCreateGroupUseCase() -> CreateGroupUseCase
+    func resolveEnterGroupUseCase() -> EnterGroupUseCase
+    func resolveGetMyGroupUseCase() -> GetMyGroupUseCase
+    // MARK: - Tag UseCases
+    func resolveFetchTagsUseCase() -> FetchTagsUseCase
+    func resolveAddTagUseCase() -> AddTagUseCase
+    // MARK: - Emotion UseCases
+    func resolveSendEmotionCardUseCase() -> SendEmotionCardUseCase
+    func resolveGetEmotionCardDetailUseCase() -> GetEmotionCardDetailUseCase
+    func resolveGetEmotionCardListUseCase() -> GetEmotionCardListUseCase
+    // MARK: - Stats UseCases
+    func resolveGetCleanlinessUseCase() -> GetCleanlinessUseCase
+    func resolveGetMyContributionUseCase() -> GetMyContributionUseCase
+    func resolveGetTodayCompletionStatusUseCase() -> GetTodayCompletionStatusUseCase
+    func resolveGetWeekCompletionStatusUseCase() -> GetWeekCompletionStatusUseCase
+    func resolveGetTwoWeekComparisonUseCase() -> GetTwoWeekComparisonUseCase
+    func resolveGetActivitySummaryUseCase() -> GetActivitySummaryUseCase
+    // MARK: - Housework Extra UseCases
+    func resolveGetHouseworkDetailUseCase() -> GetHouseworkDetailUseCase
+    func resolveGetMyRecentHouseworkUseCase() -> GetMyRecentHouseworkUseCase
+    func resolveGetTodayPlaceHouseworkUseCase() -> GetTodayPlaceHouseworkUseCase
 }

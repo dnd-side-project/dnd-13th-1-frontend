@@ -9,9 +9,22 @@ import Foundation
 import AlloDomain
 
 final class MemberRepositoryImpl: MemberRepository {
-    // TODO: Service 의존성 추가
+    private let networkService: NetworkService
+    
+    init(networkService: NetworkService) {
+        self.networkService = networkService
+    }
+    
     func fetchMembers() async throws -> [Member] {
-        return []
+        guard let groupId = UserDefaultsService.groupId else { return [] }
+        let dto = try await networkService.getMemberList(groupId)
+        return dto.compactMap { element in
+            guard let urlString = element.memberProfileImageUrl,
+                  let url = URL(string: urlString) else {
+                return Member(id: element.memberId, name: element.memberNickName, profileImageUrl: URL(string: "https://example.com/placeholder.png")!)
+            }
+            return Member(id: element.memberId, name: element.memberNickName, profileImageUrl: url)
+        }
     }
 }
 

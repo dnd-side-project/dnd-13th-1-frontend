@@ -22,6 +22,10 @@ final class DIContainerImpl {
     private lazy var kakaoLoginRepository: KakaoLoginRepository = repositoryFactory.makeKakaoLoginRepository()
     private lazy var placeRepository: PlaceRepository = repositoryFactory.makePlaceRepository(liveData: liveData)
     private lazy var memberRepository: MemberRepository = repositoryFactory.makeMemberRepository(liveData: liveData)
+    private lazy var groupRepository: GroupRepository = repositoryFactory.makeGroupRepository(liveData: liveData)
+    private lazy var tagRepository: TagRepository = repositoryFactory.makeTagRepository(liveData: liveData)
+    private lazy var emotionRepository: EmotionRepository = repositoryFactory.makeEmotionRepository(liveData: liveData)
+    private lazy var statsRepository: StatsRepository = repositoryFactory.makeStatsRepository(liveData: liveData)
 }
 // MARK: - DIContainer 프로토콜 구현
 extension DIContainerImpl: DIContainer {
@@ -60,6 +64,67 @@ extension DIContainerImpl: DIContainer {
     
     func resolveFetchMemberUseCase() -> FetchMemberUseCase {
         UseCaseFactory.makeFetchMemberUseCase(memberRepository: memberRepository)
+    }
+    
+    // MARK: Group
+    func resolveCreateGroupUseCase() -> CreateGroupUseCase {
+        UseCaseFactory.makeCreateGroupUseCase(groupRepository: groupRepository)
+    }
+    func resolveEnterGroupUseCase() -> EnterGroupUseCase {
+        UseCaseFactory.makeEnterGroupUseCase(groupRepository: groupRepository)
+    }
+    func resolveGetMyGroupUseCase() -> GetMyGroupUseCase {
+        UseCaseFactory.makeGetMyGroupUseCase(groupRepository: groupRepository)
+    }
+    
+    // MARK: Tag
+    func resolveFetchTagsUseCase() -> FetchTagsUseCase {
+        UseCaseFactory.makeFetchTagsUseCase(tagRepository: tagRepository)
+    }
+    func resolveAddTagUseCase() -> AddTagUseCase {
+        UseCaseFactory.makeAddTagUseCase(tagRepository: tagRepository)
+    }
+    
+    // MARK: Emotion
+    func resolveSendEmotionCardUseCase() -> SendEmotionCardUseCase {
+        UseCaseFactory.makeSendEmotionCardUseCase(emotionRepository: emotionRepository)
+    }
+    func resolveGetEmotionCardDetailUseCase() -> GetEmotionCardDetailUseCase {
+        UseCaseFactory.makeGetEmotionCardDetailUseCase(emotionRepository: emotionRepository)
+    }
+    func resolveGetEmotionCardListUseCase() -> GetEmotionCardListUseCase {
+        UseCaseFactory.makeGetEmotionCardListUseCase(emotionRepository: emotionRepository)
+    }
+    
+    // MARK: Stats
+    func resolveGetCleanlinessUseCase() -> GetCleanlinessUseCase {
+        UseCaseFactory.makeGetCleanlinessUseCase(statsRepository: statsRepository)
+    }
+    func resolveGetMyContributionUseCase() -> GetMyContributionUseCase {
+        UseCaseFactory.makeGetMyContributionUseCase(statsRepository: statsRepository)
+    }
+    func resolveGetTodayCompletionStatusUseCase() -> GetTodayCompletionStatusUseCase {
+        UseCaseFactory.makeGetTodayCompletionStatusUseCase(statsRepository: statsRepository)
+    }
+    func resolveGetWeekCompletionStatusUseCase() -> GetWeekCompletionStatusUseCase {
+        UseCaseFactory.makeGetWeekCompletionStatusUseCase(statsRepository: statsRepository)
+    }
+    func resolveGetTwoWeekComparisonUseCase() -> GetTwoWeekComparisonUseCase {
+        UseCaseFactory.makeGetTwoWeekComparisonUseCase(statsRepository: statsRepository)
+    }
+    func resolveGetActivitySummaryUseCase() -> GetActivitySummaryUseCase {
+        UseCaseFactory.makeGetActivitySummaryUseCase(statsRepository: statsRepository)
+    }
+    
+    // MARK: Housework Extra
+    func resolveGetHouseworkDetailUseCase() -> GetHouseworkDetailUseCase {
+        UseCaseFactory.makeGetHouseworkDetailUseCase(houseworkRepository: houseworkRepository)
+    }
+    func resolveGetMyRecentHouseworkUseCase() -> GetMyRecentHouseworkUseCase {
+        UseCaseFactory.makeGetMyRecentHouseworkUseCase(houseworkRepository: houseworkRepository)
+    }
+    func resolveGetTodayPlaceHouseworkUseCase() -> GetTodayPlaceHouseworkUseCase {
+        UseCaseFactory.makeGetTodayPlaceHouseworkUseCase(houseworkRepository: houseworkRepository)
     }
     
 }
