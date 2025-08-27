@@ -16,6 +16,6 @@ public protocol HouseworkRepository: Sendable {
         ourHouseworksCompleted: [Housework]
     )
     func completeHousework(_ housework: Housework) async throws
-    func addHousework(_ housework: Housework) async throws
+    func addHousework(groupId: Int, housework: Housework) async throws
     func deleteHousework(_ housework: Housework) async throws
 }

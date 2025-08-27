@@ -15,7 +15,7 @@ final class AddHouseworkUseCaseImpl {
 }
 
 extension AddHouseworkUseCaseImpl: AddHouseworkUseCase {
-    func execute(_ housework: Housework) async throws {
-        return try await houseworkRepository.addHousework(housework)
+    func execute(groupId: Int, housework: Housework) async throws {
+        return try await houseworkRepository.addHousework(groupId: groupId, housework: housework)
     }
 }

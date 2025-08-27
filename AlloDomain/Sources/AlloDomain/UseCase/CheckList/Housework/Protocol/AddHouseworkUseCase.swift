@@ -8,5 +8,5 @@
 import Foundation
 
 public protocol AddHouseworkUseCase {
-    func execute(_ housework: Housework) async throws
+    func execute(groupId: Int, housework: Housework) async throws
 }
