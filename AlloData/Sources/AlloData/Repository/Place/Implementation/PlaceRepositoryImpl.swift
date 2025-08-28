@@ -23,8 +23,6 @@ final class PlaceRepositoryImpl: PlaceRepository {
         let newPlace = HouseworkPlace(placeId: 0, name: placeName)
         return newPlace
     }
-
-
     
     func fetchPlaces() async throws -> [HouseworkPlace] {
         guard let groupId = UserDefaultsService.groupId else { return [] }

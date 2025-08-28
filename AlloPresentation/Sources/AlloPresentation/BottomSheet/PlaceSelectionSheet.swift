@@ -44,6 +44,8 @@ public struct PlaceSelectionSheet: View {
                             viewModel.action(.selectPlace(place))
                             placeClickAction(place.name, place.placeId)
                         }
+                        .frame(maxWidth: .infinity, minHeight: 56, alignment: .leading)
+                        .contentShape(Rectangle())
                     }
                     // + 버튼
                     Button {
@@ -51,6 +53,7 @@ public struct PlaceSelectionSheet: View {
                     } label: {
                         Image(.iconPlus)
                     }
+                    .frame(maxWidth: .infinity, minHeight: 56)
                     .contentShape(Rectangle())
                     .buttonStyle(.plain)
                     .background(

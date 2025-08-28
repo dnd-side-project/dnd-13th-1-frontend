@@ -80,13 +80,11 @@ final class HouseworkRepositoryImpl: HouseworkRepository {
         try await networkService.completeHousework(housework.id)
     }
     
-    
     func addHousework(housework: Housework) async throws {
         guard let groupId = UserDefaultsService.groupId else {
             print("[AddHousework] groupId is nil")
             return
         }
-        
         let startDate = dateFormatterYYYYMMDD.string(from: housework.date)
         let request = AddHouseworkScheduleRequestDTO(
             houseWorkName: housework.houseWorkName,
@@ -99,14 +97,10 @@ final class HouseworkRepositoryImpl: HouseworkRepository {
             dayOfWeek: housework.dayOfTheWeek.map { $0.rawValue },
             isNotified: false
         )
-        
         print("[AddHousework] 요청 전 - groupId: \(groupId), request: \(request)")
-        
         let response = try await networkService.addHouseworkSchedule(groupId, request)
-        
         print("[AddHousework] 요청 후 - response: \(response)")
     }
-
     
     func deleteHousework(_ housework: Housework) async throws {
         try await networkService.deleteHousework(housework.id)
