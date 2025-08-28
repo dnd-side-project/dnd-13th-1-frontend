@@ -37,7 +37,7 @@ public struct HomeView: View {
                         .ignoresSafeArea(edges: .top)
                 }
                 VStack {
-                    NavigationBar(
+                    HomeNavigationBar(
                         onTapGroup: {
                             viewModel.action(.didTapMemberButton)
                         },

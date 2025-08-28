@@ -13,19 +13,26 @@ struct HomeSendEmotionCardCell: View {
     let housework: Housework
     let onTapSendEmotion: (Housework) -> Void
     
+    init(housework: Housework, onTapSendEmotion: @escaping (Housework) -> Void) {
+        self.housework = housework
+        self.onTapSendEmotion = onTapSendEmotion
+        Fonts.registerCustomFonts()
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
-            HStack {
+            HStack(alignment: .center, spacing: 0) {
                 Text(housework.place)
                     .font(.button3)
                     .foregroundStyle(.blue400)
                     .padding(.horizontal, 8)
                     .frame(height: 20)
+                    .background(.blue50)
                     .cornerRadius(.radius3)
+                    .padding(.trailing, 6)
                 Text(housework.title)
                     .font(.subtitle6)
                     .foregroundStyle(.gray700)
-                    .padding(.leading, 6)
                     .padding(.bottom, 8)
                 Spacer(minLength: 0)
             }
@@ -35,18 +42,20 @@ struct HomeSendEmotionCardCell: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 44, height: 44)
-                        .cornerRadius(.radius3)
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
                         .overlay(
                             RoundedRectangle(cornerRadius: 20)
                                 .inset(by: 1)
-                                .stroke(Color.gray200, lineWidth: 1)
+                                .stroke(.gray200, lineWidth: 1)
                         )
                 }
+                Spacer(minLength: 0)
             }
             Text(formatDateToString(housework.date))
                 .font(.body3)
                 .opacity(0.5)
                 .foregroundStyle(.black)
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top, 8)
                 .padding(.bottom, 8)
             Button(
@@ -63,6 +72,7 @@ struct HomeSendEmotionCardCell: View {
                             .foregroundStyle(.white)
                         Spacer(minLength: 0)
                     }
+                    .padding(.horizontal, 37)
                     .padding(.vertical, 16)
                     .background(.blue400)
                     .frame(width: 178, height: 58)

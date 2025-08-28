@@ -15,7 +15,7 @@ struct TabbedMainView: View {
 
     var body: some View {
         NavigationStack(path: $appCoordinator.path) {
-            VStack(alignment: .leading) {
+            VStack {
                 Group {
                     switch selectedTab {
                     case .home:
@@ -32,7 +32,6 @@ struct TabbedMainView: View {
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-
                 TabBarView(selectedTab: $selectedTab)
             }
             .ignoresSafeArea(edges: .bottom)
