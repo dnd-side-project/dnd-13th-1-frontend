@@ -144,6 +144,10 @@ struct NetworkService: Sendable {
         return responseDTO
     }
     
+    func deleteEmotion(_ emotionCardId: Int) async throws {
+        try await provider.request(.deleteHousework(emotionCardId: emotionCardId))
+    }
+    
     public func getEmotionCardList(filter: String, sorted: String) async throws -> GetEmotionCardListResponseDTO {
         let response = try await provider.request(.getEmotionCardList(filter: filter, sorted: sorted))
         let responseDTO = try JSONDecoder().decode(GetEmotionCardListResponseDTO.self, from: response)
