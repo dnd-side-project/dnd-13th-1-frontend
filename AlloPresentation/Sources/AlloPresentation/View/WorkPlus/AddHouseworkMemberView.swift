@@ -35,15 +35,17 @@ public struct AddHouseworkMemberView: View {
             }
             .padding(.bottom, 32)
             VStack(spacing: 12) {
-                ForEach(viewModel.state.members, id: \.id) { member in
+                ForEach(viewModel.state.members) { member in
                     MemberButton(
                         member: member,
                         isSelected: selectedMemberIDs.contains(member.id),
                         action: { toggleSelection(for: member) },
-                        displayName: member.id == 1 ? "나" : member.name
+                        displayName: displayName(for: member)
                     )
                 }
             }
+
+
             Spacer()
             MainButton(
                 title: "다음으로",
@@ -55,6 +57,14 @@ public struct AddHouseworkMemberView: View {
         .padding(.horizontal, 20)
         .task {
             await viewModel.fetchMembers()
+        }
+    }
+    
+    private func displayName(for member: Member) -> String {
+        if let first = viewModel.state.members.first, first.id == member.id {
+            return "나"
+        } else {
+            return member.name
         }
     }
     
@@ -74,37 +84,42 @@ struct MemberButton: View {
     let member: Member
     let isSelected: Bool
     let action: () -> Void
-    let displayName: String?
-    
+    let displayName: String
+
     var body: some View {
-        Button(action: action) {
+        let textFont: Font = isSelected ? .subtitle3 : .subtitle4
+        let textColor: Color = isSelected ? .blue400 : .gray900
+        let backgroundColor: Color = isSelected ? .blue50 : .gray25
+        let borderColor: Color = isSelected ? .blue400 : .gray25
+
+        return Button(action: action) {
             HStack(spacing: 12) {
                 KFImage(member.profileImageUrl)
-                    .placeholder {
-                        Color.gray200
-                    }
+                    .placeholder { Color.gray200 }
                     .resizable()
                     .scaledToFill()
                     .frame(width: 32, height: 32)
                     .clipShape(Circle())
-                
-                Text(displayName ?? "나")
-                    .font(isSelected ? .subtitle3: .subtitle4)
-                    .foregroundColor(isSelected ? .blue400 : .gray900)
-                
+
+                Text(displayName)
+                    .font(textFont)
+                    .foregroundColor(textColor)
+
                 Spacer()
             }
             .padding(.vertical, 12)
             .padding(.horizontal, 16)
+            .frame(maxWidth: .infinity)
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(backgroundColor)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(borderColor, lineWidth: 2)
+            )
+            .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(isSelected ? .blue50 : .gray25)
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(isSelected ? .blue400 : .gray25, lineWidth: 2)
-        )
     }
 }
