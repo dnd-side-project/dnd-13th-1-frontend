@@ -8,7 +8,6 @@
 import SwiftUI
 import Observation
 import AlloPresentation
-import AlloPresentation
 
 struct OnboardingNavView: View {
     @Bindable var onboardingCoordinator: OnboardingCoordinator
@@ -22,11 +21,3 @@ struct OnboardingNavView: View {
         }
     }
 }
-
-#if !canImport(AlloPresentation)
-enum OnboardingScene: Hashable {
-    case login
-}
-#endif
-
-

@@ -34,6 +34,8 @@ struct AlloApp: App {
         appCoordinator = AppCoordinator(diContainer: diContainer)
         onBoardingCoordinator = OnboardingCoordinator(diContainer: diContainer)
         
+        try? KeychainService.delete(key: "accessToken")
+        
         /// Keychain에서 accessToken을 확인하여 로그인 상태를 설정합니다
         checkLoginStatusFromKeychain()
         
