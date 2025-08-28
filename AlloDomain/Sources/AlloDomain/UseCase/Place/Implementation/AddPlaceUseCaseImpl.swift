@@ -15,8 +15,8 @@ final class AddPlaceUseCaseImpl {
 }
 
 extension AddPlaceUseCaseImpl: AddPlaceUseCase {
-    func execute(groupId: Int, placeName: String) async throws {
-        return try await placeRepository.addPlace(groupId: groupId, placeName: placeName)
+    func execute(placeName: String) async throws -> HouseworkPlace {
+        return try await placeRepository.addPlace(placeName: placeName)
     }
 }
 

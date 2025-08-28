@@ -78,7 +78,7 @@ final class AppCoordinator: Coordinator {
             let addWorkstandardViewModel = AddWorkstandardViewModel(
                 coordinator: self,
                 housework: housework,
-                tagUseCase: diContainer.resolveGetTagListUseCase(),
+                tagUseCase: diContainer.resolveFetchTagsUseCase(),
                 addTagUseCase: diContainer.resolveAddTagUseCase())
             AddWorkstandardView(viewModel: addWorkstandardViewModel)
         case .houseworkMember(let housework):

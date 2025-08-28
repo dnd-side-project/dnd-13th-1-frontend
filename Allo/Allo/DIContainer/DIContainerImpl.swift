@@ -31,6 +31,10 @@ final class DIContainerImpl {
 }
 // MARK: - DIContainer 프로토콜 구현
 extension DIContainerImpl: DIContainer {
+    func resolveAddPlaceUseCase() -> AddPlaceUseCase {
+        UseCaseFactory.makeAddPlaceUseCase(placeRepository: placeRepository)
+    }
+    
     func resolveCreateGroupUseCase() -> CreateGroupUseCase {
         UseCaseFactory.makeCreateGroupUseCase(groupRepository: groupRepository)
     }
@@ -142,25 +146,5 @@ extension DIContainerImpl: DIContainer {
     
     func resolveFetchMemberUseCase() -> FetchMemberUseCase {
         UseCaseFactory.makeFetchMemberUseCase(memberRepository: memberRepository)
-    }
-
-    func resolveFetchDaysUseCase() -> FetchHouseworkDaysUseCase {
-        UseCaseFactory.makeFetchHouseworkDaysUseCase(houseworkDaysRepository: houseworkDaysRepository)
-    }
-    
-    func resolveSendEmotionUseCase() -> SendEmotionUseCase {
-        UseCaseFactory.makeSendEmotionUseCase(emotionRepository: emotionRepository)
-    }
-    
-    func resolveGetEmotionListUseCase() -> FetchEmotionUseCase {
-        UseCaseFactory.makeGetEmotionListUseCase(emotionRepository: emotionRepository)
-    }
-    
-    func resolvetransformAiUseCase() -> AIUseCase {
-        UseCaseFactory.makeTransformAiUseCase(aiRepository: aiRepository)
-    }
-    
-    func resolveDetailEmotionUseCase() -> EmotionDetailUseCase {
-        UseCaseFactory.makeDetailEmotionUseCase(emotionRepository: emotionRepository)
     }
 }

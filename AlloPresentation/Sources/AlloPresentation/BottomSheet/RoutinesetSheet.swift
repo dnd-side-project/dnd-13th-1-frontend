@@ -41,7 +41,7 @@ public struct RoutinesetSheet: View {
                     Button(action: {
                         guard let category = selectedCategory else { return }
                         
-                        let selectedDaysArray = selectedDays.sorted()
+                        let selectedDaysArray = days.filter { selectedDays.contains($0) }
                         
                         let routineText: String
                         if category == "매주" || category == "격주", !selectedDaysArray.isEmpty {
@@ -49,7 +49,6 @@ public struct RoutinesetSheet: View {
                         } else {
                             routineText = category
                         }
-                        
                         completeButtonAction(category, selectedDaysArray, routineText)
                     }) {
                         Text("완료")

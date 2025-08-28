@@ -16,6 +16,6 @@ final class FetchMemberUseCaseImpl {
 
 extension FetchMemberUseCaseImpl: FetchMemberUseCase {
     public func execute(groupId: Int) async throws -> [Member] {
-        return try await memberRepository.getMemberList(groupId: groupId)
+        return try await memberRepository.fetchMembers()
     }
 }

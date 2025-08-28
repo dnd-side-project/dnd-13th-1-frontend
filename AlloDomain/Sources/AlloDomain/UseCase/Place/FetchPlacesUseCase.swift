@@ -8,5 +8,5 @@
 import Foundation
 
 public protocol FetchPlacesUseCase: Sendable {
-    func execute(groupId: Int) async throws -> [HouseworkPlace]
+    func execute() async throws -> [HouseworkPlace]
 }

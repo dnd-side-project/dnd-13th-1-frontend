@@ -106,11 +106,7 @@ public struct AddWorkstandardView: View {
         }
             .onAppear {
             Task {
-                await viewModel.loadTags(groupId: 123) // 실제 groupId로 변경
-                print("fetchedTags count:", viewModel.state.fetchedTags.count)
-                        viewModel.state.fetchedTags.forEach { tag in
-                            print("tagId:", tag.tagId, "name:", tag.name)
-                        }
+                await viewModel.loadTags()
             }
         }
     }

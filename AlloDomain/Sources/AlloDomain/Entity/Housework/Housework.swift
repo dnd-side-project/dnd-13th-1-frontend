@@ -71,6 +71,36 @@ public final class Housework: Equatable, Identifiable, Sendable {
         self.dayOfTheWeek = dayOfTheWeek
         self.isNotified = isNotified
     }
+    public convenience init(
+        id: Int,
+        place: String,
+        title: String,
+        member: [Member],
+        date: Date,
+        isDone: Bool,
+        routine: HouseworkRoutine,
+        tags: [String]
+    ) {
+        self.init(
+            id: id,
+            place: place,
+            title: title,
+            member: member,
+            date: date,
+            isDone: isDone,
+            routine: routine,
+            tags: tags,
+            houseWorkName: title,
+            placeAdd: 0,
+            tagsAdd: [],
+            members: [],
+            startDate: "",
+            dueDate: "",
+            routineAdd: .none,
+            dayOfTheWeek: [],
+            isNotified: false
+        )
+    }
 
     // 서버 전송용 convenience 초기화자
     public convenience init(

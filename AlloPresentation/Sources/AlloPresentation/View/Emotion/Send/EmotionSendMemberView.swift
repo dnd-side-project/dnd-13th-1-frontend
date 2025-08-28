@@ -26,7 +26,8 @@ public struct EmotionSendMemberView: View {
                     MemberButton(
                         member: member,
                         isSelected: selectedMemberIDs.contains(member.id),
-                        action: { toggleSelection(for: member) }
+                        action: { toggleSelection(for: member) },
+                        displayName: member.id == 1 ? "나" : member.name
                     )
                 }
             }

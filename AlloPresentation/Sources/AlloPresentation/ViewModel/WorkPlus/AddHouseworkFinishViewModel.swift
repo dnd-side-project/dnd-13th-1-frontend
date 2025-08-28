@@ -22,7 +22,6 @@ public final class AddHouseworkFinishViewModel: ViewModelable {
     // MARK: - Action
     enum Action {
         case didTapBackButton
-        case didTapTagButton
         case didTapNextButton
     }
     
@@ -44,19 +43,19 @@ public final class AddHouseworkFinishViewModel: ViewModelable {
         switch action {
         case .didTapBackButton:
             coordinator.pop()
-        case .didTapTagButton:
-            coordinator.popToRoot()
         case .didTapNextButton:
             let useCase = addHouseworkUseCase
             let housework = state.housework
-            let groupId = 0
             Task {
-                try await useCase.execute(groupId: groupId,housework: housework)
-                await MainActor.run {
-                    coordinator.popToRoot()
+                do {
+                    try await useCase.execute(housework: housework)
+                    await MainActor.run {
+                        coordinator.popToRoot()
+                    }
+                } catch {
+                    print("집안일 추가 실패: \(error)")
                 }
             }
-
         }
     }
 }

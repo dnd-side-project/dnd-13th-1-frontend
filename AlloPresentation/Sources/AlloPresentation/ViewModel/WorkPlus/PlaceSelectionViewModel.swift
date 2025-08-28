@@ -49,9 +49,9 @@ public final class PlaceSelectionViewModel: ViewModelable {
         }
     }
     
-    public func loadPlaces(groupId: Int) async {
+    public func loadPlaces() async {
         do {
-            let fetchedPlaces = try await fetchPlacesUseCase.execute(groupId: groupId)
+            let fetchedPlaces = try await fetchPlacesUseCase.execute()
             state.places = fetchedPlaces
             
             if let currentSelected = state.selectedCategory {

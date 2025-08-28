@@ -39,7 +39,8 @@ public struct AddHouseworkMemberView: View {
                     MemberButton(
                         member: member,
                         isSelected: selectedMemberIDs.contains(member.id),
-                        action: { toggleSelection(for: member) }
+                        action: { toggleSelection(for: member) },
+                        displayName: member.id == 1 ? "나" : member.name
                     )
                 }
             }
@@ -73,6 +74,7 @@ struct MemberButton: View {
     let member: Member
     let isSelected: Bool
     let action: () -> Void
+    let displayName: String?
     
     var body: some View {
         Button(action: action) {
@@ -86,25 +88,23 @@ struct MemberButton: View {
                     .frame(width: 32, height: 32)
                     .clipShape(Circle())
                 
-                Text(member.name)
-                    .font(isSelected ? .subtitle3 : .subtitle4)
+                Text(displayName ?? "나")
+                    .font(isSelected ? .subtitle3: .subtitle4)
                     .foregroundColor(isSelected ? .blue400 : .gray900)
                 
                 Spacer()
             }
             .padding(.vertical, 12)
             .padding(.horizontal, 16)
-            .frame(maxWidth: .infinity) 
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(isSelected ? .blue50 : .gray25)
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke(isSelected ? .blue400 : .gray25, lineWidth: 2)
-            )
-            .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(isSelected ? .blue50 : .gray25)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(isSelected ? .blue400 : .gray25, lineWidth: 2)
+        )
     }
 }

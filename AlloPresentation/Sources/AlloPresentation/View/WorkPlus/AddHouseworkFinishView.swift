@@ -81,7 +81,7 @@ public struct AddHouseworkFinishView: View {
                             .fill(.gray25)
                     )
                     VStack(alignment: .leading) {
-                        if !viewModel.state.housework.tags.isEmpty { // 태그가 있을 때만 표시
+                        if !viewModel.state.housework.tags.isEmpty {
                             Text("집안일 기준 태그")
                                 .font(.subtitle6)
                                 .foregroundColor(.gray700)

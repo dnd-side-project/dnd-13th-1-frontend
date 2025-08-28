@@ -15,7 +15,7 @@ struct TabbedMainView: View {
 
     var body: some View {
         NavigationStack(path: $appCoordinator.path) {
-            ZStack(alignment: .bottom) {
+            VStack(alignment: .leading) {
                 Group {
                     switch selectedTab {
                     case .home:
@@ -37,7 +37,7 @@ struct TabbedMainView: View {
             }
             .ignoresSafeArea(edges: .bottom)
             .navigationDestination(for: AppScene.self) { scene in
-                appCoordinator.buildScene(scene)
+                appCoordinator.buildScene(scene).navigationBarBackButtonHidden()
             }
             .sheet(item: $appCoordinator.appSheet, onDismiss: appCoordinator.sheetOnDismiss) {
                 appCoordinator.buildSheet($0)

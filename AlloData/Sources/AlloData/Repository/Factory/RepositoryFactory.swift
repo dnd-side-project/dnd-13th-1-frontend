@@ -16,7 +16,7 @@ public struct RepositoryFactory {
     }
   
     public func makeHouseworkRepository(liveData: Bool) -> HouseworkRepository {
-        liveData ? HouseworkRepositoryImpl(networkService: networkService) : StubHouseworkRepository()
+        HouseworkRepositoryImpl(networkService: networkService)
     }
 
     public func makeKakaoLoginRepository() -> KakaoLoginRepository {
@@ -24,11 +24,11 @@ public struct RepositoryFactory {
     }
     
     public func makePlaceRepository(liveData: Bool) -> PlaceRepository {
-        liveData ? PlaceRepositoryImpl(networkService: networkService) : StubPlaceRepository()
+        PlaceRepositoryImpl(networkService: networkService)
     }
     
     public func makeMemberRepository(liveData: Bool) -> MemberRepository {
-        liveData ? MemberRepositoryImpl(networkService: networkService) : StubMemberRepository()
+        MemberRepositoryImpl(networkService: networkService)
     }
     
     public func makeGroupRepository(liveData: Bool = true) -> GroupRepository {
@@ -41,21 +41,6 @@ public struct RepositoryFactory {
     
     public func makeStatsRepository(liveData: Bool = true) -> StatsRepository {
         liveData ? StatsRepositoryImpl(networkService: networkService) : StubStatsRepository()
-    }
-    
-    public func makeHouseworkSevenDaysRepository(liveData: Bool) -> HouseworkDaysRepository {
-        liveData ? HouseworkDaysRepositoryImpl() : StubHouseworkDaysRepository()
-    }
-    
-    public func makeEmotionRepository(liveData: Bool) -> EmotionRepository {
-        liveData ? EmotionRepositoryimpl() : StubEmotionListRepository()
-    }
-    
-    public func makeAIRepository() -> AIRepository {
-        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "OPENAI_API_KEY") as? String else {
-            fatalError("OPENAI_API_KEY가 Info.plist에 없습니다.")
-        }
-        return AIRepositoryImpl(apiClient: AIAPIClient(apiKey: apiKey))
     }
     
     public func makeHouseworkSevenDaysRepository(liveData: Bool) -> HouseworkDaysRepository {

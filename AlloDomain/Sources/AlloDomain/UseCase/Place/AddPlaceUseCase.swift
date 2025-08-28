@@ -8,5 +8,5 @@
 import Foundation
 
 public protocol AddPlaceUseCase: Sendable {
-    func execute(groupId: Int, placeName: String) async throws
+    func execute(placeName: String) async throws -> HouseworkPlace
 }

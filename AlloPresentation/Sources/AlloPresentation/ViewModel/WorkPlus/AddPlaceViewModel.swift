@@ -20,7 +20,7 @@ public final class AddPlaceViewModel: ViewModelable {
     
     var state: State
     let coordinator: Coordinator
-    let usecase : AddPlaceUseCase
+    let usecase: AddPlaceUseCase
     // MARK: - Action
     enum Action {
         case didTapBackButton
@@ -40,7 +40,6 @@ public final class AddPlaceViewModel: ViewModelable {
         case .didTapBackButton:
             coordinator.dismissFullScreenCover()
         case .didTapAddPlaceButton:
-            coordinator.dismissFullScreenCover()
             Task {
                 await addPlace()
             }
@@ -48,20 +47,14 @@ public final class AddPlaceViewModel: ViewModelable {
     }
     
     private func addPlace() async {
-            guard !state.newPlaceName.isEmpty else { return }
-            guard let groupIdString = state.groupId, let groupIdInt = Int(groupIdString) else {
-                print("그룹ID가 유효하지 않습니다.")
-                return
-            }
-
-            do {
-                try await usecase.execute(groupId: groupIdInt, placeName: state.newPlaceName)
-                state.existingPlaces.append(state.newPlaceName)
-                state.newPlaceName = ""
-                coordinator.dismissFullScreenCover()
-            } catch {
-                print("장소 추가 실패: \(error)")
-            }
+        guard !state.newPlaceName.isEmpty else { return }
+        do {
+            let newPlace: HouseworkPlace = try await usecase.execute(placeName: state.newPlaceName)
+            state.existingPlaces.append(newPlace.name)
+            state.newPlaceName = ""
+            coordinator.dismissFullScreenCover()
+        } catch {
+            print("장소 추가 실패: \(error)")
         }
-    
+    }
 }

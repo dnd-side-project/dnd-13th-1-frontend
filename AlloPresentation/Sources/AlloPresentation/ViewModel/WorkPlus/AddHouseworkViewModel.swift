@@ -79,8 +79,8 @@ extension AddHouseworkViewModel {
                     self?.state.selectedPlaceId = placeId
                     self?.coordinator.dismissSheet()
                 }),
-                onDismiss: {}
-            )
+                onDismiss: {})
+
         case .didTapAdddRoutineButton:
             coordinator.presentSheet(AppSheet.routineSelection(
                 initialRoutine: state.routine,
@@ -109,15 +109,22 @@ extension AddHouseworkViewModel {
 // MARK: - Function
 extension AddHouseworkViewModel {
     func makeHousework() -> Housework? {
+        // Date 변환
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko_KR")
         formatter.dateFormat = "yyyy.MM.dd(EE)"
         guard let date = formatter.date(from: state.startDate) else { return nil }
         print("routine", state.routineEnum)
         print("dayOfTheWeek", state.selectedDays.map { $0.toDayOfWeek()})
-
-        // 서버 전송용 데이터 생성
         let housework = Housework(
+            id: 0,
+            place: state.place,
+            title: state.myHouseworkTitle,
+            member: [],
+            date: Date(),
+            isDone: false,
+            routine: HouseworkRoutine(rawValue: state.routine) ?? .none,
+            tags: [],
             houseWorkName: state.myHouseworkTitle,
             placeAdd: state.selectedPlaceId ?? 0,
             tagsAdd: [0],
@@ -128,7 +135,7 @@ extension AddHouseworkViewModel {
             dayOfTheWeek: state.selectedDays.map { $0.toDayOfWeek() },
             isNotified: state.alarm
         )
-        
+        print("housework문", state.place)
         return housework
     }
 

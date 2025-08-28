@@ -16,8 +16,8 @@ public final class AddWorkstandardViewModel: ViewModelable {
         var housework: Housework
         var selectedStandards: [String] = []
         var customTags: [String] = []
-        var customTag: TagList?
-        var fetchedTags: [TagList] = []
+        var customTag: TagItem?
+        var fetchedTags: [TagItem] = []
     }
     // MARK: - Action
     enum Action {
@@ -28,9 +28,9 @@ public final class AddWorkstandardViewModel: ViewModelable {
     // MARK: - Properties
     var state: State
     let coordinator: Coordinator
-    let tagUseCase: TagListUseCase
-    let addTagUseCase: TagAddUseCase
-    public init(coordinator: Coordinator, housework: Housework, tagUseCase: TagListUseCase, addTagUseCase: TagAddUseCase) {
+    let tagUseCase: FetchTagsUseCase
+    let addTagUseCase: AddTagUseCase
+    public init(coordinator: Coordinator, housework: Housework, tagUseCase: FetchTagsUseCase, addTagUseCase: AddTagUseCase) {
         self.coordinator = coordinator
         self.state = State(housework: housework)
         self.tagUseCase = tagUseCase
@@ -48,21 +48,27 @@ public final class AddWorkstandardViewModel: ViewModelable {
                 do {
                     // 1. 선택된 서버 태그 이름 → tagId 변환
                     let selectedTagIds = state.selectedStandards.compactMap { selectedName in
-                        state.fetchedTags.first(where: { $0.name == selectedName })?.tagId
+                        state.fetchedTags.first(where: { $0.name == selectedName })?.id
                     }
-                    
                     // 2. 커스텀 태그 서버에 추가 후 tagId 반환
                     var createdCustomTagIds: [Int] = []
                     for customTag in state.customTags {
-                        let newTag = try await addTagUseCase.execute(groupId: 123, tagName: customTag)
-                        createdCustomTagIds.append(newTag.tagId)
+                        let newTag = try await addTagUseCase.execute(name: customTag)
+                        createdCustomTagIds.append(newTag.id)
                     }
-                    
                     // 3. 최종 tagId 배열
                     let allTagIds = selectedTagIds + createdCustomTagIds
                     let allTags = state.selectedStandards + state.customTags
                     // 4. Housework 업데이트
                     let updatedHousework = Housework(
+                        id: 0,
+                        place: state.housework.place,
+                        title: state.housework.title,
+                        member: [],
+                        date: Date(),
+                        isDone: false,
+                        routine: .none,
+                        tags: allTags,
                         houseWorkName: state.housework.houseWorkName,
                         placeAdd: state.housework.placeAdd,
                         tagsAdd: allTagIds,
@@ -82,9 +88,9 @@ public final class AddWorkstandardViewModel: ViewModelable {
         }
     }
     
-    public func loadTags(groupId: Int) async {
+    public func loadTags() async {
         do {
-            let fetchedTags = try await tagUseCase.execute(groupId: groupId)
+            let fetchedTags = try await tagUseCase.execute()
             await MainActor.run {
                 state.fetchedTags = fetchedTags
                 print("로드된 태그:", fetchedTags.map { $0.name })
@@ -93,11 +99,10 @@ public final class AddWorkstandardViewModel: ViewModelable {
             print("tag 불러오기 실패: \(error)")
         }
     }
-
     
-    public func addTags(groupId: Int, tagName: String) async {
+    public func addTags(tagName: String) async {
         do {
-            let addTags = try await addTagUseCase.execute(groupId: groupId, tagName: tagName)
+            let addTags = try await addTagUseCase.execute(name: tagName)
             state.customTag = addTags
         } catch {
             print("tag 추가 실패: \(error)")

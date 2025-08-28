@@ -8,5 +8,5 @@
 import Foundation
 
 public protocol AddHouseworkUseCase: Sendable {
-    func execute(groupId: Int, housework: Housework) async throws
+    func execute(housework: Housework) async throws
 }

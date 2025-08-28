@@ -16,7 +16,6 @@ public final class AddHouseworkMemberViewModel: ViewModelable {
         var housework: Housework
         var members: [Member] = []
         var selectedMembers: [Member] = []
-        var tagList: [String] = []
     }
     // MARK: - Action
     enum Action {
@@ -40,14 +39,19 @@ public final class AddHouseworkMemberViewModel: ViewModelable {
         case .didTapNextButton:
             // 선택된 멤버 id 추출
             let selectedMemberIds = state.selectedMembers.map { $0.id }
-            // TODO: 태그 id 추출, 현재 임시로 [0] 사용
-            let selectedTagIds: [Int] = [0]
-            
-            // 서버 전송용 Housework 생성
+            // UI에서 사용할 Member 배열도 같이 전달
             let housework = Housework(
+                id: 0,
+                place: state.housework.place,
+                title: state.housework.title,
+                member: state.selectedMembers,
+                date: Date(),
+                isDone: false,
+                routine: .none,
+                tags: state.housework.tags,
                 houseWorkName: state.housework.title,
-                placeAdd: 0,                  // 선택된 place index
-                tagsAdd: selectedTagIds,
+                placeAdd: state.housework.placeAdd,
+                tagsAdd: state.housework.tagsAdd,
                 members: selectedMemberIds,
                 startDate: state.housework.startDate,
                 dueDate: state.housework.dueDate,
@@ -55,10 +59,7 @@ public final class AddHouseworkMemberViewModel: ViewModelable {
                 dayOfTheWeek: state.housework.dayOfTheWeek,
                 isNotified: state.housework.isNotified
             )
-            
-            // 화면 이동 시 서버 전송용 Housework 전달
             coordinator.push(AppScene.houseworkPlusFinish(housework: housework))
-
         }
     }
     
