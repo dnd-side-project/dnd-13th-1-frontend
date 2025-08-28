@@ -1,11 +1,11 @@
 import Foundation
 
 public protocol GetCleanlinessUseCase { func execute() async throws -> CleanlinessScore }
-public protocol GetMyContributionUseCase { func execute() async throws -> ContributionScore }
-public protocol GetTodayCompletionStatusUseCase { func execute() async throws -> TodayCompletionStatus }
-public protocol GetWeekCompletionStatusUseCase { func execute() async throws -> WeekCompletionStatus }
-public protocol GetTwoWeekComparisonUseCase { func execute() async throws -> TwoWeekComparison }
-public protocol GetActivitySummaryUseCase { func execute() async throws -> ActivitySummary }
+public protocol GetMyContributionUseCase: Sendable { func execute() async throws -> ContributionScore }
+public protocol GetTodayCompletionStatusUseCase: Sendable { func execute() async throws -> TodayCompletionStatus }
+public protocol GetWeekCompletionStatusUseCase: Sendable { func execute() async throws -> WeekCompletionStatus }
+public protocol GetTwoWeekComparisonUseCase: Sendable { func execute() async throws -> TwoWeekComparison }
+public protocol GetActivitySummaryUseCase: Sendable { func execute() async throws -> ActivitySummary }
 
 final class GetCleanlinessUseCaseImpl: GetCleanlinessUseCase { private let repo: StatsRepository; init(repo: StatsRepository){ self.repo = repo } ; func execute() async throws -> CleanlinessScore { try await repo.fetchCleanliness() } }
 final class GetMyContributionUseCaseImpl: GetMyContributionUseCase { private let repo: StatsRepository; init(repo: StatsRepository){ self.repo = repo } ; func execute() async throws -> ContributionScore { try await repo.fetchMyContribution() } }

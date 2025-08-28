@@ -1,5 +1,5 @@
 //
-//  NavigationBar.swift
+//  HomeNavigationBar.swift
 //  AlloPresentation
 //
 //  Created by 황채웅 on 8/27/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct NavigationBar: View {
+struct HomeNavigationBar: View {
     
     let onTapGroup: () -> Void
     let onTapNotification: () -> Void

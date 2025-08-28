@@ -61,7 +61,15 @@ final class AppCoordinator: Coordinator {
             )
             CheckListView(viewModel: checkListViewModel)
         case .mypage:
-            let mypageViewModel = MyPageViewModel(coordinator: self)
+            let mypageViewModel = MyPageViewModel(
+                fetchMemberUseCase: diContainer.resolveFetchMemberUseCase(),
+                getActivitySummaryUseCase: diContainer.resolveGetActivitySummaryUseCase(),
+                getTodayCompletionStatusUseCase: diContainer.resolveGetTodayCompletionStatusUseCase(),
+                getMyContributionUseCase: diContainer.resolveGetMyContributionUseCase(),
+                getWeekCompletionStatusUseCase: diContainer.resolveGetWeekCompletionStatusUseCase(),
+                getTwoWeekComparisonUseCase: diContainer.resolveGetTwoWeekComparisonUseCase(),
+                coordinator: self
+            )
             MyPageView(viewModel: mypageViewModel)
         default:
             EmptyView()

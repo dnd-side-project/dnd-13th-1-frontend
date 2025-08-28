@@ -48,5 +48,3 @@ final class StatsRepositoryImpl: StatsRepository {
         return ActivitySummary(received: dto.receivedEmotionCardCount, sent: dto.sentEmotionCardCount, completed: dto.completedHouseWorkCount)
     }
 }
-
-

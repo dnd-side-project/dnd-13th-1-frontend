@@ -53,7 +53,7 @@ public struct KeychainService {
         return token
     }
     
-    static func delete(key: String) throws {
+    public static func delete(key: String) throws {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service,

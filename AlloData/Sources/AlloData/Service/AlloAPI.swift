@@ -42,8 +42,11 @@ enum AlloAPI {
 
 extension AlloAPI: TargetType {
     
-    var accessToken: String? {
-        try? KeychainService.get(key: "accessToken")
+    var accessToken: String {
+        guard let token = try? KeychainService.get(key: "accessToken") else {
+            return ""
+        }
+        return token
     }
     
     var baseURL: URL {
@@ -231,15 +234,15 @@ extension AlloAPI: TargetType {
         }
     }
     
-    var headers: [String : String]? {
+    var headers: [String: String]? {
         /// 기본 엔드포인트에 적용
         let withAuthorization = [
-            "Authorization": "Bearer \(accessToken ?? "")",
+            "Authorization": "\(accessToken)",
             "Content-Type": "application/json"
         ]
         /// 사진 등 Multipart FormData 엔드포인트에 적용
         let multipartFormDatawithAuthorization = [
-            "Authorization": "Bearer \(accessToken ?? "")",
+            "Authorization": "\(accessToken)",
             "Content-Type": "multipart/form-data"
         ]
         /// 로그인 등 Auth 관련 엔드포인트에 적용
