@@ -32,7 +32,6 @@ public final class PlaceSelectionViewModel: ViewModelable {
         self.coordinator = coordinator
         self.fetchPlacesUseCase = fetchPlacesUseCase
         self.state = State()
-//        self.state.selectedCategory = HouseworkPlace(placeId: UUID(), name: initialPlace)
     }
     
     // MARK: - Action Handler
@@ -42,10 +41,23 @@ public final class PlaceSelectionViewModel: ViewModelable {
             state.selectedCategory = place
         case .addNewPlace:
             coordinator.dismissSheet()
-            Task {
-                try? await Task.sleep(nanoseconds: 300_000_000)
-                coordinator.presentFullScreenCover(AppFullScreenCover.addHousePlace)
-            }
+            coordinator.presentFullScreenCover(
+                AppFullScreenCover.addHousePlace(onComplete: { [weak self] _ in
+                    Task { [weak self] in
+                        await self?.loadPlaces()
+                        self?.coordinator.dismissFullScreenCoverAndReturnToSheet(
+                            AppSheet.placeSelection(
+                                initialPlace: self?.state.selectedCategory?.name ?? "",
+                                placeClickAction: { [weak self] name, id in
+                                    guard let self else { return }
+                                    self.state.selectedCategory = HouseworkPlace(placeId: id, name: name)
+                                    self.coordinator.dismissSheet()
+                                }
+                            )
+                        )
+                    }
+                })
+            )
         }
     }
     

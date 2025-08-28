@@ -24,6 +24,7 @@ public final class AddWorkstandardViewModel: ViewModelable {
         case didTapBackButton
         case didTapTagButton
         case didTapNextButton
+       // case didTapAddCustomTag(name: String)
     }
     // MARK: - Properties
     var state: State
@@ -85,6 +86,17 @@ public final class AddWorkstandardViewModel: ViewModelable {
                     print("태그 생성 실패:", error)
                 }
             }
+        //case .didTapAddCustomTag(let name):
+//            Task { @MainActor in
+//                do {
+//                    let newTag = try await addTagUseCase.execute(name: name)
+//                    state.customTags.append(newTag.name)
+//                    state.customTag = newTag
+//                    print("추가된 태그:", newTag)
+//                } catch {
+//                    print("tag 추가 실패:", error)
+//                }
+//            }
         }
     }
     
@@ -97,15 +109,6 @@ public final class AddWorkstandardViewModel: ViewModelable {
             }
         } catch {
             print("tag 불러오기 실패: \(error)")
-        }
-    }
-    
-    public func addTags(tagName: String) async {
-        do {
-            let addTags = try await addTagUseCase.execute(name: tagName)
-            state.customTag = addTags
-        } catch {
-            print("tag 추가 실패: \(error)")
         }
     }
 }

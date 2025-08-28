@@ -39,7 +39,7 @@ public struct AddWorkstandardView: View {
                     }
                 }
                 .padding(.bottom, 32)
-                TagWriteTextFields(tags: $customTags, maxSelection: maxSelection)
+                TagWriteTextFields(tags: $customTags, maxSelection: maxSelection, viewModel: viewModel)
                     .padding(.bottom, 20)
                     .focused($isTextFieldFocused)
                 // 태그 영역 스크롤
@@ -155,7 +155,7 @@ struct TagWriteTextFields: View {
     let maxSelection: Int
     @FocusState private var isSearchFieldFocused: Bool
     @State private var searchText: String = ""
-    
+    @ObservedObject var viewModel: AddWorkstandardViewModel
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack(spacing: 8) {
@@ -173,6 +173,7 @@ struct TagWriteTextFields: View {
                 
                 Button {
                     if !searchText.isEmpty, searchText.count <= 12, tags.count < maxSelection {
+                      //  viewModel.action(.didTapAddCustomTag(name: searchText))
                         withAnimation {
                             tags.append(searchText)
                             searchText = ""
