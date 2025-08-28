@@ -44,11 +44,11 @@ public struct RepositoryFactory {
     }
     
     public func makeHouseworkSevenDaysRepository(liveData: Bool) -> HouseworkDaysRepository {
-        liveData ? HouseworkDaysRepositoryImpl() : StubHouseworkDaysRepository()
+        HouseworkDaysRepositoryImpl(networkService: networkService)
     }
     
     public func makeEmotionRepository(liveData: Bool) -> EmotionRepository {
-        liveData ? EmotionRepositoryimpl() : StubEmotionListRepository()
+        EmotionRepositoryimpl(networkService: networkService)
     }
     
     public func makeAIRepository() -> AIRepository {

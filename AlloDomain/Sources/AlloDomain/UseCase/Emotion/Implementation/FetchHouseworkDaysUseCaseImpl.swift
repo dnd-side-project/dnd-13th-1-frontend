@@ -15,8 +15,8 @@ final class FetchHouseworkDaysUseCaseImpl {
 }
 
 extension FetchHouseworkDaysUseCaseImpl: FetchHouseworkDaysUseCase {
-    public func execute() async throws -> [HouseworkSevendays] {
-        return try await houseworkDaysRepository.fetchSevenDaysHousework()
+    public func execute(receiverId: Int) async throws -> [HouseworkSevendays] {
+        return try await houseworkDaysRepository.fetchSevenDaysHousework(receiverId: receiverId)
     }
 }
 

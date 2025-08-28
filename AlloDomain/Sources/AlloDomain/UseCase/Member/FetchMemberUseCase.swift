@@ -8,5 +8,5 @@
 import Foundation
 
 public protocol FetchMemberUseCase: Sendable {
-    func execute(groupId: Int) async throws -> [Member]
+    func execute() async throws -> [Member]
 }

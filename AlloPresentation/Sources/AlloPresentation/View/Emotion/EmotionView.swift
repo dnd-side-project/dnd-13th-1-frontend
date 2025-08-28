@@ -25,7 +25,7 @@ public struct EmotionView: View {
             )
             .padding(.top, 10)
             .onChange(of: selectedTab) { _, newTab in
-                viewModel.state.selectedFilter = (newTab == .received) ? "from" : "to"
+                viewModel.state.selectedFilter = (newTab == .received) ? "received" : "sent"
                 Task { await viewModel.loadEmotionList() }
             }
             .onChange(of: sortType) { _, newSort in

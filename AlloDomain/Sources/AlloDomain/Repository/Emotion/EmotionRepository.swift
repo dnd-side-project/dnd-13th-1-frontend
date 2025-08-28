@@ -8,7 +8,8 @@
 import Foundation
 
 public protocol EmotionRepository: Sendable {
-    func sendHouseworkEmotion() async throws -> [SendEmotion]
+    func sendHouseworkEmotion(sendEmotion: SendEmotion) async throws
     func getEmotionList(filter: String, sorted: String) async throws -> ([EmotionList])
     func emotionDetail(for id: Int) async throws -> EmotionDetail
+   // func deleteEmotion() async throws -> EmotionDetail
 }

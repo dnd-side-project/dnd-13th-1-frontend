@@ -8,5 +8,5 @@
 import Foundation
 
 public protocol HouseworkDaysRepository: Sendable {
-    func fetchSevenDaysHousework() async throws -> [HouseworkSevendays]
+    func fetchSevenDaysHousework(receiverId: Int) async throws -> [HouseworkSevendays]
 }

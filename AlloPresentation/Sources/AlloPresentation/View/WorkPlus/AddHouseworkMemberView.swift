@@ -54,7 +54,7 @@ public struct AddHouseworkMemberView: View {
         }
         .padding(.horizontal, 20)
         .task {
-            await viewModel.fetchMembers(groupId: 123)
+            await viewModel.fetchMembers()
         }
     }
     

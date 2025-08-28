@@ -61,7 +61,7 @@ public enum AppSheet: AppRoute {
 }
 
 public enum AppFullScreenCover: AppRoute {
-    case addHousePlace(onComplete: ((HouseworkPlace) -> Void)? = nil)
+    case addHousePlace
     
     public var id: String {
         switch self {

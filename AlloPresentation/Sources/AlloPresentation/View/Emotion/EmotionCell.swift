@@ -55,7 +55,7 @@ struct EmotionCell: View {
         .padding(.vertical, 12)
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .fill(.gray25)
+                .fill(emotion.isRead ? Color.gray25 : Color.blue50)
         )
         .onTapGesture {
             onTap?()

@@ -13,7 +13,7 @@ public final class EmotionViewModel: ViewModelable {
     // MARK: - State
     struct State {
         var emotions: [EmotionList] = []
-        var selectedFilter: String = "from"
+        var selectedFilter: String = "received"
         var sortOrder: String = "desc"
     }
     // MARK: - Action
@@ -49,7 +49,7 @@ public final class EmotionViewModel: ViewModelable {
         Task {
             do {
                 let detail = try await emotionDetailUseCase.execute(id: id)
-                coordinator.push(AppScene.emotionDetails(detailEmotion: detail, isReceived: state.selectedFilter == "from"))
+                coordinator.push(AppScene.emotionDetails(detailEmotion: detail, isReceived: state.selectedFilter == "received"))
             } catch {
                 print("Error: \(error)")
             }
@@ -61,6 +61,7 @@ public final class EmotionViewModel: ViewModelable {
                 filter: state.selectedFilter,
                 sorted: state.sortOrder
             )
+            print("loadEmotionList - fetched count: \(result.count)")
             self.state.emotions = result
         } catch {
             print("failed to fetch houseworks")

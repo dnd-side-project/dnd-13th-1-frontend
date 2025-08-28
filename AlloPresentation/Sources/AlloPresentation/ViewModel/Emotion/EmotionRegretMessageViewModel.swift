@@ -19,6 +19,7 @@ public final class EmotionRegretMessageViewModel: ViewModelable {
         var isLoading: Bool = false
         var isAITransformed: Bool = false
         var receiverImg: URL
+        var isAIToneTriggered: Bool = false
     }
     // MARK: - Action
     enum Action {
@@ -52,6 +53,9 @@ public final class EmotionRegretMessageViewModel: ViewModelable {
             coordinator.push(AppScene.emotionFinish(sendEmotion: sendEmotion, receiverName: state.receiverName, houseworkTitle: state.houseworkTitle))
             
         case .didTapAIToneButton, .didTapRotateButton:
+            if state.contentText.isEmpty {
+                state.isAIToneTriggered = true
+            }
             Task { await transformTextWithAI() }
         case .updateContentText(let text):
             state.contentText = text
@@ -65,8 +69,10 @@ public final class EmotionRegretMessageViewModel: ViewModelable {
         do {
             let transformed = try await aiUseCase.transformMessage(state.contentText)
             state.contentText = transformed
+            state.isAITransformed = true
         } catch {
             print("AI 변환 실패: \(error.localizedDescription)")
+            state.isAITransformed = false
         }
         state.isLoading = false
     }

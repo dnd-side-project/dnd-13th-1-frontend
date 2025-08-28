@@ -63,9 +63,9 @@ public final class AddHouseworkMemberViewModel: ViewModelable {
         }
     }
     
-    func fetchMembers(groupId: Int) async {
+    func fetchMembers() async {
         do {
-            let members = try await fetchMemberUseCase.execute(groupId: groupId)
+            let members = try await fetchMemberUseCase.execute()
             state.members = members
         } catch {
             print("멤버 로드 실패: \(error)")
