@@ -9,7 +9,7 @@ import Foundation
 import Moya
 
 enum AlloAPI {
-    case createGroup(characterId: Int) // 그룹 생성
+    case createGroup(backGroundTypeNum: Int) // 그룹 생성
     case enterGroup(inviteCode: String) // 그룹 입장
     case addHouseworkSchedule(groupId: Int, requestDTO: AddHouseworkScheduleRequestDTO) // 집안일 일정 추가
     case getPlaceList(groupId: Int) // 그룹 장소 목록 조회
@@ -177,8 +177,8 @@ extension AlloAPI: TargetType {
     
     var task: Moya.Task {
         return switch self {
-        case let .createGroup(characterId):
-                .requestJSONEncodable(["characterId": characterId])
+        case let .createGroup(backGroundTypeNum):
+                .requestJSONEncodable(["backGroundTypeNum": backGroundTypeNum])
         case let .enterGroup(inviteCode):
                 .requestJSONEncodable(["inviteCode": inviteCode])
         case let .addHouseworkSchedule(_, requestDTO):

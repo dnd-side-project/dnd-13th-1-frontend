@@ -14,7 +14,10 @@ struct UserDefaultsService: Sendable {
     }
     
     static var groupId: Int? {
-        get { UserDefaults.standard.integer(forKey: "groupId") }
-        set { UserDefaults.standard.set(newValue, forKey: "groupId") }
+    get { 
+        let value = UserDefaults.standard.integer(forKey: "groupId")
+        return value == 0 ? nil : value  // 0일 때 nil 반환
     }
+    set { UserDefaults.standard.set(newValue, forKey: "groupId") }
+}
 }

@@ -20,10 +20,10 @@ public enum AppScene: AppRoute {
     case houseworkMember(housework: Housework)
     case houseworkPlusFinish(housework: Housework)
     case emotionMember
-    case houseworkSevendays(sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String, receiverImg: URL)
-    case emotionChoice(sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String, receiverImg: URL)
-    case emotionThankMessage(sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String, initialEmotion: EmotionType, receiverImg: URL)
-    case emotionRegretMessage(sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String, receiverImg: URL)
+    case houseworkSevendays(sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String, receiverImg: URL?)
+    case emotionChoice(sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String, receiverImg: URL?)
+    case emotionThankMessage(sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String, initialEmotion: EmotionType, receiverImg: URL?)
+    case emotionRegretMessage(sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String, receiverImg: URL?)
     case emotionFinish(sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String)
     case emotionDetails(detailEmotion: EmotionDetail, isReceived: Bool)
     public var id: String {

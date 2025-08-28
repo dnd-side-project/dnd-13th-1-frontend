@@ -70,19 +70,19 @@ struct CheckListCell: View {
                     spacing: 2
                 ) {
                     if isMyHousework {
-                        KFImage(housework.member[0].profileImageUrl)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 20, height: 20)
-                            .cornerRadius(.radius3)
+                        ProfileImageView(
+                            url: housework.member[0].profileImageUrl,
+                            size: 20,
+                            cornerRadius: 20
+                        )
                     }
                     ForEach(housework.member.dropFirst()) { member in
-                        KFImage(member.profileImageUrl)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 20, height: 20)
-                            .cornerRadius(.radius3)
-                            .opacity(0.36) // FIXME: 조정 필요
+                        ProfileImageView(
+                            url: member.profileImageUrl,
+                            size: 20,
+                            cornerRadius: 20
+                        )
+                        .opacity(0.4)
                     }
                     Spacer(minLength: 0)
                 }

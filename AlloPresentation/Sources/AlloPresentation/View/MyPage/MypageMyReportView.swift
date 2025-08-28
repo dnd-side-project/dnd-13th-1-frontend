@@ -27,7 +27,8 @@ struct MypageMyReportView: View {
                     valueColor: .blue400,
                     unitColor: .gray300,
                     showProgressBar: false,
-                    statusMessage: "잘하고 있어요!"
+                    statusMessage: "잘하고 있어요!",
+                    backgroundColor: .gray25
                 )
                 ReportCardView(
                     title: "나의 기여도",
@@ -37,7 +38,8 @@ struct MypageMyReportView: View {
                     valueColor: .blue400,
                     unitColor: .blue400,
                     showProgressBar: true,
-                    progressValue: contribution
+                    progressValue: contribution,
+                    backgroundColor: .gray25
                 )
             }
         }

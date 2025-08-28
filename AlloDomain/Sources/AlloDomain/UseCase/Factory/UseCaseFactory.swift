@@ -56,6 +56,9 @@ public struct UseCaseFactory {
     public static func makeGetMyGroupUseCase(groupRepository: GroupRepository) -> GetMyGroupUseCase {
         return GetMyGroupUseCaseImpl(repo: groupRepository)
     }
+    public static func makeSetMyGroupUseCase(groupRepository: GroupRepository) -> SetMyGroupUseCase {
+        return SetMyGroupUseCaseImpl(repo: groupRepository)
+    }
     
     // MARK: Tag
     public static func makeFetchTagsUseCase(tagRepository: TagRepository) -> FetchTagsUseCase {

@@ -64,6 +64,7 @@ public struct MyPageView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
             .scrollIndicators(.never)
-        }.task { await viewModel.load() }
+        }
+        .task { await viewModel.load() }
     }
 }

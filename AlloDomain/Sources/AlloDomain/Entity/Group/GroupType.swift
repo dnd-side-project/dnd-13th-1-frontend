@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum GroupType {
+public enum GroupType: CaseIterable {
     case roommate
     case lover
     case family

@@ -18,7 +18,7 @@ public final class HouseworkSevendaysViewModel: ViewModelable {
         var houseworTitle: String
         var selectedHouseworks: Set<Int> = []
         var sevenDaysHouseworks: [HouseworkSevendays] = []
-        var receiverImg: URL
+        var receiverImg: URL?
     }
     // MARK: - Action
     enum Action {
@@ -35,7 +35,7 @@ public final class HouseworkSevendaysViewModel: ViewModelable {
         sendEmotion: SendEmotion,
         receiverName: String,
         houseworTitle: String,
-        receiverImg: URL
+        receiverImg: URL?
     ) {
         self.coordinator = coordinator
         self.state = State(sendEmotion: sendEmotion, receiverName: receiverName, houseworTitle: houseworTitle, receiverImg: receiverImg)

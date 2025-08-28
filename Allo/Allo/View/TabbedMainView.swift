@@ -44,7 +44,7 @@ struct TabbedMainView: View {
             .fullScreenCover(item: $appCoordinator.appFullScreenCover, onDismiss: appCoordinator.fullScreenCoverOnDismiss) {
                 appCoordinator.buildFullScreenCover($0)
             }
-            .navigationBarHidden(true)
+            .navigationBarBackButtonHidden()
         }
     }
 }

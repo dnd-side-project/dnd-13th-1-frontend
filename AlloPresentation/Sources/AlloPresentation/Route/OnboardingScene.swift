@@ -10,6 +10,10 @@ import SwiftUI
 
 public enum OnboardingScene: AppRoute {
     case login
+    case onboardingComplete(nickname: String)
+    case enterGroup
+    case createGroup
+    case copyInviteCode(inviteCode: String, groupId: Int)
     public var id: String {
         String(describing: self)
     }

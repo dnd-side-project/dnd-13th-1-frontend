@@ -17,7 +17,7 @@ public final class EmotionChoiceViewModel: ViewModelable {
         var selectedHouseworkTitle: String
         var receiverName: String
         var selectedEmotion: EmotionType? = nil
-        var receiverImg: URL
+        var receiverImg: URL?
     }
     // MARK: - Action
     enum Action {
@@ -28,7 +28,7 @@ public final class EmotionChoiceViewModel: ViewModelable {
     // MARK: - Properties
     var state: State
     let coordinator: Coordinator
-    public init(coordinator: Coordinator, sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String, receiverImg: URL) {
+    public init(coordinator: Coordinator, sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String, receiverImg: URL?) {
         self.coordinator = coordinator
         self.state = State(sendEmotion: sendEmotion, selectedHouseworkTitle: houseworkTitle, receiverName: receiverName, receiverImg: receiverImg)
         self.state.selectedHouseworkTitle = houseworkTitle

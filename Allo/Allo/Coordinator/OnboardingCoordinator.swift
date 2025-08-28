@@ -35,6 +35,32 @@ final class OnboardingCoordinator: Coordinator {
         switch scene {
         case .login:
             LoginView(viewModel: LoginViewModel(kakaoLoginUseCase: diContainer.resolveKakaoLoginUseCase()))
+        case let .onboardingComplete(nickname):
+            OnboardingCompleteView(viewModel: OnboardingCompleteViewModel(coordinator: self, nickname: nickname))
+        case .enterGroup:
+            TypeInviteCodeView(
+                viewModel: TypeInviteCodeViewModel(
+                    coordinator: self,
+                    enterGroupUseCase: diContainer.resolveEnterGroupUseCase(),
+                    setMyGroupUseCase: diContainer.resolveSetMyGroupUseCase()
+                )
+            )
+        case .createGroup:
+            SelectGroupTypeView(
+                viewModel: SelectGroupTypeViewModel(
+                    coordinator: self,
+                    createGroupUseCase: diContainer.resolveCreateGroupUseCase()
+                )
+            )
+        case .copyInviteCode(inviteCode: let inviteCode, groupId: let groupId):
+            ShareInviteCodeView(
+                viewModel: ShareInviteCodeViewModel(
+                    coordinator: self,
+                    inviteCode: inviteCode,
+                    groupId: groupId,
+                    setMyGroupUseCase: diContainer.resolveSetMyGroupUseCase()
+                )
+            )
         }
     }
     @MainActor

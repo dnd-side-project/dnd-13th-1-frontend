@@ -137,17 +137,11 @@ struct OverlappingProfileImages: View {
     var body: some View {
         HStack(spacing: -38) {
             ForEach(members, id: \.id) { member in
-                KFImage(member.profileImageUrl)
-                    .placeholder {
-                        Color.gray200
-                    }
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 84, height: 84)
-                    .clipShape(RoundedRectangle(cornerRadius: 34))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 34).stroke(.gray200, lineWidth: 1)
-                    )
+                ProfileImageView(
+                    url: member.profileImageUrl,
+                    size: 84,
+                    cornerRadius: 34
+                )
             }
         }
     }

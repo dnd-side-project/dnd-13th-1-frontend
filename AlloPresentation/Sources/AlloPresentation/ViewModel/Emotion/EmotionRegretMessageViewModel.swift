@@ -18,7 +18,7 @@ public final class EmotionRegretMessageViewModel: ViewModelable {
         var contentText: String = ""
         var isLoading: Bool = false
         var isAITransformed: Bool = false
-        var receiverImg: URL
+        var receiverImg: URL?
     }
     // MARK: - Action
     enum Action {
@@ -32,7 +32,7 @@ public final class EmotionRegretMessageViewModel: ViewModelable {
     var state: State
     let aiUseCase: AIUseCase
     let coordinator: Coordinator
-    public init(coordinator: Coordinator, aiUseCase: AIUseCase, sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String, receiverImg: URL) {
+    public init(coordinator: Coordinator, aiUseCase: AIUseCase, sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String, receiverImg: URL?) {
         self.coordinator = coordinator
         self.aiUseCase = aiUseCase
         self.state = State(sendEmotion: sendEmotion, receiverName: receiverName, houseworkTitle: houseworkTitle, receiverImg: receiverImg)

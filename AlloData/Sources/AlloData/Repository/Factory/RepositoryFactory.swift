@@ -31,15 +31,15 @@ public struct RepositoryFactory {
         liveData ? MemberRepositoryImpl(networkService: networkService) : StubMemberRepository()
     }
     
-    public func makeGroupRepository(liveData: Bool = true) -> GroupRepository {
+    public func makeGroupRepository(liveData: Bool) -> GroupRepository {
         liveData ? GroupRepositoryImpl(networkService: networkService) : StubGroupRepository()
     }
     
-    public func makeTagRepository(liveData: Bool = true) -> TagRepository {
+    public func makeTagRepository(liveData: Bool) -> TagRepository {
         liveData ? TagRepositoryImpl(networkService: networkService) : StubTagRepository()
     }
     
-    public func makeStatsRepository(liveData: Bool = true) -> StatsRepository {
+    public func makeStatsRepository(liveData: Bool) -> StatsRepository {
         liveData ? StatsRepositoryImpl(networkService: networkService) : StubStatsRepository()
     }
     

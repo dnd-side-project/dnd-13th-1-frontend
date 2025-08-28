@@ -15,7 +15,21 @@ public struct LoginView: View {
     }
     
     public var body: some View {
-        VStack {
+        VStack(alignment: .center, spacing: 0) {
+            TitleNavigationBar(
+                title: "",
+                onBack: {
+                    
+                }
+            )
+            Image(.logoBig)
+                .resizable()
+                .frame(width: 188, height: 94)
+                .padding(.bottom, 11)
+                .padding(.top, 81)
+            Text("함께하는 마음, 함께하는 집안일, 알로")
+                .font(.body3)
+                .foregroundStyle(.blue400)
             Spacer()
             Button {
                 viewModel.action(.kakaoLoginButtonTapped)
@@ -23,10 +37,10 @@ public struct LoginView: View {
                 Image(.iconKakaoLoginLargeWide)
                     .resizable()
                     .scaledToFit()
-                    .padding(.horizontal, 20)
                     .padding(.vertical, 60)
             }
         }
         .background(.white)
+        .padding(.horizontal, 20)
     }
 }

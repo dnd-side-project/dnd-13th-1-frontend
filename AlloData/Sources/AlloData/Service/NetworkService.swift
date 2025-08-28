@@ -19,8 +19,8 @@ struct NetworkService: Sendable {
     
     private let provider = MoyaProvider<AlloAPI>()
     
-    func createGroup(_ charcterId: Int) async throws -> CreateGroupResponseDTO {
-        let response = try await provider.request(.createGroup(characterId: charcterId))
+    func createGroup(_ backGroundTypeNum: Int) async throws -> CreateGroupResponseDTO {
+        let response = try await provider.request(.createGroup(backGroundTypeNum: backGroundTypeNum))
         let responseDTO = try JSONDecoder().decode(CreateGroupResponseDTO.self, from: response)
         dump(responseDTO)
         return responseDTO
@@ -30,7 +30,6 @@ struct NetworkService: Sendable {
         let response = try await provider.request(.enterGroup(inviteCode: inviteCode))
         let responseDTO = try JSONDecoder().decode(EnterGroupResponseDTO.self, from: response)
         dump(responseDTO)
-        UserDefaultsService.groupId = responseDTO.groupId
         return responseDTO
     }
     
@@ -78,7 +77,6 @@ struct NetworkService: Sendable {
         let response = try await provider.request(.postKakaoLogin(requestDTO: requestDTO))
         let responseDTO = try JSONDecoder().decode(PostKakaoLoginResponseDTO.self, from: response)
         dump(responseDTO)
-        UserDefaultsService.isSignedIn = true // 로그인 상태로 변경
         return responseDTO
     }
     

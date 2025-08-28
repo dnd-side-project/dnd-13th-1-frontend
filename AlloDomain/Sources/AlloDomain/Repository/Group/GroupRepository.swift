@@ -8,9 +8,8 @@
 import Foundation
 
 public protocol GroupRepository: Sendable {
-    func createGroup(characterId: Int) async throws -> GroupInfo
+    func createGroup(backGroundTypeNum: Int) async throws -> GroupInfo
     func enterGroup(inviteCode: String) async throws -> GroupInfo
     func getMyGroup() async throws -> GroupInfo
+    func setMyGroup(groupId: Int)
 }
-
-
