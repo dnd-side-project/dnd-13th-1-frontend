@@ -14,18 +14,16 @@ final class MemberRepositoryImpl: MemberRepository {
     init(networkService: NetworkService) {
         self.networkService = networkService
     }
-    func getMemberList(groupId: Int) async throws -> [Member] {
+    
+    func fetchMembers() async throws -> [Member] {
+        guard let groupId = UserDefaultsService.groupId else { return [] }
         let dto = try await networkService.getMemberList(groupId)
         return dto.compactMap { element in
-            guard let urlString = element.profileImageUrl,
+            guard let urlString = element.memberProfileImageUrl,
                   let url = URL(string: urlString) else {
-                return nil
+                return Member(id: element.memberId, name: element.memberNickName, profileImageUrl: URL(string: "https://example.com/placeholder.png")!)
             }
-            return Member(
-                id: element.memberId,
-                name: element.name,
-                profileImageUrl: url
-            )
+            return Member(id: element.memberId, name: element.memberNickName, profileImageUrl: url)
         }
     }
 }

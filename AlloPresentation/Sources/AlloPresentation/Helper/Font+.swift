@@ -19,6 +19,7 @@ public enum AlloFontStyle {
     case headline2
     case headline3
     case headline4
+    case headline5
     
     case subtitle1
     case subtitle2
@@ -52,7 +53,7 @@ public enum AlloFontStyle {
                 .body1, .body2, .body5:
             return "Pretendard-Bold"
         case
-                .headline2, .headline4,
+                .headline2, .headline4, .headline5,
                 .body7,
                 .subtitle1, .subtitle3, .subtitle6,
                 .button1, .button2,
@@ -75,6 +76,8 @@ public enum AlloFontStyle {
         switch self {
         case .headline1:
             return 36
+        case .headline5:
+            return 32
         case .headline2:
             return 28
         case .headline3, .headline4:
@@ -107,6 +110,8 @@ public enum AlloFontStyle {
             return 50
         case .headline2:
             return 42
+        case .headline5:
+            return 38
         case .headline3, .headline4:
             return 34
         case .subtitle1, .subtitle2:
@@ -133,7 +138,7 @@ public enum AlloFontStyle {
     var kerning: CGFloat {
         switch self {
         case
-                .headline1, .headline2, .headline3,
+                .headline1, .headline2, .headline3, .headline5,
                 .subtitle1, .subtitle2, .subtitle3, .subtitle4, .subtitle5, .subtitle6, .subtitle7,
                 .body1, .body2, .body3, .body4, .body5, .body6, .body7:
             return -(size * 0.02)  // -2% 자간

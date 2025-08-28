@@ -16,12 +16,14 @@ final class PlaceRepositoryImpl: PlaceRepository {
         self.networkService = networkService
     }
     
-    func fetchPlaces(groupId: Int) async throws -> [HouseworkPlace] {
-        let dto = try await networkService.getPlaceList(groupId)
-        return dto.map { HouseworkPlace(placeId: $0.placeId, name: $0.name) }
-    }
-    
     func addPlace(groupId: Int, placeName: String) async throws {
         try await networkService.addPlace(groupId, placeName: placeName)
+
+    func fetchPlaces() async throws -> [HouseworkPlace] {
+        guard let groupId = UserDefaultsService.groupId else { return [] }
+        let dto = try await networkService.getPlaceList(groupId)
+        return dto.map { element in
+            HouseworkPlace(placeId: String(element.placeId), name: element.name)
+        }
     }
 }

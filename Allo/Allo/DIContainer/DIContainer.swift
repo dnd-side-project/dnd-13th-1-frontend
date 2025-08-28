@@ -28,4 +28,28 @@ public protocol DIContainer {
     func resolveGetTagListUseCase() -> TagListUseCase
     // MARK: - Member UseCase
     func resolveFetchMemberUseCase() -> FetchMemberUseCase
+    // MARK: - Group UseCases
+    func resolveCreateGroupUseCase() -> CreateGroupUseCase
+    func resolveEnterGroupUseCase() -> EnterGroupUseCase
+    func resolveGetMyGroupUseCase() -> GetMyGroupUseCase
+    // MARK: - Tag UseCases
+    func resolveFetchTagsUseCase() -> FetchTagsUseCase
+    func resolveAddTagUseCase() -> AddTagUseCase
+    // MARK: - Stats UseCases
+    func resolveGetCleanlinessUseCase() -> GetCleanlinessUseCase
+    func resolveGetMyContributionUseCase() -> GetMyContributionUseCase
+    func resolveGetTodayCompletionStatusUseCase() -> GetTodayCompletionStatusUseCase
+    func resolveGetWeekCompletionStatusUseCase() -> GetWeekCompletionStatusUseCase
+    func resolveGetTwoWeekComparisonUseCase() -> GetTwoWeekComparisonUseCase
+    func resolveGetActivitySummaryUseCase() -> GetActivitySummaryUseCase
+    // MARK: - Housework Extra UseCases
+    func resolveGetHouseworkDetailUseCase() -> GetHouseworkDetailUseCase
+    func resolveGetMyRecentHouseworkUseCase() -> GetMyRecentHouseworkUseCase
+    func resolveGetTodayPlaceHouseworkUseCase() -> GetTodayPlaceHouseworkUseCase
+    // MARK: -- Emotion UseCase
+    func resolveFetchDaysUseCase() -> FetchHouseworkDaysUseCase
+    func resolveSendEmotionUseCase() -> SendEmotionUseCase
+    func resolveGetEmotionListUseCase() -> FetchEmotionUseCase
+    func resolvetransformAiUseCase() -> AIUseCase
+    func resolveDetailEmotionUseCase() -> EmotionDetailUseCase
 }

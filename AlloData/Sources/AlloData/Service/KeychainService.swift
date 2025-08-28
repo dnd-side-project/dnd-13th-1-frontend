@@ -8,7 +8,7 @@
 import Foundation
 import Security
 
-struct KeychainService {
+public struct KeychainService {
     private static let service = "com.dnd.allo"
 
     enum KeyChainError: Error {
@@ -17,7 +17,7 @@ struct KeychainService {
         case deleteError
     }
     
-    static func save(token: String, key: String) throws {
+    public static func save(token: String, key: String) throws {
         let data = Data(token.utf8)
         let query: [String: Any] = [
             kSecClass as String       : kSecClassGenericPassword,
@@ -33,7 +33,7 @@ struct KeychainService {
         guard status == errSecSuccess else { throw KeyChainError.saveError }
     }
     
-    static func get(key: String) throws -> String? {
+    public static func get(key: String) throws -> String? {
         let query: [String: Any] = [
             kSecClass as String         : kSecClassGenericPassword,
             kSecAttrService as String   : service,

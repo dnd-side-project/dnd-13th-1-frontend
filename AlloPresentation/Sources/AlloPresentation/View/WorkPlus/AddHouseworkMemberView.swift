@@ -49,7 +49,7 @@ public struct AddHouseworkMemberView: View {
                 action: { viewModel.action(.didTapNextButton)},
                 style: .bottoomMain
             )
-            .padding(.bottom, 46)
+            .padding(.bottom, 16)
         }
         .padding(.horizontal, 20)
         .task {
@@ -87,22 +87,24 @@ struct MemberButton: View {
                     .clipShape(Circle())
                 
                 Text(member.name)
-                    .font(isSelected ? .subtitle3: .subtitle4)
+                    .font(isSelected ? .subtitle3 : .subtitle4)
                     .foregroundColor(isSelected ? .blue400 : .gray900)
                 
                 Spacer()
             }
             .padding(.vertical, 12)
             .padding(.horizontal, 16)
+            .frame(maxWidth: .infinity) 
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(isSelected ? .blue50 : .gray25)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(isSelected ? .blue400 : .gray25, lineWidth: 2)
+            )
+            .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(isSelected ? .blue50 : .gray25)
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(isSelected ? .blue400 : .gray25, lineWidth: 2)
-        )
     }
 }

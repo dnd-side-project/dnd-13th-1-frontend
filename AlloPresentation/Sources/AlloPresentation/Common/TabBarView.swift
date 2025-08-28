@@ -31,15 +31,11 @@ public struct TabBarView: View {
                     .frame(maxWidth: .infinity)
                 }
             }
+            .padding(.horizontal, 20)
             .frame(height: 48)
             .padding(.top, 4)
             .padding(.bottom, 34)
             .background(Color.white)
-            .overlay(
-                Rectangle()
-                    .frame(height: 0.5)
-                    .foregroundColor(Color.gray200),
-                alignment: .top
-            )
+            .shadow(color: Color.black.opacity(0.02), radius: 2, x: 0, y: -2)
     }
 }

@@ -109,7 +109,6 @@ extension AddHouseworkViewModel {
 // MARK: - Function
 extension AddHouseworkViewModel {
     func makeHousework() -> Housework? {
-        // Date 변환
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko_KR")
         formatter.dateFormat = "yyyy.MM.dd(EE)"

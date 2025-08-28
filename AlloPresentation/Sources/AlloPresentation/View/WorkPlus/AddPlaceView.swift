@@ -31,7 +31,7 @@ public struct AddPlaceView: View {
                 action: { viewModel.action(.didTapAddPlaceButton) },
                 style: .bottoomMain
             )
-            .padding(.bottom, 46)
+            .padding(.bottom, 16)
             .ignoresSafeArea(.keyboard, edges: .bottom)
         }
         .padding(.horizontal, 20)

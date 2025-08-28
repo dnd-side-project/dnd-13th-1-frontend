@@ -50,11 +50,55 @@ public struct UseCaseFactory {
         return AddPlaceUseCaseImpl(placeRepository: placeRepository)
     }
     
-    public static func makeTagListUseCase(tagListRepository: TagListRepository) -> TagListUseCase {
-        return TagListUseCaseImpl(tagListRepository: tagListRepository)
+    // MARK: Group
+    public static func makeCreateGroupUseCase(groupRepository: GroupRepository) -> CreateGroupUseCase {
+        return CreateGroupUseCaseImpl(repo: groupRepository)
+    }
+    public static func makeEnterGroupUseCase(groupRepository: GroupRepository) -> EnterGroupUseCase {
+        return EnterGroupUseCaseImpl(repo: groupRepository)
+    }
+    public static func makeGetMyGroupUseCase(groupRepository: GroupRepository) -> GetMyGroupUseCase {
+        return GetMyGroupUseCaseImpl(repo: groupRepository)
     }
     
-    public static func makeAddTagUseCase(tagAddRespository: TagAddRespository) -> TagAddUseCase {
-        return TagAddUseCaseImpl(tagAddRespository: tagAddRespository)
+    // MARK: Tag
+    public static func makeFetchTagsUseCase(tagRepository: TagRepository) -> FetchTagsUseCase {
+        return FetchTagsUseCaseImpl(repo: tagRepository)
+    }
+    public static func makeAddTagUseCase(tagRepository: TagRepository) -> AddTagUseCase {
+        return AddTagUseCaseImpl(repo: tagRepository)
+    }
+    
+    // MARK: Stats
+    public static func makeGetCleanlinessUseCase(statsRepository: StatsRepository) -> GetCleanlinessUseCase { GetCleanlinessUseCaseImpl(repo: statsRepository) }
+    public static func makeGetMyContributionUseCase(statsRepository: StatsRepository) -> GetMyContributionUseCase { GetMyContributionUseCaseImpl(repo: statsRepository) }
+    public static func makeGetTodayCompletionStatusUseCase(statsRepository: StatsRepository) -> GetTodayCompletionStatusUseCase { GetTodayCompletionStatusUseCaseImpl(repo: statsRepository) }
+    public static func makeGetWeekCompletionStatusUseCase(statsRepository: StatsRepository) -> GetWeekCompletionStatusUseCase { GetWeekCompletionStatusUseCaseImpl(repo: statsRepository) }
+    public static func makeGetTwoWeekComparisonUseCase(statsRepository: StatsRepository) -> GetTwoWeekComparisonUseCase { GetTwoWeekComparisonUseCaseImpl(repo: statsRepository) }
+    public static func makeGetActivitySummaryUseCase(statsRepository: StatsRepository) -> GetActivitySummaryUseCase { GetActivitySummaryUseCaseImpl(repo: statsRepository) }
+    
+    // MARK: Housework Extras
+    public static func makeGetHouseworkDetailUseCase(houseworkRepository: HouseworkRepository) -> GetHouseworkDetailUseCase { GetHouseworkDetailUseCaseImpl(repo: houseworkRepository) }
+    public static func makeGetMyRecentHouseworkUseCase(houseworkRepository: HouseworkRepository) -> GetMyRecentHouseworkUseCase { GetMyRecentHouseworkUseCaseImpl(repo: houseworkRepository) }
+    public static func makeGetTodayPlaceHouseworkUseCase(houseworkRepository: HouseworkRepository) -> GetTodayPlaceHouseworkUseCase { GetTodayPlaceHouseworkUseCaseImpl(repo: houseworkRepository) }
+    
+    public static func makeFetchHouseworkDaysUseCase(houseworkDaysRepository: HouseworkDaysRepository) -> FetchHouseworkDaysUseCase {
+        return FetchHouseworkDaysUseCaseImpl(houseworkDaysRepository: houseworkDaysRepository)
+    }
+    
+    public static func makeSendEmotionUseCase(emotionRepository: EmotionRepository) -> SendEmotionUseCase {
+        return EmotionUseCaseImpl(emotionRepository: emotionRepository)
+    }
+    
+    public static func makeGetEmotionListUseCase(emotionRepository: EmotionRepository) -> FetchEmotionUseCase {
+        return FetchEmotionUseCaseImpl(emotionRepository: emotionRepository)
+    }
+    
+    public static func makeTransformAiUseCase(aiRepository: AIRepository) -> AIUseCase {
+        return AIUseCaseImpl(aiRepository: aiRepository)
+    }
+    
+    public static func makeDetailEmotionUseCase(emotionRepository: EmotionRepository) -> EmotionDetailUseCase {
+        return EmotionDetailUseCaseImpl(emotionDetailRepository: emotionRepository)
     }
 }

@@ -17,4 +17,5 @@ struct GetEmotionCardListResponseDTOElement: Decodable {
     let receiverNickName: String
     let createdTime: String
     let emotionType: String
+    let isRead: Bool
 }
