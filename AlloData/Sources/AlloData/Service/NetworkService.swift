@@ -145,7 +145,7 @@ struct NetworkService: Sendable {
     }
     
     func deleteEmotion(_ emotionCardId: Int) async throws {
-        try await provider.request(.deleteHousework(emotionCardId: emotionCardId))
+        try await provider.request(.deleteEmotion(emotionCardId: emotionCardId))
     }
     
     public func getEmotionCardList(filter: String, sorted: String) async throws -> GetEmotionCardListResponseDTO {
