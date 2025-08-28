@@ -9,17 +9,17 @@ import SwiftUI
 
 struct MypageStatsView: View {
     
-    init () {
-        Fonts.registerCustomFonts()
-    }
+    let totalCompliments: Int
+    let sentCompliments: Int
+    let totalCompletedHouseworks: Int
     
     var body: some View {
         HStack(alignment: .center) {
-            MypageStatsElementView(title: "총 받은 칭찬", count: 8)
+            MypageStatsElementView(title: "총 받은 칭찬", count: totalCompliments)
             MypageStatsDividerView()
-            MypageStatsElementView(title: "보낸 칭찬", count: 20)
+            MypageStatsElementView(title: "보낸 칭찬", count: sentCompliments)
             MypageStatsDividerView()
-            MypageStatsElementView(title: "총 완수 집안일", count: 48)
+            MypageStatsElementView(title: "총 완수 집안일", count: totalCompletedHouseworks)
         }
         .padding(.horizontal, 20)
         .frame(maxWidth: .infinity)
@@ -28,7 +28,6 @@ struct MypageStatsView: View {
         .cornerRadius(.radius2)
     }
 }
-
 
 struct MypageStatsElementView: View {
     let title: String
@@ -54,11 +53,4 @@ struct MypageStatsDividerView: View {
             .frame(width: 1, height: 46)
             .foregroundColor(.gray200)
     }
-}
-
-#Preview{
-    MypageProfileView(profileImageUrl: URL(string: "https://randomuser.me/api/portraits/men/50.jpg")!, name: "익명")
-        .padding(.bottom, 28)
-    MypageStatsView()
-        .padding(.horizontal, 20)
 }
