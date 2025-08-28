@@ -153,11 +153,10 @@ extension MyPageViewModel {
     private func loadComparison() async {
         do {
             let comp = try await getTwoWeekComparisonUseCase.execute()
-            // lastWeek == 현재 주 대비 직전 주, twoWeeksAgo == 그 전 주
             state.comparisonCurrentCompleted = comp.lastWeekCompleted
             state.comparisonPastCompleted = comp.twoWeeksAgoCompleted
-            state.comparisonCurrentWeekString = Date().adding(days: -7).getWeekString()
-            state.comparisonPastWeekString = Date().adding(days: -14).getWeekString()
+            state.comparisonCurrentWeekString = Date().getWeekString()
+            state.comparisonPastWeekString = Date().adding(days: -7).getWeekString()
         } catch {
         }
     }

@@ -25,7 +25,7 @@ struct MypageNavigationBar: View {
                     }
                 )
             } else {
-                EmptyView()
+                Color.clear
                     .frame(width: 32, height: 32)
             }
             Spacer(minLength: 0)
@@ -44,7 +44,7 @@ struct MypageNavigationBar: View {
                     }
                 )
             } else {
-                EmptyView()
+                Color.clear
                     .frame(width: 32, height: 32)
             }
         }
