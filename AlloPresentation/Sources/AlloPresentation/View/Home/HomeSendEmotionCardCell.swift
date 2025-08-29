@@ -38,16 +38,11 @@ struct HomeSendEmotionCardCell: View {
             }
             HStack(spacing: -19) {
                 ForEach(housework.member) { member in
-                    KFImage(member.profileImageUrl)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 44, height: 44)
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 20)
-                                .inset(by: 1)
-                                .stroke(.gray200, lineWidth: 1)
-                        )
+                    ProfileImageView(
+                        url: member.profileImageUrl,
+                        size: 44,
+                        cornerRadius: 20
+                    )
                 }
                 Spacer(minLength: 0)
             }

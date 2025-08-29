@@ -3,7 +3,9 @@ import Foundation
 final class CreateGroupUseCaseImpl: CreateGroupUseCase {
     private let repo: GroupRepository
     init(repo: GroupRepository) { self.repo = repo }
-    func execute(characterId: Int) async throws -> GroupInfo { try await repo.createGroup(characterId: characterId) }
+    func execute(backGroundTypeNum: Int) async throws -> GroupInfo {
+        try await repo.createGroup(backGroundTypeNum: backGroundTypeNum)
+    }
 }
 
 final class EnterGroupUseCaseImpl: EnterGroupUseCase {
@@ -18,4 +20,8 @@ final class GetMyGroupUseCaseImpl: GetMyGroupUseCase {
     func execute() async throws -> GroupInfo { try await repo.getMyGroup() }
 }
 
-
+final class SetMyGroupUseCaseImpl: SetMyGroupUseCase {
+    private let repo: GroupRepository
+    init(repo: GroupRepository) { self.repo = repo }
+    func execute(groupId: Int) { repo.setMyGroup(groupId: groupId) }
+}

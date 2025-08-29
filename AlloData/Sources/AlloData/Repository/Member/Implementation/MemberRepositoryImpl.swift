@@ -26,4 +26,10 @@ final class MemberRepositoryImpl: MemberRepository {
             return Member(id: element.memberId, name: element.memberNickName, profileImageUrl: url)
         }
     }
+
+    func patchMyProfile(nickname: String, imageData: Data) async throws {
+//        let requestDTO = PatchProfileRequestDTO(nickname: nickname, profileImage: UIImage(data: imageData) ?? UIImage())
+        let requestDTO = PatchProfileRequestDTO(nickname: nickname)
+        try await networkService.patchMyProfile(requestDTO)
+    }
 }

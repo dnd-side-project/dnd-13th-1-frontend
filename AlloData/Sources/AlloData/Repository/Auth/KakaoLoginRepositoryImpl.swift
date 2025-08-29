@@ -28,6 +28,7 @@ final class KakaoLoginRepositoryImpl: KakaoLoginRepository {
     public func kakaoLogin() async throws -> AlloDomain.Token {
         let accessToken = try await getKakaoLoginAccessToken()
         let responseDTO = try await networkService.postKakaoLogin(accessToken)
+        UserDefaultsService.isSignedIn = true
         try KeychainService.save(token: responseDTO.accessToken, key: "accessToken")
         return Token(accessToken: responseDTO.accessToken)
     }

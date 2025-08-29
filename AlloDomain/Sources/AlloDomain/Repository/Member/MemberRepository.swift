@@ -9,4 +9,5 @@ import Foundation
 
 public protocol MemberRepository: Sendable {
     func fetchMembers() async throws -> [Member]
+    func patchMyProfile(nickname: String, imageData: Data) async throws
 }

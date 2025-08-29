@@ -33,8 +33,38 @@ final class OnboardingCoordinator: Coordinator {
     @ViewBuilder
     func buildScene(_ scene: OnboardingScene) -> some View {
         switch scene {
+        case .onboarding:
+            OnboardingView(viewModel: OnboardingViewModel(coordinator: self))
         case .login:
-            LoginView(viewModel: LoginViewModel(kakaoLoginUseCase: diContainer.resolveKakaoLoginUseCase()))
+            LoginView(viewModel: LoginViewModel(coordinator: self, kakaoLoginUseCase: diContainer.resolveKakaoLoginUseCase()))
+        case .profileSetting:
+            ProfileSettingView(viewModel: ProfileSettingViewModel(coordinator: self, patchMyProfileUseCase: diContainer.resolvePatchMyProfileUseCase()))
+        case let .onboardingComplete(nickname):
+            OnboardingCompleteView(viewModel: OnboardingCompleteViewModel(coordinator: self, nickname: nickname))
+        case .enterGroup:
+            TypeInviteCodeView(
+                viewModel: TypeInviteCodeViewModel(
+                    coordinator: self,
+                    enterGroupUseCase: diContainer.resolveEnterGroupUseCase(),
+                    setMyGroupUseCase: diContainer.resolveSetMyGroupUseCase()
+                )
+            )
+        case .createGroup:
+            SelectGroupTypeView(
+                viewModel: SelectGroupTypeViewModel(
+                    coordinator: self,
+                    createGroupUseCase: diContainer.resolveCreateGroupUseCase()
+                )
+            )
+        case .copyInviteCode(inviteCode: let inviteCode, groupId: let groupId):
+            ShareInviteCodeView(
+                viewModel: ShareInviteCodeViewModel(
+                    coordinator: self,
+                    inviteCode: inviteCode,
+                    groupId: groupId,
+                    setMyGroupUseCase: diContainer.resolveSetMyGroupUseCase()
+                )
+            )
         }
     }
     @MainActor

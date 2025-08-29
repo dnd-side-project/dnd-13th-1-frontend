@@ -23,7 +23,7 @@ struct GetHouseworkResponseDTO: Decodable {
         struct Member: Decodable {
             let memberId: Int
             let memberNickName: String
-            let memberProfileImageUrl: String
+            let memberProfileImageUrl: String?
         }
     }
 }

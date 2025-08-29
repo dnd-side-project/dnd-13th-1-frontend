@@ -17,6 +17,7 @@ struct ReportCardView: View {
     let showProgressBar: Bool
     let progressValue: Int?
     let statusMessage: String?
+    let backgroundColor: Color
     
     init(
         title: String,
@@ -27,7 +28,8 @@ struct ReportCardView: View {
         unitColor: Color = .blue400,
         showProgressBar: Bool = false,
         progressValue: Int? = nil,
-        statusMessage: String? = nil
+        statusMessage: String? = nil,
+        backgroundColor: Color = .white
     ) {
         self.title = title
         self.icon = icon
@@ -38,6 +40,7 @@ struct ReportCardView: View {
         self.showProgressBar = showProgressBar
         self.progressValue = progressValue
         self.statusMessage = statusMessage
+        self.backgroundColor = backgroundColor
     }
     
     var body: some View {
@@ -75,7 +78,7 @@ struct ReportCardView: View {
                             .cornerRadius(.radius3)
                         Rectangle()
                             .foregroundStyle(.blue400)
-                            .frame(width: geo.size.width * CGFloat(progressValue) / 100)
+                            .frame(maxWidth: geo.size.width * CGFloat(progressValue) / 100)
                             .frame(height: 13)
                             .cornerRadius(.radius3)
                     }
@@ -93,9 +96,9 @@ struct ReportCardView: View {
         .padding(.horizontal, 14)
         .padding(.top, 14)
         .padding(.bottom, 16)
-        .background(.white)
         .frame(height: 124)
         .frame(maxWidth: .infinity)
+        .background(backgroundColor)
         .cornerRadius(.radius2)
         .shadow(color: .black.opacity(0.04), radius: 12, x: 0, y: 2)
     }

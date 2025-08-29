@@ -54,8 +54,11 @@ final class HouseworkRepositoryImpl: HouseworkRepository {
             return list.compactMap { item in
                 guard let workDate = dateFormatterYYYYMMDD.date(from: item.houseworkDate) else { return nil }
                 let members: [Member] = item.houseworkMembers.compactMap { m in
-                    let url = URL(string: m.memberProfileImageUrl) ?? URL(string: "https://example.com/placeholder.png")!
-                    return Member(id: m.memberId, name: m.memberNickName, profileImageUrl: url)
+                    if let url = m.memberProfileImageUrl {
+                        return Member(id: m.memberId, name: m.memberNickName, profileImageUrl: URL(string: url))
+                    } else {
+                        return Member(id: m.memberId, name: m.memberNickName, profileImageUrl: nil)
+                    }
                 }
                 return Housework(
                     id: item.houseworkId,
@@ -109,9 +112,11 @@ final class HouseworkRepositoryImpl: HouseworkRepository {
     func getHouseworkDetail(id: Int) async throws -> HouseworkDetail {
         let dto = try await networkService.getHouseworkDetail(id)
         guard let date = dateFormatterYYYYMMDD.date(from: dto.houseworkDate) else {
-            return HouseworkDetail(id: dto.houseworkId, title: dto.houseworkTitle, tags: dto.houseworkTag.map { $0.name }, date: Date(), members: dto.houseworkMembers.map { Member(id: $0.memberId, name: $0.memberNickName, profileImageUrl: URL(string: "https://example.com/placeholder.png")!) })
+            return HouseworkDetail(id: dto.houseworkId, title: dto.houseworkTitle, tags: dto.houseworkTag.map { $0.name }, date: Date(), members: dto.houseworkMembers.map {
+                    return Member(id: $0.memberId, name: $0.memberNickName, profileImageUrl: nil)
+            })
         }
-        return HouseworkDetail(id: dto.houseworkId, title: dto.houseworkTitle, tags: dto.houseworkTag.map { $0.name }, date: date, members: dto.houseworkMembers.map { Member(id: $0.memberId, name: $0.memberNickName, profileImageUrl: URL(string: "https://example.com/placeholder.png")!) })
+        return HouseworkDetail(id: dto.houseworkId, title: dto.houseworkTitle, tags: dto.houseworkTag.map { $0.name }, date: date, members: dto.houseworkMembers.map { Member(id: $0.memberId, name: $0.memberNickName, profileImageUrl: nil) })
     }
     
     func getMyRecentHousework(receiverId: Int) async throws -> [RecentHouseworkDay] {
@@ -128,7 +133,13 @@ final class HouseworkRepositoryImpl: HouseworkRepository {
         let dto = try await networkService.getTodayPlaceHousework(placeId)
         func mapItems(_ arr: [GetTodayPlaceHouseworkResponseDTO.HouseWork]) -> [TodayHouseworkItem] {
             arr.map { item in
-                let urls = item.houseWorkMembers.compactMap { URL(string: $0.memberProfileImageUrl) }
+                let urls = item.houseWorkMembers.map { member in
+                    if let urlString = member.memberProfileImageUrl {
+                        return URL(string: urlString)
+                    } else {
+                        return nil
+                    }
+                }
                 return TodayHouseworkItem(id: item.houseWorkId, title: item.houseWorkTitle, memberProfileImageUrls: urls)
             }
         }

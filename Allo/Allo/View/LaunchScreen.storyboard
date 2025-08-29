@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Pretendard-Medium.ttf">
+            <string>Pretendard-Medium</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController id="Y6W-OH-hqX" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="G5G-yD-AWE"/>
+                        <viewControllerLayoutGuide type="bottom" id="jnI-qb-fIe"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="illustration_launchscreen_cat" translatesAutoresizingMaskIntoConstraints="NO" id="65c-tC-leY">
+                                <rect key="frame" x="20" y="515" width="353" height="337"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_big_white" translatesAutoresizingMaskIntoConstraints="NO" id="Pt4-Yv-0Et">
+                                <rect key="frame" x="102.66666666666669" y="253" width="188" height="94"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="188" id="7VU-43-20r"/>
+                                    <constraint firstAttribute="height" constant="94" id="jhX-TT-cXK"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="함께하는 마음, 함께하는 집안일, 알로" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FaF-aP-W5N">
+                                <rect key="frame" x="95" y="358" width="203" height="17"/>
+                                <fontDescription key="fontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" name="blue400"/>
+                        <constraints>
+                            <constraint firstItem="Pt4-Yv-0Et" firstAttribute="top" secondItem="G5G-yD-AWE" secondAttribute="bottom" constant="135" id="Hf2-9s-7bh"/>
+                            <constraint firstAttribute="bottom" secondItem="65c-tC-leY" secondAttribute="bottom" id="TAH-mO-O7v"/>
+                            <constraint firstItem="FaF-aP-W5N" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="Yqn-s3-6bk"/>
+                            <constraint firstItem="Pt4-Yv-0Et" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="bk2-nR-0Sw"/>
+                            <constraint firstItem="FaF-aP-W5N" firstAttribute="top" secondItem="Pt4-Yv-0Et" secondAttribute="bottom" constant="11" id="bx9-qM-3eV"/>
+                            <constraint firstItem="65c-tC-leY" firstAttribute="leading" secondItem="5EZ-qb-Rvc" secondAttribute="leading" constant="20" id="dw7-r7-Nu5"/>
+                            <constraint firstAttribute="trailing" secondItem="65c-tC-leY" secondAttribute="trailing" constant="20" id="ekZ-vH-vmm"/>
+                            <constraint firstItem="65c-tC-leY" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="tpt-PK-gNP"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="130.53435114503816" y="-28.169014084507044"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="illustration_launchscreen_cat" width="337.33334350585938" height="337"/>
+        <image name="logo_big_white" width="188" height="94"/>
+        <namedColor name="blue400">
+            <color red="0.32549019607843138" green="0.49803921568627452" blue="0.90588235294117647" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

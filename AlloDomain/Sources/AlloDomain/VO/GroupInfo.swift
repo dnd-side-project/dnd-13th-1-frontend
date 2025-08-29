@@ -16,5 +16,3 @@ public struct GroupInfo: Sendable {
         self.inviteCode = inviteCode
     }
 }
-
-

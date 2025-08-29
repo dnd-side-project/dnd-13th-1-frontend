@@ -9,7 +9,7 @@ import Foundation
 import Moya
 
 enum AlloAPI {
-    case createGroup(characterId: Int) // 그룹 생성
+    case createGroup(backGroundTypeNum: Int) // 그룹 생성
     case enterGroup(inviteCode: String) // 그룹 입장
     case addHouseworkSchedule(groupId: Int, requestDTO: AddHouseworkScheduleRequestDTO) // 집안일 일정 추가
     case getPlaceList(groupId: Int) // 그룹 장소 목록 조회
@@ -39,6 +39,8 @@ enum AlloAPI {
     case getMyWeekCompletionStatus // 마이/나의 지난 일주일 간 집안일 완수 상태 조회
     case getMyTwoWeekCompletionStatusComparison // 마이/나의 2주 전, 1주 전 완수 상태 비교 조회
     case getMyEmotionCardAndCompletionStatus // 마이/나의 받은 칭찬, 보낸 칭찬, 완수 집안일 수
+    case getMyProfile // 내 프로필 조회
+    case patchMyProfile(requestDTO: PatchProfileRequestDTO)// 내 프로필 수정
 }
 
 extension AlloAPI: TargetType {
@@ -113,6 +115,10 @@ extension AlloAPI: TargetType {
             "/api/groups/house-work/me/comparison"
         case .getMyEmotionCardAndCompletionStatus:
             "api/groups/house-work/me/activity-summary"
+        case .getMyProfile:
+            "auth/user/me"
+        case .patchMyProfile:
+            "auth/user/me"
         case let .deleteEmotion(emotionCardId):
             "/api/emotion-cards/\(emotionCardId)"
         }
@@ -174,69 +180,93 @@ extension AlloAPI: TargetType {
                 .get
         case .getMyEmotionCardAndCompletionStatus:
                 .get
+        case .getMyProfile:
+                .get
+        case .patchMyProfile:
+                .patch
         case .deleteEmotion:
                 .delete
         }
     }
     
     var task: Moya.Task {
-        return switch self {
-        case let .createGroup(characterId):
-                .requestJSONEncodable(["characterId": characterId])
+        switch self {
+        case let .createGroup(backGroundTypeNum):
+            return .requestJSONEncodable(["backGroundTypeNum": backGroundTypeNum])
         case let .enterGroup(inviteCode):
-                .requestJSONEncodable(["inviteCode": inviteCode])
+            return .requestJSONEncodable(["inviteCode": inviteCode])
         case let .addHouseworkSchedule(_, requestDTO):
-                .requestJSONEncodable(requestDTO)
+            return .requestJSONEncodable(requestDTO)
         case .getPlaceList:
-                .requestPlain
+            return .requestPlain
         case let .addPlace(_, name):
-                .requestJSONEncodable(["name": name])
+            return .requestJSONEncodable(["name": name])
         case .getTags:
-                .requestPlain
+            return .requestPlain
         case let .addTag(_, tagName):
-                .requestJSONEncodable(["tagName": tagName])
+            return .requestJSONEncodable(["tagName": tagName])
         case .getMemberList:
-                .requestPlain
+            return .requestPlain
         case let .postKakaoLogin(requestDTO):
-                .requestJSONEncodable(requestDTO)
+            return .requestJSONEncodable(requestDTO)
         case .getPresetHouseworkList:
-                .requestPlain
+            return .requestPlain
         case .getMyGroup:
-                .requestPlain
+            return .requestPlain
         case let .getHaveHousework(_, from, to):
-                .requestParameters(parameters: ["from": from, "to": to], encoding: URLEncoding.queryString)
+            return .requestParameters(parameters: ["from": from, "to": to], encoding: URLEncoding.queryString)
         case let .getHouseworkList(_, date):
-                .requestParameters(parameters: ["date": date], encoding: URLEncoding.queryString)
+            return .requestParameters(parameters: ["date": date], encoding: URLEncoding.queryString)
         case .completeHousework:
-                .requestPlain
+            return .requestPlain
         case let .sendEmotionCard(requestDTO):
-                .requestJSONEncodable(requestDTO)
+            return .requestJSONEncodable(requestDTO)
         case .getEmotionCard:
-                .requestPlain
+            return .requestPlain
         case let .getRecentWeekHouseworkList(_, receiverId):
-                .requestParameters(parameters: ["receiverId": receiverId], encoding: URLEncoding.queryString)
+            return .requestParameters(parameters: ["receiverId": receiverId], encoding: URLEncoding.queryString)
         case .deleteHousework:
-                .requestPlain
+            return .requestPlain
         case .getHouseworkDetail:
-                .requestPlain
+            return .requestPlain
         case let .getEmotionCardList(filter, sorted):
-                .requestParameters(parameters: ["filter": filter, "sorted": sorted], encoding: URLEncoding.queryString)
+            return .requestParameters(parameters: ["filter": filter, "sorted": sorted], encoding: URLEncoding.queryString)
         case .getCleanliness:
-                .requestPlain
+            return .requestPlain
         case .getTodayPlaceHousework:
-                .requestPlain
+            return .requestPlain
         case .getMyContribution:
-                .requestPlain
+            return .requestPlain
         case .getMyTodayCompletionStatus:
-                .requestPlain
+            return .requestPlain
         case .getMyWeekCompletionStatus:
-                .requestPlain
+            return .requestPlain
         case .getMyTwoWeekCompletionStatusComparison:
-                .requestPlain
+            return .requestPlain
         case .getMyEmotionCardAndCompletionStatus:
-                .requestPlain
+            return .requestPlain
+        case .getMyProfile:
+            return .requestPlain
+        case let .patchMyProfile(requestDTO):
+//            let imageData = requestDTO.profileImage.pngData() ?? Data()
+//            let userIdData = "\(requestDTO.nickname)".data(using: .utf8) ?? Data()
+//            
+//            var formData: [Moya.MultipartFormData] = []
+//            
+//            formData.append(Moya.MultipartFormData(
+//                provider: .data(userIdData),
+//                name: "nickname"
+//            ))
+//            formData.append(Moya.MultipartFormData(
+//                provider: .data(imageData),
+//                name: "profileImage",
+//                fileName: "profile.png",
+//                mimeType: "image/png"
+//            ))
+//            return .uploadMultipart(formData)
+            return .requestJSONEncodable(requestDTO)
         case .deleteEmotion:
-                .requestPlain
+            return .requestPlain
         }
     }
     

@@ -34,13 +34,19 @@ struct AlloApp: App {
         appCoordinator = AppCoordinator(diContainer: diContainer)
         onBoardingCoordinator = OnboardingCoordinator(diContainer: diContainer)
         
-        try? KeychainService.delete(key: "accessToken")
-        
+//        do {
+//            try KeychainService.delete(key: "accessToken")
+//            UserDefaults.standard.removeObject(forKey: "groupId")
+//        } catch {
+//            dump(error)
+//        }
         /// Keychain에서 accessToken을 확인하여 로그인 상태를 설정합니다
         checkLoginStatusFromKeychain()
         
         /// 그룹 정보를 가져옵니다
-        if isSignedIn { getGroupInformation() }
+        if isSignedIn {
+            getGroupInformation()
+        }
     }
     
     var body: some Scene {
@@ -50,15 +56,23 @@ struct AlloApp: App {
                     // MARK: 로그인 상태
                     if groupId != nil {
                         // MARK: 그룹 가입 완료
-                        TabbedMainView(appCoordinator: appCoordinator, selectedTab: $selectedTab)
+                        TabbedMainView(
+                            appCoordinator: appCoordinator,
+                            selectedTab: $selectedTab
+                        )
                     } else {
                         // MARK: 그룹 가입 전
-                        TabbedMainView(appCoordinator: appCoordinator, selectedTab: $selectedTab)
-//                        OnboardingNavView(onboardingCoordinator: onBoardingCoordinator)
+                        OnboardingNavView(
+                            rootScene: .onboardingComplete(nickname: ""), // FIXME: 닉네임 연결
+                            onboardingCoordinator: onBoardingCoordinator
+                        )
                     }
                 } else {
                     // MARK: 로그아웃 상태
-                    OnboardingNavView(onboardingCoordinator: onBoardingCoordinator)
+                    OnboardingNavView(
+                        rootScene: .onboarding,
+                        onboardingCoordinator: onBoardingCoordinator
+                    )
                 }
             }
             .onOpenURL { handleURL($0) }
@@ -81,10 +95,12 @@ struct AlloApp: App {
         }
     }
     
+    /// 내 그룹 정보를 가져와서 그룹이 있는 경우 화면을 업데이트 합니다
     private func getGroupInformation() {
         Task {
             do {
                 let myGroup = try await diContainer.resolveGetMyGroupUseCase().execute()
+                diContainer.resolveSetMyGroupUseCase().execute(groupId: myGroup.groupId)
             } catch {
                 dump(error)
             }

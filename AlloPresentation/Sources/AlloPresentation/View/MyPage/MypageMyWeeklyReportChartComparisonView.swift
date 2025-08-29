@@ -103,6 +103,6 @@ struct BigChartColumn: View {
                 .font(.body3)
                 .foregroundStyle(.gray900)
         }
-        .frame(width: 65)
+        .frame(minWidth: 65)
     }
 }
