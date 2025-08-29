@@ -52,11 +52,13 @@ final class HouseworkRepositoryImpl: HouseworkRepository {
         
         func mapHouseworks(_ list: [GetHouseworkResponseDTO.Housework]) -> [Housework] {
             return list.compactMap { item in
-                guard let workDate = dateFormatterYYYYMMDD.date(from: item.houseWorkDate) else { return nil }
-                let members: [Member] = item.houseWorkMembers.compactMap { m in
-                    let url = URL(string: m.memberProfileImageUrl ?? "https://example.com/placeholder.png")!
+               // guard let workDate = dateFormatterYYYYMMDD.date(from: item.houseWorkDate) else { return nil }
+                let members: [Member] = item.houseWorkMembers.map { m in
+                    let url = m.memberProfileImageUrl != nil ? URL(string: m.memberProfileImageUrl!) : nil
                     return Member(id: m.memberId, name: m.memberNickName, profileImageUrl: url)
                 }
+
+                let workDate = dateFormatterYYYYMMDD.date(from: item.houseWorkDate) ?? Date() // 실패하면 오늘 날짜
                 return Housework(
                     id: item.houseWorkId,
                     place: "",
@@ -67,6 +69,7 @@ final class HouseworkRepositoryImpl: HouseworkRepository {
                     routine: .none,
                     tags: item.houseWorkTag.map{ $0.name }
                 )
+
             }
         }
         let myLeft = mapHouseworks(dto.myHouseWorkLeft)
@@ -120,7 +123,7 @@ final class HouseworkRepositoryImpl: HouseworkRepository {
                     date: Date(),
                     members: dto.houseWorkMembers.map {
                         Member(id: $0.memberId, name: $0.memberNickName,
-                               profileImageUrl: URL(string: "https://example.com/placeholder.png")!)
+                               profileImageUrl: nil)
                     }
                 )
             }
@@ -133,7 +136,7 @@ final class HouseworkRepositoryImpl: HouseworkRepository {
                 date: date,
                 members: dto.houseWorkMembers.map {
                     Member(id: $0.memberId, name: $0.memberNickName,
-                           profileImageUrl: URL(string: "https://example.com/placeholder.png")!)
+                           profileImageUrl: nil)
                 }
             )
             
