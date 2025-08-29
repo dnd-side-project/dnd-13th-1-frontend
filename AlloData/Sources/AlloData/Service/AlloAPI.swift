@@ -114,7 +114,7 @@ extension AlloAPI: TargetType {
         case .getMyEmotionCardAndCompletionStatus:
             "api/groups/house-work/me/activity-summary"
         case let .deleteEmotion(emotionCardId):
-            "/api/groups/house-work/\(emotionCardId)"
+            "/api/emotion-cards/\(emotionCardId)"
         }
     }
     
