@@ -75,7 +75,7 @@ final class AppCoordinator: Coordinator {
             EmptyView()
         }
     }
-
+    
     @MainActor
     @ViewBuilder
     private func buildHouseworkScene(_ scene: AppScene) -> some View {
@@ -114,7 +114,7 @@ final class AppCoordinator: Coordinator {
             EmptyView()
         }
     }
-
+    
     @MainActor
     @ViewBuilder
     private func buildEmotionScene(_ scene: AppScene) -> some View {
@@ -122,14 +122,15 @@ final class AppCoordinator: Coordinator {
         case .emotion:
             let viewModel = EmotionViewModel(
                 coordinator: self,
+                fetchMemberUseCase: diContainer.resolveFetchMemberUseCase(),
                 getEmotionListUscase: diContainer.resolveGetEmotionListUseCase(),
                 emotionDetailUseCase: diContainer.resolveDetailEmotionUseCase()
             )
             EmotionView(viewModel: viewModel)
-        case .emotionMember:
+        case .emotionMember(let housework):
             let emotionMemberViewModel = EmotionSendMemberViewModel(
                 coordinator: self,
-                fetchMemberUscase: diContainer.resolveFetchMemberUseCase())
+                fetchMemberUscase: diContainer.resolveFetchMemberUseCase(), housework: housework)
             EmotionSendMemberView(viewModel: emotionMemberViewModel)
         case .emotionChoice(let sendEmotion, let receiverName, let houseworkTitle, let receiverImg):
             EmotionChoiceView(viewModel: EmotionChoiceViewModel(
@@ -170,13 +171,14 @@ final class AppCoordinator: Coordinator {
                 coordinator: self,
                 emotionDetailUseCase: diContainer.resolveDetailEmotionUseCase(),
                 emotionDetail: detailEmotion,
-                isReceived: isReceived
+                isReceived: isReceived,
+                emotionDeleteUseCase: diContainer.resolveDeleteEmotionUseCase()
             ))
         default:
             EmptyView()
         }
     }
-
+    
     @MainActor
     @ViewBuilder
     func buildSheet(_ sheet: AppSheet) -> some View {
@@ -199,7 +201,7 @@ final class AppCoordinator: Coordinator {
                 .presentationDetents([.height(624)])
         }
     }
-
+    
     @MainActor
     @ViewBuilder
     func buildFullScreenCover(_ fullScreenCover: AppFullScreenCover) -> some View {

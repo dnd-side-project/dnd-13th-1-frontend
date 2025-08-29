@@ -16,7 +16,7 @@ struct UserDefaultsService: Sendable {
     static var groupId: Int? {
         get {
             let value = UserDefaults.standard.object(forKey: "groupId") as? Int
-            return value ?? 11   // 값이 없으면 5 반환
+            return value
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "groupId")

@@ -98,7 +98,7 @@ public struct EmotionDetailView: View {
                 }
                 .padding(.horizontal, 20)
                 Button {
-                    // 버튼 액션
+                    viewModel.action(.didTapDeleteButton)
                 } label: {
                     HStack {
                         Image(.iconTrash)

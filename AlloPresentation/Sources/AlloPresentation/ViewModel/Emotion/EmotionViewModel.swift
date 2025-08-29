@@ -30,7 +30,7 @@ public final class EmotionViewModel: ViewModelable {
     private let fetchMemberUseCase: FetchMemberUseCase
     private let getEmotionListUscase: FetchEmotionUseCase
     private let emotionDetailUseCase: EmotionDetailUseCase
-    public init(coordinator: Coordinator,fetchMemberUseCase: FetchMemberUseCase, getEmotionListUscase: FetchEmotionUseCase, emotionDetailUseCase: EmotionDetailUseCase) {
+    public init(coordinator: Coordinator, fetchMemberUseCase: FetchMemberUseCase, getEmotionListUscase: FetchEmotionUseCase, emotionDetailUseCase: EmotionDetailUseCase) {
         self.coordinator = coordinator
         self.state = State()
         self.fetchMemberUseCase = fetchMemberUseCase
@@ -43,7 +43,8 @@ public final class EmotionViewModel: ViewModelable {
         case .backButtonDidTap:
             coordinator.pop()
         case .didTapSendButton:
-            coordinator.push(AppScene.emotionMember)
+            let housework = Housework(id: 0, place: "", title: "", member: [], date: Date(), isDone: false, routine: .none, tags: [])
+            coordinator.push(AppScene.emotionMember(housework: housework))
         case .didTapEmotionCard(let id):
            didSelectEmotion(id: id)
         }
@@ -68,7 +69,7 @@ extension EmotionViewModel {
         }
     }
     
-    public func loadEmotionList() async {
+    func loadEmotionList() async {
         do {
             let result = try await getEmotionListUscase.execute(
                 filter: state.selectedFilter,
@@ -81,7 +82,7 @@ extension EmotionViewModel {
         }
     }
     
-    private func loadProfile() async {
+    func loadProfile() async {
         do {
             let members = try await fetchMemberUseCase.execute()
             if let me = members.first {

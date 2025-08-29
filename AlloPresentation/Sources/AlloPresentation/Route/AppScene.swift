@@ -19,7 +19,7 @@ public enum AppScene: AppRoute {
     case houseworkStandard(housework: Housework)
     case houseworkMember(housework: Housework)
     case houseworkPlusFinish(housework: Housework)
-    case emotionMember
+    case emotionMember(housework: Housework)
     case houseworkSevendays(sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String, receiverImg: URL)
     case emotionChoice(sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String, receiverImg: URL)
     case emotionThankMessage(sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String, initialEmotion: EmotionType, receiverImg: URL)

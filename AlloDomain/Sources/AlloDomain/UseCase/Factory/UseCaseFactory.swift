@@ -101,4 +101,8 @@ public struct UseCaseFactory {
     public static func makeDetailEmotionUseCase(emotionRepository: EmotionRepository) -> EmotionDetailUseCase {
         return EmotionDetailUseCaseImpl(emotionDetailRepository: emotionRepository)
     }
+    
+    public static func makeDeleteEmotionUseCase(emotionRepository: EmotionRepository) -> EmotionDeleteUseCase {
+        return EmotionDeleteUseCaseImpl(emotionRepository: emotionRepository)
+    }
 }

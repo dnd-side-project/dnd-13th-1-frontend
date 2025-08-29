@@ -1,9 +1,9 @@
-////
-////  StubHouseworkRepository.swift
-////  AlloData
-////
-////  Created by 황채웅 on 8/10/25.
-////
+//
+//  StubHouseworkRepository.swift
+//  AlloData
+//
+//  Created by 황채웅 on 8/10/25.
+//
 //import Foundation
 //import AlloDomain
 

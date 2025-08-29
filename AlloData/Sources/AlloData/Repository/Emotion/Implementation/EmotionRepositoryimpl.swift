@@ -62,4 +62,8 @@ final class EmotionRepositoryimpl: EmotionRepository {
             createdTime: responseDTO.createdTime
         )
     }
+
+    func deleteEmotion(_ emotion: Int) async throws {
+        try await networkService.deleteEmotion(emotion)
+    }
 }

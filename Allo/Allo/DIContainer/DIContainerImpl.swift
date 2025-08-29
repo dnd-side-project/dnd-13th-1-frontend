@@ -111,6 +111,10 @@ extension DIContainerImpl: DIContainer {
         UseCaseFactory.makeDetailEmotionUseCase(emotionRepository: emotionRepository)
     }
     
+    func resolveDeleteEmotionUseCase() -> EmotionDeleteUseCase {
+        UseCaseFactory.makeDeleteEmotionUseCase(emotionRepository: emotionRepository)
+    }
+    
     func resolveKakaoLoginUseCase() -> KakaoLoginUseCase {
         UseCaseFactory.makeKakaoLoginUseCase(kakaoLoginRepository: kakaoLoginRepository)
     }
