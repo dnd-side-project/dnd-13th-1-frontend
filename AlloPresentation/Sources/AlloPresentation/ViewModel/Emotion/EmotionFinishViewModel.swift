@@ -24,9 +24,8 @@ public final class EmotionFinishViewModel: ViewModelable {
     // MARK: - Properties
     var state: State
     let coordinator: Coordinator
-    //usecase
     private let sendEmotionUseCase: SendEmotionUseCase
-    public init(coordinator: Coordinator, sendEmotionUseCase: SendEmotionUseCase,sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String) {
+    public init(coordinator: Coordinator, sendEmotionUseCase: SendEmotionUseCase, sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String) {
         self.coordinator = coordinator
         self.sendEmotionUseCase = sendEmotionUseCase
         self.state = State(sendEmotion: sendEmotion, receiverName: receiverName, houseworkTitle: houseworkTitle)
@@ -37,7 +36,14 @@ public final class EmotionFinishViewModel: ViewModelable {
         case .didTapBackButton:
             coordinator.pop()
         case .didTapSendButton:
-            coordinator.popToRoot()
+            Task {
+                do {
+                    try await sendEmotionUseCase.execute(sendEmotion: state.sendEmotion)
+                    coordinator.popToRoot()
+                } catch {
+                    print("[EmotionFinishViewModel] 감정 보내기 실패: \(error)")
+                }
+            }
         }
     }
 }

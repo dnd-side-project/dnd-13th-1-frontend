@@ -8,7 +8,7 @@
 import Foundation
 
 public final class HouseworkPlace: Equatable, Identifiable, Hashable, Sendable {
-    public let placeId: String
+    public let placeId: Int
     public let name: String
     
     public static func == (lhs: HouseworkPlace, rhs: HouseworkPlace) -> Bool {
@@ -18,7 +18,7 @@ public final class HouseworkPlace: Equatable, Identifiable, Hashable, Sendable {
         hasher.combine(placeId)
     }
     
-    public init(placeId: String, name: String) {
+    public init(placeId: Int, name: String) {
         self.placeId = placeId
         self.name = name
     }

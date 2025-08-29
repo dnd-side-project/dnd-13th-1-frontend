@@ -15,6 +15,6 @@ struct AddHouseworkScheduleRequestDTO: Codable {
     let startDate: String
     let dueDate: String
     let routinePolicy: String
-    let dayOfTheWeek: [String]
+    let dayOfWeek: [String]
     let isNotified: Bool
 }

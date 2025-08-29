@@ -60,7 +60,7 @@ public final class HouseworkSevendaysViewModel: ViewModelable {
     
     public func loadSevenDaysHouseworks() async {
         do {
-            let result = try await fetchDaysUscase.execute()
+            let result = try await fetchDaysUscase.execute(receiverId: 2)
             self.state.sevenDaysHouseworks = result
         } catch {
             print("failed to fetch houseworks")

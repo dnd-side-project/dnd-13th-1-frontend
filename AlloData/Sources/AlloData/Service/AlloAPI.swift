@@ -24,6 +24,7 @@ enum AlloAPI {
     case getHouseworkList(groupId: Int, date: String) // 특정 날짜의 집안일 목록 조회
     case completeHousework(houseworkId: Int) // 특정 집안일 완료
     case sendEmotionCard(requestDTO: SendEmotionRequestDTO) // 마음 보내기
+    case deleteEmotion(emotionCardId: Int) // 특정 마음카드 삭제
     case getEmotionCard(emotionCardId: Int) // 마음 카드 상세 조회
     case getRecentWeekHouseworkList(groupId: Int, receiverId: Int) // 사용자의 오늘 기점 최근 7일간 집안일 조회
     case deleteHousework(houseworkId: Int) // 특정 집안일 삭제
@@ -43,7 +44,6 @@ enum AlloAPI {
 }
 
 extension AlloAPI: TargetType {
-    
     var accessToken: String {
         guard let token = try? KeychainService.get(key: "accessToken") else {
             return ""
@@ -119,6 +119,8 @@ extension AlloAPI: TargetType {
             "auth/user/me"
         case .patchMyProfile:
             "auth/user/me"
+        case let .deleteEmotion(emotionCardId):
+            "/api/emotion-cards/\(emotionCardId)"
         }
     }
     
@@ -182,6 +184,8 @@ extension AlloAPI: TargetType {
                 .get
         case .patchMyProfile:
                 .patch
+        case .deleteEmotion:
+                .delete
         }
     }
     
@@ -261,6 +265,8 @@ extension AlloAPI: TargetType {
 //            ))
 //            return .uploadMultipart(formData)
             return .requestJSONEncodable(requestDTO)
+        case .deleteEmotion:
+            return .requestPlain
         }
     }
     

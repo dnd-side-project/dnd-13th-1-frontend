@@ -16,7 +16,7 @@ public protocol HouseworkRepository: Sendable {
         ourHouseworksCompleted: [Housework]
     )
     func completeHousework(_ housework: Housework) async throws
-    func addHousework(_ housework: Housework) async throws
+    func addHousework(housework: Housework) async throws
     func deleteHousework(_ housework: Housework) async throws
     func getHouseworkDetail(id: Int) async throws -> HouseworkDetail
     func getMyRecentHousework(receiverId: Int) async throws -> [RecentHouseworkDay]

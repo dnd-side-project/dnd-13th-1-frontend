@@ -57,7 +57,7 @@ struct UnderlineTextFields: View {
                         }
                     }
                 Button(action: onPresetTap) {
-                    Image(.iconPreset)
+                    Image(.iconSearch)
                 }
             }
             .overlay(

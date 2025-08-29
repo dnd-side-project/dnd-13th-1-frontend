@@ -16,7 +16,7 @@ public final class EmotionChoiceViewModel: ViewModelable {
         var sendEmotion: SendEmotion
         var selectedHouseworkTitle: String
         var receiverName: String
-        var selectedEmotion: EmotionType? = nil
+        var selectedEmotion: EmotionType?
         var receiverImg: URL?
     }
     // MARK: - Action

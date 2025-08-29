@@ -8,5 +8,5 @@
 import Foundation
 
 public protocol SendEmotionUseCase: Sendable {
-    func execute() async throws -> [SendEmotion]
+    func execute(sendEmotion: SendEmotion) async throws
 }

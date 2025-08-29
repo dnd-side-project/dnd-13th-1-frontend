@@ -9,4 +9,5 @@ import Foundation
 
 public protocol PlaceRepository: Sendable {
     func fetchPlaces() async throws -> [HouseworkPlace]
+    func addPlace(placeName: String) async throws -> HouseworkPlace
 }

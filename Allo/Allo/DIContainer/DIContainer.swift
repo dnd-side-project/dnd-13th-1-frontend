@@ -23,6 +23,7 @@ public protocol DIContainer {
     // MARK: -- AddHousework UseCases
     func resolveAddHouseworkUsecase() -> AddHouseworkUseCase
     func resolveFetchPlaceUsecase() -> FetchPlacesUseCase
+    func resolveAddPlaceUseCase() -> AddPlaceUseCase
     // MARK: - Member UseCase
     func resolveFetchMemberUseCase() -> FetchMemberUseCase
     func resolvePatchMyProfileUseCase() -> PatchMyProfileUseCase
@@ -51,4 +52,5 @@ public protocol DIContainer {
     func resolveGetEmotionListUseCase() -> FetchEmotionUseCase
     func resolvetransformAiUseCase() -> AIUseCase
     func resolveDetailEmotionUseCase() -> EmotionDetailUseCase
+    func resolveDeleteEmotionUseCase() -> EmotionDeleteUseCase
 }

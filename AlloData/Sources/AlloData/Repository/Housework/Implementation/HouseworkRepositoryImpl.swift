@@ -49,6 +49,7 @@ final class HouseworkRepositoryImpl: HouseworkRepository {
         }
         let dateString = dateFormatterYYYYMMDD.string(from: date)
         let dto = try await networkService.getHouseworkList(groupId, date: dateString)
+        
         func mapHouseworks(_ list: [GetHouseworkResponseDTO.Housework]) -> [Housework] {
             return list.compactMap { item in
                 guard let workDate = dateFormatterYYYYMMDD.date(from: item.houseworkDate) else { return nil }
@@ -82,24 +83,26 @@ final class HouseworkRepositoryImpl: HouseworkRepository {
         try await networkService.completeHousework(housework.id)
     }
     
-    func addHousework(_ housework: Housework) async throws {
-        guard let groupId = UserDefaultsService.groupId else { return }
-        // Domain 모델만으로는 placeId, tag 식별자 등 추가 정보가 부족합니다.
-        // 최소 매핑으로 title/members/date/routine만 전송하고, 나머지는 기본값 처리합니다.
-        let memberIds = housework.member.map { $0.id }
+    func addHousework(housework: Housework) async throws {
+        guard let groupId = UserDefaultsService.groupId else {
+            print("[AddHousework] groupId is nil")
+            return
+        }
         let startDate = dateFormatterYYYYMMDD.string(from: housework.date)
         let request = AddHouseworkScheduleRequestDTO(
-            houseWorkName: housework.title,
-            placeId: 0,
-            tags: [],
-            members: memberIds,
+            houseWorkName: housework.houseWorkName,
+            placeId: housework.placeAdd,
+            tags: housework.tagsAdd,
+            members: housework.members,
             startDate: startDate,
             dueDate: startDate,
-            routinePolicy: housework.routine.rawValue,
-            dayOfTheWeek: [],
+            routinePolicy: housework.routineAdd.rawValue,
+            dayOfWeek: housework.dayOfTheWeek.map { $0.rawValue },
             isNotified: false
         )
-        _ = try await networkService.addHouseworkSchedule(groupId, request)
+        print("[AddHousework] 요청 전 - groupId: \(groupId), request: \(request)")
+        let response = try await networkService.addHouseworkSchedule(groupId, request)
+        print("[AddHousework] 요청 후 - response: \(response)")
     }
     
     func deleteHousework(_ housework: Housework) async throws {

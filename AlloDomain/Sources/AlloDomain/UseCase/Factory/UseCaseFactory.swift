@@ -51,6 +51,10 @@ public struct UseCaseFactory {
         return PatchMyProfileUseCaseImpl(memberRepository: memberRepository)
     }
     
+    public static func makeAddPlaceUseCase(placeRepository : PlaceRepository) -> AddPlaceUseCase {
+        return AddPlaceUseCaseImpl(placeRepository: placeRepository)
+    }
+    
     // MARK: Group
     public static func makeCreateGroupUseCase(groupRepository: GroupRepository) -> CreateGroupUseCase {
         return CreateGroupUseCaseImpl(repo: groupRepository)
@@ -104,5 +108,9 @@ public struct UseCaseFactory {
     
     public static func makeDetailEmotionUseCase(emotionRepository: EmotionRepository) -> EmotionDetailUseCase {
         return EmotionDetailUseCaseImpl(emotionDetailRepository: emotionRepository)
+    }
+    
+    public static func makeDeleteEmotionUseCase(emotionRepository: EmotionRepository) -> EmotionDeleteUseCase {
+        return EmotionDeleteUseCaseImpl(emotionRepository: emotionRepository)
     }
 }

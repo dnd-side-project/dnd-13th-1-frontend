@@ -91,8 +91,8 @@ extension HomeSendEmotionCardCell {
     }
 }
 
-#Preview {
-    HomeSendEmotionCardCell(housework: Housework(id: 11, place: "Ddd", title: "dddd", member: [Member(id: 1, name: "ddd", profileImageUrl: URL(string: "https://randomuser.me/api/portraits/men/50.jpg")!)], date: Date(), isDone: false, routine: HouseworkRoutine.none, tags: ["dd"])) { housework in
-        
-    }
-}
+//#Preview {
+//    HomeSendEmotionCardCell(housework: Housework(id: 11, place: "Ddd", title: "dddd", member: [Member(id: 1, name: "ddd", profileImageUrl: URL(string: "https://randomuser.me/api/portraits/men/50.jpg")!)], date: Date(), isDone: false, routine: HouseworkRoutine.none, tags: ["dd"])) { housework in
+//        
+//    }
+//}
