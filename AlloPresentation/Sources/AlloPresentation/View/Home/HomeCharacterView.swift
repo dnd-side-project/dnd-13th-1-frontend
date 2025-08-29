@@ -32,61 +32,40 @@ struct HomeCharacterView: View {
     }
 }
 
-enum CharacterStatus {
-    case bored // 일이 없는 경우
-    case dirty // 청결도 0 ~ 39%
-    case littleClean // 청결도 40 ~ 79%
-    case veryClean // 청결도 80 ~ 100%
+struct CharacterStatus {
+    let cleanliness: Int
+    let state: String
+    let message: String
     
     var backgroundColor: Color {
-        switch self {
-        case .bored:
-            return .gray700
-        case .dirty:
-            return .red400
-        case .littleClean:
-            return .blue400
-        case .veryClean:
+        if cleanliness >= 80 {
             return .blue500
+        } else if cleanliness >= 40 {
+            return .blue400
+        } else if cleanliness > 0 {
+            return .red400
+        } else {
+            return .gray700
         }
     }
     
     var description: String {
-        switch self {
-        case .bored:
-            return "심심한 상태에요"
-        case .dirty:
-            return "많이 꾀죄죄해요"
-        case .littleClean:
-            return "조금 깔끔해졌어요"
-        case .veryClean:
-            return "반짝반짝 깨끗해요"
-        }
+        return state
     }
     
     var characterImage: ImageResource {
-        switch self {
-        case .bored:
-            return .illustrationCatNone
-        case .dirty:
-            return .illustrationCatFirst
-        case .littleClean:
-            return .illustrationCatSecond
-        case .veryClean:
+        if cleanliness >= 80 {
             return .illustrationCatThird
+        } else if cleanliness >= 40 {
+            return .illustrationCatSecond
+        } else if cleanliness > 0 {
+            return .illustrationCatFirst
+        } else {
+            return .illustrationCatNone
         }
     }
     
     var characterMessage: String {
-        switch self {
-        case .bored:
-            "어서와~ 집안일을 등록해봐!"
-        case .dirty:
-            "먼지가 나랑 친구하자고 하겠어!"
-        case .littleClean:
-            "슬슬 할일을 해야할 시간이야!"
-        case .veryClean:
-            "우와~ 반짝반짝 파티네!"
-        }
+        return message
     }
 }

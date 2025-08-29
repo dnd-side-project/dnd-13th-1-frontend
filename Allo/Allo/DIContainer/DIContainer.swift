@@ -32,6 +32,7 @@ public protocol DIContainer {
     func resolveEnterGroupUseCase() -> EnterGroupUseCase
     func resolveGetMyGroupUseCase() -> GetMyGroupUseCase
     func resolveSetMyGroupUseCase() -> SetMyGroupUseCase
+    func resolveGetGroupStateUseCase() -> GetGroupStateUseCase
     // MARK: - Tag UseCases
     func resolveFetchTagsUseCase() -> FetchTagsUseCase
     func resolveAddTagUseCase() -> AddTagUseCase

@@ -27,6 +27,7 @@ final class DIContainerImpl {
     private lazy var aiRepository: AIRepository = repositoryFactory.makeAIRepository()
     private lazy var tagRepository: TagRepository = repositoryFactory.makeTagRepository(liveData: liveData)
     private lazy var groupRepository: GroupRepository = repositoryFactory.makeGroupRepository(liveData: liveData)
+    private lazy var getGroupStateRepository: GetGroupStateRepository = repositoryFactory.makeGetGroupStateRepository()
     private lazy var statsRepository: StatsRepository = repositoryFactory.makeStatsRepository(liveData: liveData)
 }
 // MARK: - DIContainer 프로토콜 구현
@@ -49,6 +50,10 @@ extension DIContainerImpl: DIContainer {
     
     func resolveSetMyGroupUseCase() -> SetMyGroupUseCase {
         UseCaseFactory.makeSetMyGroupUseCase(groupRepository: groupRepository)
+    }
+    
+    func resolveGetGroupStateUseCase() -> GetGroupStateUseCase {
+        UseCaseFactory.makeGetGroupStateUseCase(getGroupStateRepository: getGroupStateRepository)
     }
     
     func resolveFetchTagsUseCase() -> FetchTagsUseCase {

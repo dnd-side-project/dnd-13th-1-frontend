@@ -20,10 +20,10 @@ struct HomeReportView: View {
                 icon: .iconCheckEmpty,
                 value: completed,
                 unit: "/\(total)",
+                total: total,
                 valueColor: .blue400,
                 unitColor: .gray300,
                 showProgressBar: false,
-                statusMessage: "오늘 집안일이 없어요!"
             )
             
             ReportCardView(
@@ -38,5 +38,19 @@ struct HomeReportView: View {
             )
         }
         .padding(.horizontal, 20)
+    }
+}
+
+extension HomeReportView {
+    func getMessage(completed: Int, total: Int) -> String {
+        if total == 0 {
+            "오늘 집안일이 없어요!"
+        } else if completed == 0 {
+            "집안일을 완수해볼까요?"
+        } else if completed < total {
+            "잘하고 있어요!"
+        } else {
+            "집안일을 모두 끝냈어요!"
+        }
     }
 }

@@ -27,7 +27,17 @@ final class GroupRepositoryImpl: GroupRepository {
     
     func getMyGroup() async throws -> GroupInfo {
         let dto = try await networkService.getMyGroup()
-        return GroupInfo(groupId: dto.groupId, inviteCode: dto.inviteCode)
+        let groupType: GroupType = switch dto.backGroundType {
+        case "ROOM_MATE":
+                .roommate
+        case "FAMILY":
+                .family
+        case "COUPLE":
+                .lover
+        default:
+                .lover
+        }
+        return GroupInfo(groupId: dto.groupId, inviteCode: dto.inviteCode, groupType: groupType)
     }
     
     func setMyGroup(groupId: Int) {

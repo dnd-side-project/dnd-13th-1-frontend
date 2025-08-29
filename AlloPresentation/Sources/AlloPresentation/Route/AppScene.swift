@@ -26,6 +26,8 @@ public enum AppScene: AppRoute {
     case emotionMember(housework: Housework)
     case emotionFinish(sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String)
     case emotionDetails(detailEmotion: EmotionDetail, isReceived: Bool)
+    case homeMember
+    case homeInvite
     public var id: String {
         String(describing: self)
     }

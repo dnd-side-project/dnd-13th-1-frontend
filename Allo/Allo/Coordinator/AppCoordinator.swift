@@ -33,7 +33,14 @@ final class AppCoordinator: Coordinator {
     func buildScene(_ scene: AppScene, selectedTab: Binding<TabBarItem>? = nil) -> some View {
         switch scene {
         case let .home(selectedTab): // Binding이 필요하기 때문에 따로 관리
-            let homeViewModel = HomeViewModel(coordinator: self)
+            let homeViewModel = HomeViewModel(
+                coordinator: self,
+                getGroupStateUseCase: diContainer.resolveGetGroupStateUseCase(),
+                getMyGroupUseCase: diContainer.resolveGetMyGroupUseCase(),
+                fetchPlacesUseCase: diContainer.resolveFetchPlaceUsecase(),
+                getTodayPlaceHouseworkUseCase: diContainer.resolveGetTodayPlaceHouseworkUseCase(),
+                getTodayCompletionStatusUseCase: diContainer.resolveGetTodayCompletionStatusUseCase()
+            )
             HomeView(viewModel: homeViewModel, selectedTab: selectedTab)
         case .tabBar, .checklist, .mypage:
             buildTabScene(scene, selectedTab: selectedTab)
@@ -41,6 +48,8 @@ final class AppCoordinator: Coordinator {
             buildHouseworkScene(scene)
         case .emotion, .emotionMember, .emotionChoice, .emotionThankMessage, .emotionRegretMessage, .emotionFinish, .emotionDetails:
             buildEmotionScene(scene)
+        case .homeMember, .homeInvite:
+            buildHomeScene(scene)
         }
     }
     
@@ -174,6 +183,27 @@ final class AppCoordinator: Coordinator {
                 isReceived: isReceived,
                 emotionDeleteUseCase: diContainer.resolveDeleteEmotionUseCase()
             ))
+        default:
+            EmptyView()
+        }
+    }
+    
+    @MainActor
+    @ViewBuilder
+    private func buildHomeScene(_ scene: AppScene) -> some View {
+        switch scene {
+        case .homeMember:
+            let homeMemberViewModel = HomeMemberViewModel(
+                coordinator: self,
+                fetchMemberUseCase: diContainer.resolveFetchMemberUseCase()
+            )
+            HomeMemberView(viewModel: homeMemberViewModel)
+        case .homeInvite:
+            let homeInviteCodeViewModel = HomeInviteCodeViewModel(
+                coordinator: self,
+                getMyGroupUseCase: diContainer.resolveGetMyGroupUseCase()
+            )
+            HomeInviteCodeView(viewModel: homeInviteCodeViewModel)
         default:
             EmptyView()
         }

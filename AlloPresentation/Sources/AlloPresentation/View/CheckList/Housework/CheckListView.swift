@@ -19,10 +19,18 @@ public struct CheckListView: View {
             VStack(
                 spacing: 0
             ) {
+                HomeNavigationBar(
+                    onTapGroup: {
+                        viewModel.action(.didTapMemberButton)
+                    },
+                    onTapNotification: {
+                        viewModel.action(.didTapNotificationButton)
+                    }
+                )
+                .padding(.bottom, 8)
                 VStack(
                     spacing: 0
                 ) {
-                    // TODO: 네비바 추가
                     CalendarHeaderView(
                         weekString: viewModel.state.calendarState.weekString,
                         onTapDatePicker: {
@@ -142,11 +150,11 @@ public struct CheckListView: View {
                         }
                     }
                 }
+                .background(.gray50)
             }
             .padding(.bottom, 20)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .ignoresSafeArea(edges: .bottom)
-            .background(.gray50)
             if viewModel.state.isLoading {
                 ProgressView()
             }

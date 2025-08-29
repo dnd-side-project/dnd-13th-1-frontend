@@ -40,7 +40,7 @@ struct HomeBottomSheetView: View {
                         houseworkPlaces: houseworkPlaces,
                         onTapAddHousework: onTapAddHousework
                     )
-                    .padding(.bottom, 70)
+                    .padding(.bottom, 152)
                 }
                 .frame(maxWidth: .infinity, alignment: .top)
             }

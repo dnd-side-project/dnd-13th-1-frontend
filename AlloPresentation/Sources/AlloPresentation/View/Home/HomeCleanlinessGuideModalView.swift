@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct HomeCleanlinessGuideModalView: View {
+    
+    @Binding var isPresented: Bool
+    
     var body: some View {
         ZStack {
             Color.black.opacity(0.6)
@@ -24,7 +27,7 @@ struct HomeCleanlinessGuideModalView: View {
                     Spacer(minLength: 0)
                     Button(
                         action: {
-                            
+                            isPresented = false
                         }, label: {
                             Image(.iconClose)
                                 .resizable()
@@ -93,8 +96,4 @@ struct HomeCleanlinessGuideCheckPointView: View {
                 .foregroundStyle(.gray700)
         }
     }
-}
-
-#Preview {
-    HomeCleanlinessGuideModalView()
 }

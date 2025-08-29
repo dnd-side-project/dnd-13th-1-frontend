@@ -24,11 +24,11 @@ struct MypageMyReportView: View {
                     icon: .iconCheckEmpty,
                     value: completed,
                     unit: "/\(total)",
+                    total: total,
                     valueColor: .blue400,
                     unitColor: .gray300,
                     showProgressBar: false,
-                    statusMessage: "잘하고 있어요!",
-                    backgroundColor: .gray25
+                    backgroundColor: .gray50
                 )
                 ReportCardView(
                     title: "나의 기여도",
@@ -39,7 +39,7 @@ struct MypageMyReportView: View {
                     unitColor: .blue400,
                     showProgressBar: true,
                     progressValue: contribution > 0 ? contribution : 0,
-                    backgroundColor: .gray25
+                    backgroundColor: .gray50
                 )
             }
         }

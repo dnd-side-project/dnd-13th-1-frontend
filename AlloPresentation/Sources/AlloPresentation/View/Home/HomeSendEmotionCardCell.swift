@@ -16,7 +16,6 @@ struct HomeSendEmotionCardCell: View {
     init(housework: Housework, onTapSendEmotion: @escaping (Housework) -> Void) {
         self.housework = housework
         self.onTapSendEmotion = onTapSendEmotion
-        Fonts.registerCustomFonts()
     }
     
     var body: some View {

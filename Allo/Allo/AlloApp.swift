@@ -34,12 +34,8 @@ struct AlloApp: App {
         appCoordinator = AppCoordinator(diContainer: diContainer)
         onBoardingCoordinator = OnboardingCoordinator(diContainer: diContainer)
         
-//        do {
-//            try KeychainService.delete(key: "accessToken")
-//            UserDefaults.standard.removeObject(forKey: "groupId")
-//        } catch {
-//            dump(error)
-//        }
+//        deleteLoginStatus()
+//        deleteGroupInformation()
         /// Keychain에서 accessToken을 확인하여 로그인 상태를 설정합니다
         checkLoginStatusFromKeychain()
         
@@ -100,7 +96,9 @@ struct AlloApp: App {
         Task {
             do {
                 let myGroup = try await diContainer.resolveGetMyGroupUseCase().execute()
-                diContainer.resolveSetMyGroupUseCase().execute(groupId: myGroup.groupId)
+                if let id = myGroup.groupId {
+                    diContainer.resolveSetMyGroupUseCase().execute(groupId: id)
+                }
             } catch {
                 dump(error)
             }
@@ -119,5 +117,17 @@ struct AlloApp: App {
             // Keychain 접근 오류 시 로그아웃 상태로 설정
             isSignedIn = false
         }
+    }
+    
+    private func deleteLoginStatus() {
+        do {
+            try KeychainService.delete(key: "accessToken")
+        } catch {
+            dump(error)
+        }
+    }
+    
+    private func deleteGroupInformation() {
+        UserDefaults.standard.removeObject(forKey: "groupId")
     }
 }
