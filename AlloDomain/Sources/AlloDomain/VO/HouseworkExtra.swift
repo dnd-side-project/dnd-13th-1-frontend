@@ -10,13 +10,15 @@ import Foundation
 public struct HouseworkDetail: Sendable {
     public let id: Int
     public let title: String
+    public let placeName: String
     public let tags: [String]
     public let date: Date
     public let members: [Member]
     
-    public init(id: Int, title: String, tags: [String], date: Date, members: [Member]) {
+    public init(id: Int, title: String, placeName: String, tags: [String], date: Date, members: [Member]) {
         self.id = id
         self.title = title
+        self.placeName = placeName
         self.tags = tags
         self.date = date
         self.members = members

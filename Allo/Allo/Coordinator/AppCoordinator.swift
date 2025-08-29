@@ -208,7 +208,7 @@ final class AppCoordinator: Coordinator {
             )
             HouseworkDetailSheet(coordinator: self, viewModel: viewModel)
                 .onDisappear { onDismissAction() }
-                .presentationDetents([.height(624)])
+                .presentationDetents([.height(694)])
         }
     }
     

@@ -118,6 +118,7 @@ final class HouseworkRepositoryImpl: HouseworkRepository {
                 return HouseworkDetail(
                     id: dto.houseWorkId,
                     title: dto.houseWorkTitle,
+                    placeName: dto.placeName,
                     tags: dto.houseWorkTag.map { $0.name },
                     date: Date(),
                     members: dto.houseWorkMembers.map {
@@ -130,6 +131,7 @@ final class HouseworkRepositoryImpl: HouseworkRepository {
             return HouseworkDetail(
                 id: dto.houseWorkId,
                 title: dto.houseWorkTitle,
+                placeName: dto.placeName,
                 tags: dto.houseWorkTag.map { $0.name },
                 date: date,
                 members: dto.houseWorkMembers.map {

@@ -99,7 +99,6 @@ public struct HouseworkDetailSheet: View {
             RoundedRectangle(cornerRadius: 12)
                 .fill(.gray25)
         )
-        .padding(.vertical, 12)
         .padding(.horizontal, 20)
     }
     

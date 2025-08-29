@@ -65,7 +65,7 @@ extension HouseworkDetailViewModel {
             // HouseworkDetail → Housework 변환
             let housework = Housework(
                 id: detail.id,
-                place: "",
+                place: detail.placeName,
                 title: detail.title,
                 member: detail.members.map { m in
                     Member(

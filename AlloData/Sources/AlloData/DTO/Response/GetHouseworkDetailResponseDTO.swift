@@ -10,6 +10,7 @@ import Foundation
 struct GetHouseworkDetailResponseDTO: Decodable {
     let houseWorkId: Int
     let houseWorkTitle: String
+    let placeName: String
     let houseWorkTag: [Tag]
     let houseWorkDate: String
     let houseWorkMembers: [Member]
