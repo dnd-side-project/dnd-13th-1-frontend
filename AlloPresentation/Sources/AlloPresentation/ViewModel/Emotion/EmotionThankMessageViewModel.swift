@@ -25,6 +25,7 @@ public final class EmotionThankMessageViewModel: ViewModelable {
         case selectCompliment(Compliments)
         case didTapBackButton
         case didTapNextButton
+        case focusLost
     }
     // MARK: - Properties
     var state: State
@@ -44,13 +45,30 @@ public final class EmotionThankMessageViewModel: ViewModelable {
             }
         case .didTapBackButton:
             coordinator.pop()
+            
+        case .focusLost:
+            // 포커스 해제 시 customCompliment 값이 있으면 자동으로 .sevenThank 버튼 선택
+            if !state.customCompliment.isEmpty {
+                state.selectedCompliments.insert(.sevenThank)
+            } else {
+                // 입력값이 없으면 .sevenThank 선택 해제
+                state.selectedCompliments.remove(.sevenThank)
+            }
         case .didTapNextButton:
+            let compliments: [String] = state.selectedCompliments.map { compliment in
+                if compliment == .sevenThank {
+                    return state.customCompliment // 직접 입력한 텍스트
+                } else {
+                    return compliment.rawValue
+                }
+            }
             let sendEmotion = SendEmotion(
                 receiverId: state.sendEmotion.receiverId,
                 houseWorkId: state.sendEmotion.houseWorkId,
                 disappointment: "",
-                compliments: state.selectedCompliments.map { $0.rawValue }
+                compliments: compliments
             )
+            
             switch state.initialEmotion {
             case .thank:
                 coordinator.push(
@@ -71,7 +89,9 @@ public final class EmotionThankMessageViewModel: ViewModelable {
                 )
             case .regret:
                 break
+            
             }
+            
         }
     }
 }

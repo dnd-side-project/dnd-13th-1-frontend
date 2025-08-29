@@ -44,6 +44,7 @@ public enum AppSheet: AppRoute {
     case placeSelection(initialPlace: String, placeClickAction: (String, Int) -> Void)
     case routineSelection(initialRoutine: String, completeButtonAction: (String, [String], String) -> Void)
     case calendarSelection(dateSelectedAction: (String) -> Void)
+    case houseworkDetailSelection(housework: Housework, onDismissAction: () -> Void)
     
     public var id: String {
         switch self {
@@ -51,6 +52,7 @@ public enum AppSheet: AppRoute {
         case .placeSelection:     return "placeSelection"
         case .routineSelection:   return "routineSelection"
         case .calendarSelection:  return "calendarSelection"
+        case .houseworkDetailSelection: return "houseworkDetailSelection"
         }
     }
     

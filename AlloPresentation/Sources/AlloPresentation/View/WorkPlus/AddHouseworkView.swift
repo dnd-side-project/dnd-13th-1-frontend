@@ -64,7 +64,7 @@ public struct AddHouseworkView: View {
                 action: { viewModel.action(.didTapNextButton) },
                 style: isFormValid ? .bottoomMain : .selectionNo
             )
-            .disabled(!isFormValid)
+           // .disabled(!isFormValid)
             .padding(.bottom, 16)
             .contentShape(Rectangle())
         }

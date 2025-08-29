@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "icMyPageUnSelected.png",
+      "filename" : "icon_editBtn.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "icMyPageUnSelected@2x.png",
+      "filename" : "icon_editBtn@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "icMyPageUnSelected@3x.png",
+      "filename" : "icon_editBtn@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

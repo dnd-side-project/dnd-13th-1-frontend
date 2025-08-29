@@ -19,7 +19,8 @@ struct PlaceButton: View {
                 .font(.subtitle2)
                 .foregroundColor(.gray700)
                 .frame(maxWidth: .infinity, minHeight: 56, alignment: .leading)
-                .padding(.leading, 20)
+                .padding(.horizontal, 20)
+                .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
         .background(

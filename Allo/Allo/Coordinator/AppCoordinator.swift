@@ -229,6 +229,16 @@ final class AppCoordinator: Coordinator {
         case .calendarSelection(let dateClickAction):
             CalendarDateSheet(dateClickAction: dateClickAction)
                 .presentationDetents([.height(624)])
+        case .houseworkDetailSelection(let housework, let onDismissAction):
+            let viewModel = HouseworkDetailViewModel(
+                housework: housework,
+                getHouseworkDetailUseCase: diContainer.resolveGetHouseworkDetailUseCase(),
+                deleteHouseworUseCase: diContainer.resolveDeleteHouseworkUseCase(),
+                coordinator: self
+            )
+            HouseworkDetailSheet(coordinator: self, viewModel: viewModel)
+                .onDisappear { onDismissAction() }
+                .presentationDetents([.height(694)])
         }
     }
     

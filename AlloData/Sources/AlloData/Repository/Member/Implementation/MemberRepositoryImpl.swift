@@ -21,7 +21,7 @@ final class MemberRepositoryImpl: MemberRepository {
         return dto.compactMap { element in
             guard let urlString = element.memberProfileImageUrl,
                   let url = URL(string: urlString) else {
-                return Member(id: element.memberId, name: element.memberNickName, profileImageUrl: URL(string: "https://example.com/placeholder.png")!)
+                return Member(id: element.memberId, name: element.memberNickName, profileImageUrl: nil)
             }
             return Member(id: element.memberId, name: element.memberNickName, profileImageUrl: url)
         }

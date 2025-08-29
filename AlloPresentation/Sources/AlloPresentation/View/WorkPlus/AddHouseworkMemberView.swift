@@ -94,18 +94,11 @@ struct MemberButton: View {
 
         return Button(action: action) {
             HStack(spacing: 12) {
-                KFImage(member.profileImageUrl)
-                    .placeholder {
-                        Image(.illustrationDefaultProfile)
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 32, height: 32)
-                    }
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 32, height: 32)
-                    .clipShape(Circle())
-
+                ProfileImageView(
+                    url: member.profileImageUrl,
+                    size: 32,
+                    cornerRadius: 32
+                )
                 Text(displayName)
                     .font(textFont)
                     .foregroundColor(textColor)
