@@ -14,16 +14,20 @@ struct GetHouseworkResponseDTO: Decodable {
     let ourHouseWorkCompleted: [Housework]
     
     struct Housework: Decodable {
-        let houseworkId: Int
-        let houseworkTitle: String
-        let houseworkTag: [String]
-        let houseworkDate: String
-        let houseworkMembers: [Member]
+        let houseWorkId: Int
+        let houseWorkTitle: String
+        let houseWorkTag: [Tag]
+        let houseWorkDate: String
+        let houseWorkMembers: [Member]
+
+        struct Tag: Decodable {
+            let name: String
+        }
         
         struct Member: Decodable {
             let memberId: Int
             let memberNickName: String
-            let memberProfileImageUrl: String
+            let memberProfileImageUrl: String?
         }
     }
 }

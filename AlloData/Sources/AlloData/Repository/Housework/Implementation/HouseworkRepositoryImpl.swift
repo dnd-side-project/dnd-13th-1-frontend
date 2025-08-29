@@ -52,20 +52,20 @@ final class HouseworkRepositoryImpl: HouseworkRepository {
         
         func mapHouseworks(_ list: [GetHouseworkResponseDTO.Housework]) -> [Housework] {
             return list.compactMap { item in
-                guard let workDate = dateFormatterYYYYMMDD.date(from: item.houseworkDate) else { return nil }
-                let members: [Member] = item.houseworkMembers.compactMap { m in
-                    let url = URL(string: m.memberProfileImageUrl) ?? URL(string: "https://example.com/placeholder.png")!
+                guard let workDate = dateFormatterYYYYMMDD.date(from: item.houseWorkDate) else { return nil }
+                let members: [Member] = item.houseWorkMembers.compactMap { m in
+                    let url = URL(string: m.memberProfileImageUrl ?? "https://example.com/placeholder.png")!
                     return Member(id: m.memberId, name: m.memberNickName, profileImageUrl: url)
                 }
                 return Housework(
-                    id: item.houseworkId,
+                    id: item.houseWorkId,
                     place: "",
-                    title: item.houseworkTitle,
+                    title: item.houseWorkTitle,
                     member: members,
                     date: workDate,
                     isDone: false,
                     routine: .none,
-                    tags: item.houseworkTag
+                    tags: item.houseWorkTag.map{ $0.name }
                 )
             }
         }
@@ -107,12 +107,43 @@ final class HouseworkRepositoryImpl: HouseworkRepository {
     }
     
     func getHouseworkDetail(id: Int) async throws -> HouseworkDetail {
-        let dto = try await networkService.getHouseworkDetail(id)
-        guard let date = dateFormatterYYYYMMDD.date(from: dto.houseworkDate) else {
-            return HouseworkDetail(id: dto.houseworkId, title: dto.houseworkTitle, tags: dto.houseworkTag.map { $0.name }, date: Date(), members: dto.houseworkMembers.map { Member(id: $0.memberId, name: $0.memberNickName, profileImageUrl: URL(string: "https://example.com/placeholder.png")!) })
+        print("📡 [Repository] getHouseworkDetail 호출됨, id: \(id)")
+        
+        do {
+            let dto = try await networkService.getHouseworkDetail(id)
+            print("✅ [Repository] 네트워크 응답: \(dto)")
+            
+            guard let date = dateFormatterYYYYMMDD.date(from: dto.houseWorkDate) else {
+                print("⚠️ [Repository] 날짜 변환 실패, 기본값(Date()) 사용")
+                return HouseworkDetail(
+                    id: dto.houseWorkId,
+                    title: dto.houseWorkTitle,
+                    tags: dto.houseWorkTag.map { $0.name },
+                    date: Date(),
+                    members: dto.houseWorkMembers.map {
+                        Member(id: $0.memberId, name: $0.memberNickName,
+                               profileImageUrl: URL(string: "https://example.com/placeholder.png")!)
+                    }
+                )
+            }
+            
+            return HouseworkDetail(
+                id: dto.houseWorkId,
+                title: dto.houseWorkTitle,
+                tags: dto.houseWorkTag.map { $0.name },
+                date: date,
+                members: dto.houseWorkMembers.map {
+                    Member(id: $0.memberId, name: $0.memberNickName,
+                           profileImageUrl: URL(string: "https://example.com/placeholder.png")!)
+                }
+            )
+            
+        } catch {
+            print("❌ [Repository] getHouseworkDetail 실패: \(error)")
+            throw error
         }
-        return HouseworkDetail(id: dto.houseworkId, title: dto.houseworkTitle, tags: dto.houseworkTag.map { $0.name }, date: date, members: dto.houseworkMembers.map { Member(id: $0.memberId, name: $0.memberNickName, profileImageUrl: URL(string: "https://example.com/placeholder.png")!) })
     }
+
     
     func getMyRecentHousework(receiverId: Int) async throws -> [RecentHouseworkDay] {
         guard let groupId = UserDefaultsService.groupId else { return [] }

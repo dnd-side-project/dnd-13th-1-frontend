@@ -183,7 +183,8 @@ struct TagItemView: View {
         Text(tag)
             .font(.button2)
             .foregroundColor(.blue400)
-            .padding(8)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
             .background(
                 RoundedRectangle(cornerRadius: 50)
                     .stroke(.blue400, lineWidth: 1)

@@ -46,8 +46,11 @@ struct NetworkService: Sendable {
         return responseDTO
     }
     
-    func addPlace(_ groupId: Int, placeName: String) async throws {
-        try await provider.request(.addPlace(groupId: groupId, placeName: placeName))
+    func addPlace(_ groupId: Int, placeName: String) async throws -> GetPlaceListResponseDTOElement {
+        let response = try await provider.request(.addPlace(groupId: groupId, placeName: placeName))
+        let responseDTO = try JSONDecoder().decode(GetPlaceListResponseDTOElement.self, from: response)
+        dump(responseDTO)
+        return responseDTO
     }
     
     func getTagList(_ groupId: Int) async throws -> GetTagResponseDTO {

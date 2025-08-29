@@ -8,11 +8,11 @@
 import Foundation
 
 struct GetHouseworkDetailResponseDTO: Decodable {
-    let houseworkId: Int
-    let houseworkTitle: String
-    let houseworkTag: [Tag]
-    let houseworkDate: String
-    let houseworkMembers: [Member]
+    let houseWorkId: Int
+    let houseWorkTitle: String
+    let houseWorkTag: [Tag]
+    let houseWorkDate: String
+    let houseWorkMembers: [Member]
     
     struct Tag: Decodable {
         let name: String
