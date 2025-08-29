@@ -9,38 +9,61 @@ import Foundation
 import AlloDomain
 
 final class EmotionRepositoryimpl: EmotionRepository {
-    // TODO: Service 의존성 추가
+    private let networkService: NetworkService
+    
+    init(networkService: NetworkService) {
+        self.networkService = networkService
+    }
+    
     func getEmotionList(filter: String, sorted: String) async throws -> [EmotionList] {
-        return []
-    }
-    func sendHouseworkEmotion() async throws -> [SendEmotion] {
-        return []
-    }
-    public func emotionDetail(for id: Int) async throws -> EmotionDetail {
-            let allDetails: [EmotionDetail] = [
-                EmotionDetail(
-                    emotionCardId: 1,
-                    houseworkName: "세면대 청소",
-                    compliments: ["정말 깔끔하게 잘했어요!"],
-                    disappointment: "수건 걸이는 닦지 않았어요.",
-                    senderNickName: "이건회",
-                    receiverNickName: "김민솔",
-                    createdTime: "2025-08-23T11:10:00"
-                ),
-                EmotionDetail(
-                    emotionCardId: 2,
-                    houseworkName: "침구 청소",
-                    compliments: ["침구를 잘 정리했어요!!", "머리카락이 안보이네요 ㅋㅋ"],
-                    disappointment: "넌 진짜 안되겠다",
-                    senderNickName: "이건회",
-                    receiverNickName: "황채웅",
-                    createdTime: "2025-08-23T10:30:00"
-                )
-            ]
+        let responseDTO = try await networkService.getEmotionCardList(filter: filter, sorted: sorted)
+        return responseDTO.compactMap { element -> EmotionList? in
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+            formatter.locale = Locale(identifier: "en_US_POSIX")
+            formatter.timeZone = TimeZone.current
 
-            guard let detail = allDetails.first(where: { $0.emotionCardId == id }) else {
-                throw NSError(domain: "StubEmotionListRepository", code: 404, userInfo: [NSLocalizedDescriptionKey: "EmotionDetail not found"])
+            guard let date = formatter.date(from: element.createdTime) else {
+                return nil
             }
-            return detail
+            return EmotionList(
+                id: element.emotionCardId,
+                houseWorkName: element.houseWorkName,
+                content: element.content,
+                senderNickName: element.senderNickName,
+                receiverNickName: element.receiverNickName,
+                createdTime: date,
+                emotionType: element.emotionType,
+                isRead: element.isRead
+            )
         }
+    }
+
+    func sendHouseworkEmotion(sendEmotion: SendEmotion) async throws {
+        let request = SendEmotionRequestDTO(
+            receiverId: sendEmotion.receiverId,
+            houseWorkId: sendEmotion.houseWorkId,
+            disappointment: sendEmotion.disappointment,
+            compliments: sendEmotion.compliments
+        )
+        let response = try await networkService.sendEmotionCard(request)
+    }
+
+    func emotionDetail(for id: Int) async throws -> EmotionDetail {
+        let responseDTO = try await networkService.getEmotionCardDetail(id)
+        
+        return EmotionDetail(
+            emotionCardId: responseDTO.emotionCardId,
+            houseworkName: responseDTO.houseWorkName,
+            compliments: responseDTO.compliments,
+            disappointment: responseDTO.disappointment,
+            senderNickName: responseDTO.senderNickName,
+            receiverNickName: responseDTO.receiverNickName,
+            createdTime: responseDTO.createdTime
+        )
+    }
+
+    func deleteEmotion(_ emotion: Int) async throws {
+        try await networkService.deleteEmotion(emotion)
+    }
 }

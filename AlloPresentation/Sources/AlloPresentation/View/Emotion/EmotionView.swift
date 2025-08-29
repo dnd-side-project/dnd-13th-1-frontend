@@ -25,7 +25,7 @@ public struct EmotionView: View {
             )
             .padding(.top, 10)
             .onChange(of: selectedTab) { _, newTab in
-                viewModel.state.selectedFilter = (newTab == .received) ? "from" : "to"
+                viewModel.state.selectedFilter = (newTab == .received) ? "received" : "sent"
                 Task { await viewModel.loadEmotionList() }
             }
             .onChange(of: sortType) { _, newSort in
@@ -33,10 +33,33 @@ public struct EmotionView: View {
             }
             // 리스트 (스크롤뷰)
             ScrollView(showsIndicators: false) {
-                LazyVStack(alignment: .leading, spacing: 12) {
-                    ForEach(viewModel.state.emotions) { emotion in
-                        EmotionCell(emotion: emotion) {
-                            viewModel.action(.didTapEmotionCard(id: emotion.id))
+                if viewModel.state.emotions.isEmpty {
+                    VStack(spacing: 16) {
+                        Image(.illustrationEmpty)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 235, height: 220)
+                        if selectedTab == .received {
+                            Text("받은 마음이 없어요!")
+                                .font(.subtitle7)
+                                .foregroundColor(.gray400)
+                                .multilineTextAlignment(.center)
+                        } else {
+                            Text("보낸 마음이 없어요!")
+                                .font(.subtitle7)
+                                .foregroundColor(.gray400)
+                                .multilineTextAlignment(.center)
+                        }
+                        
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding(.top, 60)
+                } else {
+                    LazyVStack(alignment: .leading, spacing: 12) {
+                        ForEach(viewModel.state.emotions) { emotion in
+                            EmotionCell(emotion: emotion) {
+                                viewModel.action(.didTapEmotionCard(id: emotion.id))
+                            }
                         }
                     }
                 }
@@ -44,13 +67,9 @@ public struct EmotionView: View {
             .padding(.top, 10)
         }
         .padding(.horizontal, 20)
-        .onAppear {
-            Task {
-                await viewModel.loadEmotionList()
-            }
-        }
+        .task { await viewModel.load() }
         .overlay(alignment: .bottomTrailing) {
-                EmotionFloatingButton(viewModel: viewModel)
+            EmotionFloatingButton(viewModel: viewModel)
                 .padding(.trailing, 20)
                 .padding(.bottom, 20)
         }
@@ -58,44 +77,44 @@ public struct EmotionView: View {
 }
 extension EmotionView {
     private var headerSection: some View {
-            VStack(alignment: .leading) {
-                if selectedTab == .received {
-                    Text("주현님,")
-                        .font(.headline4)
+        VStack(alignment: .leading) {
+            if selectedTab == .received {
+                Text("\(viewModel.state.name ?? ""),")
+                    .font(.headline4)
+                    .foregroundColor(.gray900)
+                
+                (
+                    Text("\(viewModel.state.emotions.count)")
+                        .foregroundColor(.blue400)
+                    +
+                    Text("개의 마음이 도착해있어요!")
                         .foregroundColor(.gray900)
-
-                    (
-                        Text("\(viewModel.state.emotions.count)")
-                            .foregroundColor(.blue400)
-                        +
-                        Text("개의 마음이 도착해있어요!")
-                            .foregroundColor(.gray900)
-                    )
-                    .font(.headline4)
-                    .fixedSize(horizontal: false, vertical: true) // 높이 고정
-
-                } else if selectedTab == .sent {
-                    (
-                        Text("주현님이 \n")
-                            .foregroundColor(.gray900)
-                        +
-                        Text("지금까지 보낸 마음 ")
-                            .foregroundColor(.gray900)
-                        +
-                        Text("\(viewModel.state.emotions.count) ")
-                            .foregroundColor(.blue400)
-                        +
-                        Text("개")
-                            .foregroundColor(.gray900)
-                    )
-                    .font(.headline4)
-                    .fixedSize(horizontal: false, vertical: true) // 높이 고정
-                }
+                )
+                .font(.headline4)
+                .fixedSize(horizontal: false, vertical: true) // 높이 고정
+                
+            } else if selectedTab == .sent {
+                (
+                    Text("\(viewModel.state.name ?? "")이\n")
+                        .foregroundColor(.gray900)
+                    +
+                    Text("지금까지 보낸 마음 ")
+                        .foregroundColor(.gray900)
+                    +
+                    Text("\(viewModel.state.emotions.count) ")
+                        .foregroundColor(.blue400)
+                    +
+                    Text("개")
+                        .foregroundColor(.gray900)
+                )
+                .font(.headline4)
+                .fixedSize(horizontal: false, vertical: true) // 높이 고정
             }
-            .frame(height: 100)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.top, 32)
         }
+        .frame(height: 100)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.top, 32)
+    }
 }
 // MARK: - Header
 struct EmotionHeaderView: View {

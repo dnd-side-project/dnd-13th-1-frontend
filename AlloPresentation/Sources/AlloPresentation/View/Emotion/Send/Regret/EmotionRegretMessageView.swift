@@ -10,7 +10,6 @@ import SwiftUI
 public struct EmotionRegretMessageView: View {
     @StateObject private var viewModel: EmotionRegretMessageViewModel
     @FocusState private var isTextEditorFocused: Bool
-    @State private var contentText: String = ""
     @State private var showMainButton = false
 
     private let maxCharacters = 200
@@ -63,8 +62,10 @@ public struct EmotionRegretMessageView: View {
             }
             .padding(.top, 30)
             .padding(.bottom, 10)
+            
+            // MARK: - 내용 작성 TextEditor
             ZStack(alignment: .topLeading) {
-                if contentText.isEmpty {
+                if viewModel.state.contentText.isEmpty {
                     Text("내용을 작성해주세요.")
                         .foregroundColor(.gray300)
                         .padding(EdgeInsets(top: 12, leading: 12, bottom: 12, trailing: 12))
@@ -72,21 +73,41 @@ public struct EmotionRegretMessageView: View {
                 
                 TextEditor(text: Binding(
                     get: { viewModel.state.contentText },
-                    set: { viewModel.action(.updateContentText($0)) }
+                    set: { newValue in
+                        // 200자 제한 적용
+                        if newValue.count <= maxCharacters {
+                            viewModel.action(.updateContentText(newValue))
+                        } else {
+                            viewModel.action(.updateContentText(String(newValue.prefix(maxCharacters))))
+                            viewModel.state.isAIToneTriggered = false
+                        }
+                        if !newValue.isEmpty {
+                                    viewModel.state.isAIToneTriggered = false
+                                }
+                    }
                 ))
                 .focused($isTextEditorFocused)
                 .frame(height: 290)
                 .padding(4)
                 .overlay(
                     RoundedRectangle(cornerRadius: 20)
-                        .stroke(isTextEditorFocused ? .blue400 : .gray300, lineWidth: 2)
+//                        .stroke(
+//                            (viewModel.state.contentText.count > maxCharacters || viewModel.state.isAIToneTriggered)
+//                                ? Color.red
+//                                : (isTextEditorFocused ? .blue400 : .gray300),
+//                            lineWidth: 2
+//                        )
+                        .stroke(
+                            viewModel.state.isAIToneTriggered
+                            ? .red700
+                                : (isTextEditorFocused ? .blue400 : .gray300),
+                            lineWidth: 2
+                        )
                 )
                 .onChange(of: isTextEditorFocused) { focused in
                     if !focused && !viewModel.state.contentText.isEmpty {
-                        // 키보드 내려가고 내용이 있으면 버튼 노출
                         withAnimation { showMainButton = true }
                     } else {
-                        // 입력 중이면 버튼 숨김
                         showMainButton = false
                     }
                 }
@@ -97,9 +118,7 @@ public struct EmotionRegretMessageView: View {
                     Spacer()
                     HStack {
                         if viewModel.state.isAITransformed {
-                            Button(action: {
-                                viewModel.action(.didTapRotateButton)
-                            }) {
+                            Button(action: { viewModel.action(.didTapRotateButton) }) {
                                 Image(.iconRotate)
                                     .resizable()
                                     .frame(width: 24, height: 24)
@@ -108,42 +127,41 @@ public struct EmotionRegretMessageView: View {
                             }
                         }
                         Spacer()
-                        Text("\(viewModel.state.contentText.count)/\(maxCharacters)자")
-                            .font(.caption)
-                            .foregroundColor(.gray500)
-                            .padding(.trailing, 24)
-                            .padding(.bottom, 10)
+                        VStack(alignment: .trailing, spacing: 2) {
+                            Text("\(viewModel.state.contentText.count)/\(maxCharacters)자")
+                                .font(.caption)
+                                .foregroundColor(.gray500)
+                            if viewModel.state.contentText.count > maxCharacters {
+                                Text("띄어쓰기 포함 총 200자 이내로 작성할 수 있습니다.")
+                                    .font(.caption2)
+                                    .foregroundColor(.red)
+                            }
+                        }
+                        .padding(.trailing, 24)
+                        .padding(.bottom, 10)
                     }
                 }
             }
             .frame(height: 290)
-            // MARK: - AI 말투 버튼
-            Button(action: {
-                viewModel.action(.didTapAIToneButton)
-            }) {
-                if viewModel.state.isLoading {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                        .frame(width: 20, height: 20)
-                } else {
-                    HStack(spacing: 4) {
-                        
+            HStack {
+                Spacer()
+                Button(action: { viewModel.action(.didTapAIToneButton) }) {
+                    if viewModel.state.isLoading {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                            .frame(width: 20, height: 20)
+                    } else {
                         Image(.iconAI)
                             .resizable()
-                            .frame(width: 16, height: 16)
-                        Text("AI 말투 다듬기")
-                            .font(.button1)
-                            .foregroundStyle(.white)
-                            .lineLimit(1)
+                            .frame(width: 133, height: 45)
+                            .padding(.top, 23)
                     }
-                    .frame(width: 120, height: 35)
-                    .padding(.horizontal, 10)
-                    .background(
-                        RoundedRectangle(cornerRadius: 50).fill(.blue400)
-                    )
                 }
             }
+            
             Spacer()
+            
+            // MARK: - 작성 완료 버튼
             if showMainButton {
                 MainButton(
                     title: "작성 완료",

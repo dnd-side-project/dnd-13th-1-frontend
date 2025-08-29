@@ -36,7 +36,7 @@ struct TabbedMainView: View {
             }
             .ignoresSafeArea(edges: .bottom)
             .navigationDestination(for: AppScene.self) { scene in
-                appCoordinator.buildScene(scene)
+                appCoordinator.buildScene(scene).navigationBarBackButtonHidden()
             }
             .sheet(item: $appCoordinator.appSheet, onDismiss: appCoordinator.sheetOnDismiss) {
                 appCoordinator.buildSheet($0)

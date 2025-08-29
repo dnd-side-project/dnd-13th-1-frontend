@@ -45,7 +45,7 @@ public struct AddHouseworkView: View {
                     },
                     title: "루틴 설정",
                     style: .routine,
-                    value: $viewModel.state.routine
+                    value: $viewModel.state.routineText
                 )
                 // 마감일 선택
                 UnderlineTextView(
@@ -62,8 +62,9 @@ public struct AddHouseworkView: View {
             MainButton(
                 title: "다음으로",
                 action: { viewModel.action(.didTapNextButton) },
-                style: .bottoomMain
+                style: isFormValid ? .bottoomMain : .selectionNo
             )
+            .disabled(!isFormValid)
             .padding(.bottom, 16)
             .contentShape(Rectangle())
         }
@@ -79,5 +80,12 @@ public struct AddHouseworkView: View {
             return "\(viewModel.state.startDate) - \(viewModel.state.endDate)"
         }
     }
-
+    
+    private var isFormValid: Bool {
+        !viewModel.state.myHouseworkTitle.isEmpty &&
+        !viewModel.state.place.isEmpty &&
+        !viewModel.state.routineText.isEmpty &&
+        !viewModel.state.startDate.isEmpty &&
+        !viewModel.state.endDate.isEmpty
+    }
 }

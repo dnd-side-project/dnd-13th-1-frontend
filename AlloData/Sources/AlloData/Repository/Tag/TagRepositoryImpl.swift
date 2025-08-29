@@ -23,9 +23,9 @@ final class TagRepositoryImpl: TagRepository {
     
     func addTag(name: String) async throws -> TagItem {
         guard let groupId = UserDefaultsService.groupId else { throw NSError(domain: "GroupIdMissing", code: -1) }
+        print("[TagRepository] addTag 요청 전 - groupId: \(groupId), name: \(name)")
         let dto = try await networkService.addTag(groupId, tagName: name)
+        print("[TagRepository] addTag 응답 - tagId: \(dto.tagId), name: \(dto.name)")
         return TagItem(id: dto.tagId, name: dto.name)
     }
 }
-
-

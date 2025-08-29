@@ -15,11 +15,20 @@ final class PlaceRepositoryImpl: PlaceRepository {
         self.networkService = networkService
     }
     
+    func addPlace(placeName: String) async throws -> HouseworkPlace {
+        guard let groupId = UserDefaultsService.groupId else {
+            throw NSError(domain: "GroupId is missing", code: -1)
+        }
+        _ = try await networkService.addPlace(groupId, placeName: placeName)
+        let newPlace = HouseworkPlace(placeId: 0, name: placeName)
+        return newPlace
+    }
+    
     func fetchPlaces() async throws -> [HouseworkPlace] {
         guard let groupId = UserDefaultsService.groupId else { return [] }
         let dto = try await networkService.getPlaceList(groupId)
         return dto.map { element in
-            HouseworkPlace(placeId: String(element.placeId), name: element.name)
+            HouseworkPlace(placeId: element.placeId, name: element.name)
         }
     }
 }

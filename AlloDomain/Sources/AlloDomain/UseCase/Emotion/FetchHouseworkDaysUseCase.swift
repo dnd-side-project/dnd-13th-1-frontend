@@ -8,5 +8,5 @@
 import Foundation
 
 public protocol FetchHouseworkDaysUseCase: Sendable {
-    func execute() async throws -> [HouseworkSevendays]
+    func execute(receiverId: Int) async throws -> [HouseworkSevendays]
 }

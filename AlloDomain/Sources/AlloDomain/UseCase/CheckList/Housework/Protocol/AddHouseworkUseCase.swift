@@ -7,6 +7,6 @@
 
 import Foundation
 
-public protocol AddHouseworkUseCase {
-    func execute(_ housework: Housework) async throws
+public protocol AddHouseworkUseCase: Sendable {
+    func execute(housework: Housework) async throws
 }

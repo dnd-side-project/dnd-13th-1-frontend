@@ -13,8 +13,9 @@ public final class EmotionViewModel: ViewModelable {
     // MARK: - State
     struct State {
         var emotions: [EmotionList] = []
-        var selectedFilter: String = "from"
+        var selectedFilter: String = "received"
         var sortOrder: String = "desc"
+        var name: String? = ""
     }
     // MARK: - Action
     enum Action {
@@ -25,11 +26,14 @@ public final class EmotionViewModel: ViewModelable {
     // MARK: - Properties
     var state: State
     let coordinator: Coordinator
+    // MARK: - Dependencies
+    private let fetchMemberUseCase: FetchMemberUseCase
     private let getEmotionListUscase: FetchEmotionUseCase
     private let emotionDetailUseCase: EmotionDetailUseCase
-    public init(coordinator: Coordinator, getEmotionListUscase: FetchEmotionUseCase, emotionDetailUseCase: EmotionDetailUseCase) {
+    public init(coordinator: Coordinator, fetchMemberUseCase: FetchMemberUseCase, getEmotionListUscase: FetchEmotionUseCase, emotionDetailUseCase: EmotionDetailUseCase) {
         self.coordinator = coordinator
         self.state = State()
+        self.fetchMemberUseCase = fetchMemberUseCase
         self.getEmotionListUscase = getEmotionListUscase
         self.emotionDetailUseCase = emotionDetailUseCase
     }
@@ -39,7 +43,8 @@ public final class EmotionViewModel: ViewModelable {
         case .backButtonDidTap:
             coordinator.pop()
         case .didTapSendButton:
-            coordinator.push(AppScene.emotionMember)
+            let housework = Housework(id: 0, place: "", title: "", member: [], date: Date(), isDone: false, routine: .none, tags: [])
+            coordinator.push(AppScene.emotionMember(housework: housework))
         case .didTapEmotionCard(let id):
            didSelectEmotion(id: id)
         }
@@ -49,25 +54,45 @@ public final class EmotionViewModel: ViewModelable {
         Task {
             do {
                 let detail = try await emotionDetailUseCase.execute(id: id)
-                coordinator.push(AppScene.emotionDetails(detailEmotion: detail, isReceived: state.selectedFilter == "from"))
+                coordinator.push(AppScene.emotionDetails(detailEmotion: detail, isReceived: state.selectedFilter == "received"))
             } catch {
                 print("Error: \(error)")
             }
         }
     }
-    public func loadEmotionList() async {
+}
+extension EmotionViewModel {
+    public func load() async {
+        await withTaskGroup(of: Void.self) { group in
+            group.addTask { await self.loadProfile() }
+            group.addTask { await self.loadEmotionList()}
+        }
+    }
+    
+    func loadEmotionList() async {
         do {
             let result = try await getEmotionListUscase.execute(
                 filter: state.selectedFilter,
                 sorted: state.sortOrder
             )
+            print("loadEmotionList - fetched count: \(result.count)")
             self.state.emotions = result
         } catch {
             print("failed to fetch houseworks")
         }
     }
-}
-extension EmotionViewModel {
+    
+    func loadProfile() async {
+        do {
+            let members = try await fetchMemberUseCase.execute()
+            if let me = members.first {
+                state.name = me.name
+            }
+        } catch {
+            // Silent fail for draft
+        }
+    }
+    
     func sortEmotions(by sortType: SortType) {
         switch sortType {
         case .latest:

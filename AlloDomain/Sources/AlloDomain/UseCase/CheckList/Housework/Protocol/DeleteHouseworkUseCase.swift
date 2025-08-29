@@ -7,6 +7,6 @@
 
 import Foundation
 
-public protocol DeleteHouseworkUseCase {
+public protocol DeleteHouseworkUseCase: Sendable {
     func execute(_ housework: Housework) async throws
 }

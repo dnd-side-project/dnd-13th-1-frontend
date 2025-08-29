@@ -31,6 +31,10 @@ final class DIContainerImpl {
 }
 // MARK: - DIContainer 프로토콜 구현
 extension DIContainerImpl: DIContainer {
+    func resolveAddPlaceUseCase() -> AddPlaceUseCase {
+        UseCaseFactory.makeAddPlaceUseCase(placeRepository: placeRepository)
+    }
+    
     func resolveCreateGroupUseCase() -> CreateGroupUseCase {
         UseCaseFactory.makeCreateGroupUseCase(groupRepository: groupRepository)
     }
@@ -105,6 +109,10 @@ extension DIContainerImpl: DIContainer {
     
     func resolveDetailEmotionUseCase() -> EmotionDetailUseCase {
         UseCaseFactory.makeDetailEmotionUseCase(emotionRepository: emotionRepository)
+    }
+    
+    func resolveDeleteEmotionUseCase() -> EmotionDeleteUseCase {
+        UseCaseFactory.makeDeleteEmotionUseCase(emotionRepository: emotionRepository)
     }
     
     func resolveKakaoLoginUseCase() -> KakaoLoginUseCase {

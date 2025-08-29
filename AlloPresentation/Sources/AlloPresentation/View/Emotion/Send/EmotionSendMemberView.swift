@@ -23,10 +23,12 @@ public struct EmotionSendMemberView: View {
                 .foregroundStyle(.gray900)
             VStack(spacing: 12) {
                 ForEach(viewModel.state.members, id: \.id) { member in
+                    let displayName = member.name
                     MemberButton(
                         member: member,
                         isSelected: selectedMemberIDs.contains(member.id),
-                        action: { toggleSelection(for: member) }
+                        action: { toggleSelection(for: member) },
+                        displayName: displayName
                     )
                 }
             }

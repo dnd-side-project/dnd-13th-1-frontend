@@ -34,11 +34,9 @@ struct NetworkService: Sendable {
         return responseDTO
     }
     
-    func addHouseworkSchedule(_ groupId: Int, _ requestDTO: AddHouseworkScheduleRequestDTO) async throws -> EnterGroupResponseDTO {
-        let response = try await provider.request(.addHouseworkSchedule(groupId: groupId, requestDTO: requestDTO))
-        let responseDTO = try JSONDecoder().decode(EnterGroupResponseDTO.self, from: response)
-        dump(responseDTO)
-        return responseDTO
+    func addHouseworkSchedule(_ groupId: Int, _ requestDTO: AddHouseworkScheduleRequestDTO) async throws {
+        _ = try await provider.request(.addHouseworkSchedule(groupId: groupId, requestDTO: requestDTO))
+        // 더 이상 디코딩하지 않음
     }
     
     func getPlaceList(_ groupId: Int) async throws -> GetPlaceListResponseDTO {
@@ -144,6 +142,10 @@ struct NetworkService: Sendable {
         let responseDTO = try JSONDecoder().decode(GetHouseworkDetailResponseDTO.self, from: response)
         dump(responseDTO)
         return responseDTO
+    }
+    
+    func deleteEmotion(_ emotionCardId: Int) async throws {
+        try await provider.request(.deleteEmotion(emotionCardId: emotionCardId))
     }
     
     public func getEmotionCardList(filter: String, sorted: String) async throws -> GetEmotionCardListResponseDTO {

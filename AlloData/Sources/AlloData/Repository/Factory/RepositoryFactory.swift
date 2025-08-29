@@ -16,7 +16,7 @@ public struct RepositoryFactory {
     }
   
     public func makeHouseworkRepository(liveData: Bool) -> HouseworkRepository {
-        liveData ? HouseworkRepositoryImpl(networkService: networkService) : StubHouseworkRepository()
+        HouseworkRepositoryImpl(networkService: networkService)
     }
 
     public func makeKakaoLoginRepository() -> KakaoLoginRepository {
@@ -24,11 +24,11 @@ public struct RepositoryFactory {
     }
     
     public func makePlaceRepository(liveData: Bool) -> PlaceRepository {
-        liveData ? PlaceRepositoryImpl(networkService: networkService) : StubPlaceRepository()
+        PlaceRepositoryImpl(networkService: networkService)
     }
     
     public func makeMemberRepository(liveData: Bool) -> MemberRepository {
-        liveData ? MemberRepositoryImpl(networkService: networkService) : StubMemberRepository()
+        MemberRepositoryImpl(networkService: networkService)
     }
     
     public func makeGroupRepository(liveData: Bool = true) -> GroupRepository {
@@ -44,11 +44,11 @@ public struct RepositoryFactory {
     }
     
     public func makeHouseworkSevenDaysRepository(liveData: Bool) -> HouseworkDaysRepository {
-        liveData ? HouseworkDaysRepositoryImpl() : StubHouseworkDaysRepository()
+        HouseworkDaysRepositoryImpl(networkService: networkService)
     }
     
     public func makeEmotionRepository(liveData: Bool) -> EmotionRepository {
-        liveData ? EmotionRepositoryimpl() : StubEmotionListRepository()
+        EmotionRepositoryimpl(networkService: networkService)
     }
     
     public func makeAIRepository() -> AIRepository {

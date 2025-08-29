@@ -15,7 +15,7 @@ final class EmotionUseCaseImpl {
 }
 
 extension EmotionUseCaseImpl: SendEmotionUseCase {
-    public func execute() async throws -> [SendEmotion] {
-        return try await emotionRepository.sendHouseworkEmotion()
+    public func execute(sendEmotion: SendEmotion) async throws {
+        return try await emotionRepository.sendHouseworkEmotion(sendEmotion: sendEmotion)
     }
 }

@@ -19,116 +19,139 @@ public struct AddHouseworkFinishView: View {
         GridItem(.flexible(), spacing: 5),
         GridItem(.flexible(), spacing: 5)
     ]
+    
     public var body: some View {
-        VStack(spacing: 0) {
-            TitleNavigationBar(title: "", onBack: {viewModel.action(.didTapBackButton)})
-                .padding(.bottom, 16)
-            VStack(spacing: 12) {
-                VStack(alignment: .center) {
-                    OverlappingProfileImages(members: viewModel.state.housework.member)
-                    Spacer()
-                    Text(
-                        //TODO: -- 알람 설정 유/무로 인한 처리 수정 "나"만 택할 경우
-                        (viewModel.state.housework.member.count == 1 && viewModel.state.housework.member.first?.id == 1)
-                        ? "설정한 집안일을 체크리스트에 추가할게요"
-                        : "집안일을 분담할 멤버에게\n알림을 보낼게요!"
-                    )
-                    .font(.headline4)
-                    .foregroundColor(.gray900)
-                    .multilineTextAlignment(.center)
-                }
-                .frame(height: 164)
-                .frame(maxWidth: .infinity, alignment: .center)
-                Spacer()
-                VStack(alignment: .leading) {
-                    VStack(alignment: .leading) {
-                        Text(viewModel.state.housework.title)
-                            .font(.subtitle1)
-                            .foregroundColor(.gray800)
-                            .padding(.top, 20)
-                        HStack {
-                            Text("장소")
-                                .font(.subtitle6)
-                                .foregroundColor(.gray700)
-                            Spacer()
-                            Text(viewModel.state.housework.place)
-                                .font(.subtitle6)
-                                .foregroundColor(.gray700)
-                        }
-                        HStack {
-                            Text("루틴")
-                                .font(.subtitle6)
-                                .foregroundColor(.gray700)
-                            Spacer()
-                            Text(viewModel.state.housework.routine.rawValue)
-                                .font(.subtitle6)
-                                .foregroundColor(.gray700)
-                        }
-                        HStack {
-                            Text("마감일")
-                                .font(.subtitle6)
-                                .foregroundColor(.gray700)
-                            Spacer()
-                            Text(viewModel.state.housework.date.toKoreanDateString())
-                                .font(.subtitle6)
-                                .foregroundColor(.gray700)
-                        }
-                        .padding(.bottom, 20)
+        ZStack {
+            VStack(spacing: 0) {
+                // Navigation Bar 고정
+                TitleNavigationBar(
+                    title: "",
+                    onBack: { viewModel.action(.didTapBackButton) }
+                )
+                .padding(.bottom, 25)
+                .padding(.leading, 20)
+                .frame(maxWidth: .infinity)
+                .background(Color.white)
+                
+                // 본문 영역
+                VStack(spacing: 12) {
+                    VStack(alignment: .center) {
+                        OverlappingProfileImages(members: viewModel.state.housework.member)
+                        Spacer()
+                        Text(
+                            (viewModel.state.housework.member.count == 1 &&
+                             viewModel.state.housework.member.first?.id == viewModel.state.housework.member.first?.id)
+                            ? "설정한 집안일을 체크리스트에 추가할게요"
+                            : "집안일을 분담할 멤버에게\n알림을 보낼게요!"
+                        )
+                        .font(.headline4)
+                        .foregroundColor(.gray900)
+                        .multilineTextAlignment(.center)
                     }
-                    .padding(.horizontal, 20)
-                    .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(.gray25)
-                    )
+                    .frame(height: 164)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    
+                    Spacer()
+                    
+                    // 상세 정보 섹션
                     VStack(alignment: .leading) {
-                        if !viewModel.state.housework.tags.isEmpty { // 태그가 있을 때만 표시
-                            Text("집안일 기준 태그")
-                                .font(.subtitle6)
-                                .foregroundColor(.gray700)
-                                .padding(.bottom, 5)
+                        VStack(alignment: .leading) {
+                            Text(viewModel.state.housework.title)
+                                .font(.subtitle1)
+                                .foregroundColor(.gray800)
+                                .padding(.top, 20)
                             
-                            let tags = viewModel.state.housework.tags
-                            var rows: [[String]] {
-                                stride(from: 0, to: tags.count, by: 2).map { start in
-                                    let end = min(start + 2, tags.count)
-                                    return Array(tags[start..<end])
-                                }
+                            HStack {
+                                Text("장소")
+                                    .font(.subtitle6)
+                                    .foregroundColor(.gray700)
+                                Spacer()
+                                Text(viewModel.state.housework.place)
+                                    .font(.subtitle6)
+                                    .foregroundColor(.gray700)
                             }
                             
-                            VStack(alignment: .leading, spacing: 15) {
-                                ForEach(rows, id: \.self) { row in
-                                    HStack(spacing: 12) {
-                                        ForEach(row, id: \.self) { tag in
-                                            TagItemView(tag: tag)
+                            HStack {
+                                Text("루틴")
+                                    .font(.subtitle6)
+                                    .foregroundColor(.gray700)
+                                Spacer()
+                                Text(viewModel.state.housework.routine.rawValue)
+                                    .font(.subtitle6)
+                                    .foregroundColor(.gray700)
+                            }
+                            
+                            HStack {
+                                Text("마감일")
+                                    .font(.subtitle6)
+                                    .foregroundColor(.gray700)
+                                Spacer()
+                                Text(viewModel.state.housework.date.toKoreanDateString())
+                                    .font(.subtitle6)
+                                    .foregroundColor(.gray700)
+                            }
+                            .padding(.bottom, 20)
+                        }
+                        .padding(.horizontal, 20)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(.gray25)
+                        )
+                        
+                        VStack(alignment: .leading) {
+                            if !viewModel.state.housework.tags.isEmpty {
+                                Text("집안일 기준 태그")
+                                    .font(.subtitle6)
+                                    .foregroundColor(.gray700)
+                                    .padding(.bottom, 5)
+                                
+                                let tags = viewModel.state.housework.tags
+                                var rows: [[String]] {
+                                    stride(from: 0, to: tags.count, by: 2).map { start in
+                                        let end = min(start + 2, tags.count)
+                                        return Array(tags[start..<end])
+                                    }
+                                }
+                                
+                                VStack(alignment: .leading, spacing: 15) {
+                                    ForEach(rows, id: \.self) { row in
+                                        HStack(spacing: 12) {
+                                            ForEach(row, id: \.self) { tag in
+                                                TagItemView(tag: tag)
+                                            }
+                                            Spacer()
                                         }
-                                        Spacer()
                                     }
                                 }
                             }
                         }
+                        .padding(.vertical, 20)
+                        .padding(.leading, 20)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color.gray25)
+                        )
                     }
-                    .padding(.vertical, 20)
-                    .padding(.leading, 20)
-                    .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(Color.gray25)
-                    )
-
+                    
+                    Spacer()
                 }
-                Spacer()
+                .padding(.horizontal, 20)
+                .padding(.bottom, 72) // 버튼 공간 확보
             }
-            .frame(height: 560)
-            
-            MainButton(
-                title: "추가하기",
-                action: { viewModel.action(.didTapNextButton) },
-                style: .bottoomMain
-            )
-            .padding(.bottom, 16)
+
+            VStack {
+                Spacer()
+                MainButton(
+                    title: "추가하기",
+                    action: { viewModel.action(.didTapNextButton) },
+                    style: .bottoomMain
+                )
+                .padding(.horizontal, 20)
+                .padding(.bottom, 16)
+                .background(Color.white)
+            }
         }
-        .padding(.horizontal, 20)
     }
-    
 }
 
 struct OverlappingProfileImages: View {

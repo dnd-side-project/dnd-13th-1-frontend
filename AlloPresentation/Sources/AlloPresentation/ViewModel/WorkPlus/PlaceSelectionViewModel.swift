@@ -25,14 +25,13 @@ public final class PlaceSelectionViewModel: ViewModelable {
     public var state: State
     let coordinator: Coordinator
     private let fetchPlacesUseCase: FetchPlacesUseCase
-    var selectedCategory: HouseworkPlace?
+    // var selectedCategory: HouseworkPlace?
     // MARK: - Init
     public init(coordinator: Coordinator, initialPlace: String,
                 fetchPlacesUseCase: FetchPlacesUseCase) {
         self.coordinator = coordinator
         self.fetchPlacesUseCase = fetchPlacesUseCase
         self.state = State()
-        self.state.selectedCategory = HouseworkPlace(placeId: UUID().uuidString, name: initialPlace)
     }
     
     // MARK: - Action Handler

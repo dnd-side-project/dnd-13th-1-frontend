@@ -19,7 +19,7 @@ public enum AppScene: AppRoute {
     case houseworkStandard(housework: Housework)
     case houseworkMember(housework: Housework)
     case houseworkPlusFinish(housework: Housework)
-    case emotionMember
+    case emotionMember(housework: Housework)
     case houseworkSevendays(sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String, receiverImg: URL)
     case emotionChoice(sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String, receiverImg: URL)
     case emotionThankMessage(sendEmotion: SendEmotion, receiverName: String, houseworkTitle: String, initialEmotion: EmotionType, receiverImg: URL)
@@ -39,8 +39,8 @@ public enum AppScene: AppRoute {
 
 public enum AppSheet: AppRoute {
     case houseworkSelection(worklistClickAction: (String) -> Void)
-    case placeSelection(initialPlace: String, placeClickAction: (String) -> Void)
-    case routineSelection(initialRoutine: String, completeButtonAction: (String) -> Void)
+    case placeSelection(initialPlace: String, placeClickAction: (String, Int) -> Void)
+    case routineSelection(initialRoutine: String, completeButtonAction: (String, [String], String) -> Void)
     case calendarSelection(dateSelectedAction: (String) -> Void)
     
     public var id: String {

@@ -91,10 +91,10 @@ public struct HouseworkSelectionSheet: View {
                 }) {
                     // 검색 결과 없음 뷰
                     VStack(spacing: 16) {
-                        Image(.icHomeUnselected)
+                        Image(.illustrationEmpty)
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 113, height: 113)
+                            .frame(width: 235, height: 220)
                         Text("검색되는 프리셋이 없어요!\n다른 검색어로 시도해주세요")
                             .font(.subtitle7)
                             .foregroundColor(.gray400)
