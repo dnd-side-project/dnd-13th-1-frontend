@@ -52,24 +52,24 @@ final class HouseworkRepositoryImpl: HouseworkRepository {
         
         func mapHouseworks(_ list: [GetHouseworkResponseDTO.Housework]) -> [Housework] {
             return list.compactMap { item in
-                guard let workDate = dateFormatterYYYYMMDD.date(from: item.houseworkDate) else { return nil }
-                let members: [Member] = item.houseworkMembers.compactMap { m in
-                    if let url = m.memberProfileImageUrl {
-                        return Member(id: m.memberId, name: m.memberNickName, profileImageUrl: URL(string: url))
-                    } else {
-                        return Member(id: m.memberId, name: m.memberNickName, profileImageUrl: nil)
-                    }
+               // guard let workDate = dateFormatterYYYYMMDD.date(from: item.houseWorkDate) else { return nil }
+                let members: [Member] = item.houseWorkMembers.map { m in
+                    let url = m.memberProfileImageUrl != nil ? URL(string: m.memberProfileImageUrl!) : nil
+                    return Member(id: m.memberId, name: m.memberNickName, profileImageUrl: url)
                 }
+
+                let workDate = dateFormatterYYYYMMDD.date(from: item.houseWorkDate) ?? Date() // 실패하면 오늘 날짜
                 return Housework(
-                    id: item.houseworkId,
+                    id: item.houseWorkId,
                     place: "",
-                    title: item.houseworkTitle,
+                    title: item.houseWorkTitle,
                     member: members,
                     date: workDate,
                     isDone: false,
                     routine: .none,
-                    tags: item.houseworkTag
+                    tags: item.houseWorkTag.map{ $0.name }
                 )
+
             }
         }
         let myLeft = mapHouseworks(dto.myHouseWorkLeft)
@@ -110,14 +110,41 @@ final class HouseworkRepositoryImpl: HouseworkRepository {
     }
     
     func getHouseworkDetail(id: Int) async throws -> HouseworkDetail {
-        let dto = try await networkService.getHouseworkDetail(id)
-        guard let date = dateFormatterYYYYMMDD.date(from: dto.houseworkDate) else {
-            return HouseworkDetail(id: dto.houseworkId, title: dto.houseworkTitle, tags: dto.houseworkTag.map { $0.name }, date: Date(), members: dto.houseworkMembers.map {
-                    return Member(id: $0.memberId, name: $0.memberNickName, profileImageUrl: nil)
-            })
+        do {
+            let dto = try await networkService.getHouseworkDetail(id)
+            
+            guard let date = dateFormatterYYYYMMDD.date(from: dto.houseWorkDate) else {
+                print("⚠️ [Repository] 날짜 변환 실패, 기본값(Date()) 사용")
+                return HouseworkDetail(
+                    id: dto.houseWorkId,
+                    title: dto.houseWorkTitle,
+                    placeName: dto.placeName,
+                    tags: dto.houseWorkTag.map { $0.name },
+                    date: Date(),
+                    members: dto.houseWorkMembers.map {
+                        Member(id: $0.memberId, name: $0.memberNickName,
+                               profileImageUrl: nil)
+                    }
+                )
+            }
+            
+            return HouseworkDetail(
+                id: dto.houseWorkId,
+                title: dto.houseWorkTitle,
+                placeName: dto.placeName,
+                tags: dto.houseWorkTag.map { $0.name },
+                date: date,
+                members: dto.houseWorkMembers.map {
+                    Member(id: $0.memberId, name: $0.memberNickName,
+                           profileImageUrl: nil)
+                }
+            )
+            
+        } catch {
+            throw error
         }
-        return HouseworkDetail(id: dto.houseworkId, title: dto.houseworkTitle, tags: dto.houseworkTag.map { $0.name }, date: date, members: dto.houseworkMembers.map { Member(id: $0.memberId, name: $0.memberNickName, profileImageUrl: nil) })
     }
+
     
     func getMyRecentHousework(receiverId: Int) async throws -> [RecentHouseworkDay] {
         guard let groupId = UserDefaultsService.groupId else { return [] }

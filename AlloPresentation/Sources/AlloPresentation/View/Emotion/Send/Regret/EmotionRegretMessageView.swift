@@ -40,22 +40,11 @@ public struct EmotionRegretMessageView: View {
             
             // MARK: - 받는 사람
             HStack(spacing: 12) {
-                AsyncImage(url: viewModel.state.receiverImg) { phase in
-                    switch phase {
-                    case .empty:
-                        EmptyView()
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 28, height: 28)
-                            .clipShape(Circle())
-                    case .failure:
-                        EmptyView()
-                    @unknown default:
-                        EmptyView()
-                    }
-                }
+                ProfileImageView(
+                    url: viewModel.state.receiverImg,
+                    size: 32,
+                    cornerRadius: 32
+                )
                 Text("To. \(viewModel.state.receiverName)")
                     .font(.body1)
                     .foregroundStyle(.gray600)
@@ -68,7 +57,7 @@ public struct EmotionRegretMessageView: View {
                 if viewModel.state.contentText.isEmpty {
                     Text("내용을 작성해주세요.")
                         .foregroundColor(.gray300)
-                        .padding(EdgeInsets(top: 12, leading: 12, bottom: 12, trailing: 12))
+                        .padding(EdgeInsets(top: 30, leading: 30, bottom: 30, trailing: 30))
                 }
                 
                 TextEditor(text: Binding(
@@ -88,7 +77,8 @@ public struct EmotionRegretMessageView: View {
                 ))
                 .focused($isTextEditorFocused)
                 .frame(height: 290)
-                .padding(4)
+                .padding(.horizontal, 19)
+                .padding(.top, 10)
                 .overlay(
                     RoundedRectangle(cornerRadius: 20)
 //                        .stroke(
@@ -172,5 +162,6 @@ public struct EmotionRegretMessageView: View {
             }
         }
         .padding(.horizontal, 20)
+        .onTapGesture { isTextEditorFocused = false }
     }
 }
