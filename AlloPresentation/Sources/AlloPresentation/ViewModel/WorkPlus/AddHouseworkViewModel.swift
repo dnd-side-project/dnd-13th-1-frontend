@@ -29,8 +29,7 @@ public final class AddHouseworkViewModel: ViewModelable {
         case didTapAddHouseworkButton
         case didTapAddPlaceButton
         case didTapAdddRoutineButton
-       // case didTapCalendarButton // 시작일/ 종료일
-        case didTapHouseworkDetail
+        case didTapCalendarButton // 시작일/ 종료일
         case didTapNextButton
     }
     
@@ -93,25 +92,12 @@ extension AddHouseworkViewModel {
                 }
             ), onDismiss: {})
 
-        case .didTapHouseworkDetail:
-            let dummyHousework = Housework(
-                id: 0,
-                place: "거실",
-                title: "청소하기",
-                member: [],
-                date: Date(),
-                isDone: false,
-                routine: .none,
-                tags: []
-            )
-
-            coordinator.presentSheet(
-                AppSheet.houseworkDetailSelection(housework: dummyHousework) {
-                    self.coordinator.dismissSheet()
-                },
-                onDismiss: {}
-            )
-
+        case .didTapCalendarButton:
+            coordinator.presentSheet(AppSheet.calendarSelection(dateSelectedAction: { [weak self] selected in
+                self?.state.startDate = selected
+                self?.state.endDate = selected
+                self?.coordinator.dismissSheet()
+            }), onDismiss: {})
         case .didTapNextButton:
             if let housework = makeHousework() {
                 coordinator.push(AppScene.houseworkStandard(housework: housework))

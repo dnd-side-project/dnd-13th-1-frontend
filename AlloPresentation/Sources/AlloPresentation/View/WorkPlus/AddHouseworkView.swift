@@ -50,7 +50,7 @@ public struct AddHouseworkView: View {
                 // 마감일 선택
                 UnderlineTextView(
                     onPresetTap: {
-                        viewModel.action(.didTapHouseworkDetail)
+                        viewModel.action(.didTapCalendarButton)
                     },
                     title: "마감일 선택",
                     style: .deadline,
