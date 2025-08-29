@@ -11,9 +11,9 @@ public enum TabBarItem: CaseIterable {
     case home, checklist, emotion, mypage
     var title: String {
         switch self {
-        case .home: return "홈"
+        case .home: return "메뉴"
         case .checklist: return "체크리스트"
-        case .emotion: return "마음"
+        case .emotion: return "마음함"
         case .mypage: return "마이"
         }
     }
