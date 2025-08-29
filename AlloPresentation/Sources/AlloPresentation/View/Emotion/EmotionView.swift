@@ -44,11 +44,12 @@ public struct EmotionView: View {
             .padding(.top, 10)
         }
         .padding(.horizontal, 20)
-        .onAppear {
-            Task {
-                await viewModel.loadEmotionList()
-            }
-        }
+//        .onAppear {
+//            Task {
+//                await viewModel.loadEmotionList()
+//            }
+//        }
+        .task { await viewModel.load() }
         .overlay(alignment: .bottomTrailing) {
                 EmotionFloatingButton(viewModel: viewModel)
                 .padding(.trailing, 20)
@@ -60,7 +61,7 @@ extension EmotionView {
     private var headerSection: some View {
             VStack(alignment: .leading) {
                 if selectedTab == .received {
-                    Text("주현님,")
+                    Text("\(viewModel.state.name ?? ""),")
                         .font(.headline4)
                         .foregroundColor(.gray900)
 
@@ -76,7 +77,7 @@ extension EmotionView {
 
                 } else if selectedTab == .sent {
                     (
-                        Text("주현님이 \n")
+                        Text("\(viewModel.state.name ?? "")이\n")
                             .foregroundColor(.gray900)
                         +
                         Text("지금까지 보낸 마음 ")

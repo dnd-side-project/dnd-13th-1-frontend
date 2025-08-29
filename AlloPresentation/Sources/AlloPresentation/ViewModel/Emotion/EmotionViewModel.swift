@@ -15,6 +15,7 @@ public final class EmotionViewModel: ViewModelable {
         var emotions: [EmotionList] = []
         var selectedFilter: String = "received"
         var sortOrder: String = "desc"
+        var name: String? = ""
     }
     // MARK: - Action
     enum Action {
@@ -25,11 +26,14 @@ public final class EmotionViewModel: ViewModelable {
     // MARK: - Properties
     var state: State
     let coordinator: Coordinator
+    // MARK: - Dependencies
+    private let fetchMemberUseCase: FetchMemberUseCase
     private let getEmotionListUscase: FetchEmotionUseCase
     private let emotionDetailUseCase: EmotionDetailUseCase
-    public init(coordinator: Coordinator, getEmotionListUscase: FetchEmotionUseCase, emotionDetailUseCase: EmotionDetailUseCase) {
+    public init(coordinator: Coordinator,fetchMemberUseCase: FetchMemberUseCase, getEmotionListUscase: FetchEmotionUseCase, emotionDetailUseCase: EmotionDetailUseCase) {
         self.coordinator = coordinator
         self.state = State()
+        self.fetchMemberUseCase = fetchMemberUseCase
         self.getEmotionListUscase = getEmotionListUscase
         self.emotionDetailUseCase = emotionDetailUseCase
     }
@@ -55,6 +59,15 @@ public final class EmotionViewModel: ViewModelable {
             }
         }
     }
+}
+extension EmotionViewModel {
+    public func load() async {
+        await withTaskGroup(of: Void.self) { group in
+            group.addTask { await self.loadProfile() }
+            group.addTask { await self.loadEmotionList()}
+        }
+    }
+    
     public func loadEmotionList() async {
         do {
             let result = try await getEmotionListUscase.execute(
@@ -67,8 +80,18 @@ public final class EmotionViewModel: ViewModelable {
             print("failed to fetch houseworks")
         }
     }
-}
-extension EmotionViewModel {
+    
+    private func loadProfile() async {
+        do {
+            let members = try await fetchMemberUseCase.execute()
+            if let me = members.first {
+                state.name = me.name
+            }
+        } catch {
+            // Silent fail for draft
+        }
+    }
+    
     func sortEmotions(by sortType: SortType) {
         switch sortType {
         case .latest:

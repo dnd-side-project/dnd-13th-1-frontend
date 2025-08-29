@@ -50,10 +50,13 @@ public final class EmotionSendMemberViewModel: ViewModelable {
     func fetchMembers() async {
         do {
             let members = try await fetchMemberUseCase.execute()
-            state.members = members
+            
+            // 나 자신 제외하고 UI에 보여줄 멤버들
+            state.members = Array(members.dropFirst())
+            
         } catch {
             print("멤버 로드 실패: \(error)")
         }
     }
-    
+
 }

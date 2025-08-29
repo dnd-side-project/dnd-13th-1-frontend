@@ -23,9 +23,7 @@ public struct EmotionSendMemberView: View {
                 .foregroundStyle(.gray900)
             VStack(spacing: 12) {
                 ForEach(viewModel.state.members, id: \.id) { member in
-                    let isCurrentUser = member.id == viewModel.state.members.first?.id
-                    let displayName = isCurrentUser ? "나" : member.name
-
+                    let displayName = member.name
                     MemberButton(
                         member: member,
                         isSelected: selectedMemberIDs.contains(member.id),
