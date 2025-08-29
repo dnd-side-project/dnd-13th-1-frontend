@@ -15,7 +15,7 @@ public struct RoutinesetSheet: View {
     @State private var selectedCategory: String?
     @State private var selectedDays: Set<String> = []
     
-    var initialRoutine: String
+    var initialRoutine: String = ""
 
     public init(initialRoutine: String, completeButtonAction: @escaping (String, [String], String) -> Void) {
         self.initialRoutine = initialRoutine
