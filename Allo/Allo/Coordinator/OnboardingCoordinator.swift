@@ -46,7 +46,8 @@ final class OnboardingCoordinator: Coordinator {
                 viewModel: TypeInviteCodeViewModel(
                     coordinator: self,
                     enterGroupUseCase: diContainer.resolveEnterGroupUseCase(),
-                    setMyGroupUseCase: diContainer.resolveSetMyGroupUseCase()
+                    setMyGroupUseCase: diContainer.resolveSetMyGroupUseCase(),
+                    getMyGroupUseCase: diContainer.resolveGetMyGroupUseCase()
                 )
             )
         case .createGroup:

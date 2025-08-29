@@ -35,6 +35,10 @@ public struct RepositoryFactory {
         liveData ? GroupRepositoryImpl(networkService: networkService) : StubGroupRepository()
     }
     
+    public func makeGetGroupStateRepository() -> GetGroupStateRepository {
+        GetGroupStateRepositoryImpl(networkService: networkService)
+    }
+    
     public func makeTagRepository(liveData: Bool) -> TagRepository {
         liveData ? TagRepositoryImpl(networkService: networkService) : StubTagRepository()
     }

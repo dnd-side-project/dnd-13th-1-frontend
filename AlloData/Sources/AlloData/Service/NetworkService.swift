@@ -208,4 +208,11 @@ struct NetworkService: Sendable {
     func patchMyProfile(_ requestDTO: PatchProfileRequestDTO) async throws {
         try await provider.request(.patchMyProfile(requestDTO: requestDTO))
     }
+    
+    func getMyGroupState(groupId: Int) async throws -> GetGroupStateResponseDTO {
+        let response = try await provider.request(.getGroupState(groupId: groupId))
+        let responseDTO = try JSONDecoder().decode(GetGroupStateResponseDTO.self, from: response)
+        dump(responseDTO)
+        return responseDTO
+    }
 }

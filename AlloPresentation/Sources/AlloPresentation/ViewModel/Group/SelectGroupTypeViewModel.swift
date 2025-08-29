@@ -56,7 +56,7 @@ public final class SelectGroupTypeViewModel: ViewModelable {
                             coordinator.push(
                                 OnboardingScene.copyInviteCode(
                                     inviteCode: code,
-                                    groupId: groupInfo.groupId
+                                    groupId: groupInfo.groupId ?? 0
                                 )
                             )
                         }

@@ -12,11 +12,11 @@ struct ReportCardView: View {
     let icon: ImageResource
     let value: Int
     let unit: String
+    let total: Int?
     let valueColor: Color
     let unitColor: Color
     let showProgressBar: Bool
     let progressValue: Int?
-    let statusMessage: String?
     let backgroundColor: Color
     
     init(
@@ -24,22 +24,22 @@ struct ReportCardView: View {
         icon: ImageResource,
         value: Int,
         unit: String,
+        total: Int? = nil,
         valueColor: Color = .blue400,
         unitColor: Color = .blue400,
         showProgressBar: Bool = false,
         progressValue: Int? = nil,
-        statusMessage: String? = nil,
         backgroundColor: Color = .white
     ) {
         self.title = title
         self.icon = icon
         self.value = value
+        self.total = total
         self.unit = unit
         self.valueColor = valueColor
         self.unitColor = unitColor
         self.showProgressBar = showProgressBar
         self.progressValue = progressValue
-        self.statusMessage = statusMessage
         self.backgroundColor = backgroundColor
     }
     
@@ -84,9 +84,9 @@ struct ReportCardView: View {
                     }
                 }
                 .frame(maxWidth: .infinity)
-            } else if let statusMessage = statusMessage {
+            } else if let total {
                 HStack {
-                    Text(statusMessage)
+                    Text(getMessage(completed: value, total: total))
                         .font(.body6)
                         .foregroundStyle(.gray800)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -101,5 +101,19 @@ struct ReportCardView: View {
         .background(backgroundColor)
         .cornerRadius(.radius2)
         .shadow(color: .black.opacity(0.04), radius: 12, x: 0, y: 2)
+    }
+}
+
+extension ReportCardView {
+    func getMessage(completed: Int, total: Int) -> String {
+        if total == 0 {
+            "오늘 집안일이 없어요!"
+        } else if completed == 0 {
+            "집안일을 완수해볼까요?"
+        } else if completed < total {
+            "잘하고 있어요!"
+        } else {
+            "집안일을 모두 끝냈어요!"
+        }
     }
 }

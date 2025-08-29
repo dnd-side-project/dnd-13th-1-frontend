@@ -33,6 +33,7 @@ enum AlloAPI {
     case getEmotionCardList(filter: String, sorted: String) // 내 마음카드 목록 조회
     //    case getCharacterStatus(groupId: Int) // 그룹 캐릭터 상태 조회
     case getCleanliness(groupId: Int) // 홈/우리집 청결도 조회
+    case getGroupState(groupId: Int) // 홈/우리집 청결도, 캐릭터 상태, 대사 조회
     case getTodayPlaceHousework(placeId: Int) // 홈/특정 장소의 오늘의 할 일 조회
     case getMyContribution(groupId: Int) // 마이/나의 기여도 조회
     case getMyTodayCompletionStatus // 마이/나의 오늘의 집안일 완수 상태 조회
@@ -103,6 +104,8 @@ extension AlloAPI: TargetType {
             "/api/emotion-cards/my-emotion-card"
         case let .getCleanliness(groupId):
             "/api/groups/\(groupId)/cleanliness"
+        case let .getGroupState(groupId):
+            "/api/groups/\(groupId)/state"
         case let .getTodayPlaceHousework(placeId):
             "/api/groups/places/\(placeId)/house-work"
         case let .getMyContribution(groupId):
@@ -168,6 +171,8 @@ extension AlloAPI: TargetType {
                 .get
         case .getCleanliness:
                 .get
+        case .getGroupState:
+                .get
         case .getTodayPlaceHousework:
                 .get
         case .getMyContribution:
@@ -232,6 +237,8 @@ extension AlloAPI: TargetType {
         case let .getEmotionCardList(filter, sorted):
             return .requestParameters(parameters: ["filter": filter, "sorted": sorted], encoding: URLEncoding.queryString)
         case .getCleanliness:
+            return .requestPlain
+        case .getGroupState:
             return .requestPlain
         case .getTodayPlaceHousework:
             return .requestPlain

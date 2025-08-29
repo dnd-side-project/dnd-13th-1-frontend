@@ -51,6 +51,7 @@ public final class CheckListViewModel: ViewModelable {
         case weekCalendarAction(WeekCalendarAction) // 주간 캘린더 관련 유저 액션
         case datePickerAction(DatePickerAction) // 데이트피커 관련 유저 액션
         case checkListAction(CheckListAction) // 체크리스트 관련 유저 액션
+        case didTapMemberButton // 멤버 버튼 탭
         case didTapNotificationButton // 알림 버튼 탭
     }
     enum WeekCalendarAction {
@@ -138,6 +139,8 @@ public final class CheckListViewModel: ViewModelable {
         case .didTapNotificationButton:
             break
             // TODO: 알림 UI 전환
+        case .didTapMemberButton:
+            coordinator.push(AppScene.homeMember)
         }
     }
 }

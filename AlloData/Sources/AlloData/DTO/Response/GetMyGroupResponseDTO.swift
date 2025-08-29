@@ -10,4 +10,5 @@ import Foundation
 struct GetMyGroupResponseDTO: Decodable {
     let groupId: Int
     let inviteCode: String
+    let backGroundType: String
 }

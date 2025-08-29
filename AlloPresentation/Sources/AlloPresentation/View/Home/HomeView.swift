@@ -14,87 +14,87 @@ public struct HomeView: View {
     @Binding var selectedTab: TabBarItem
     
     public init(viewModel: HomeViewModel, selectedTab: Binding<TabBarItem>) {
-        Fonts.registerCustomFonts()
         self._viewModel = StateObject(wrappedValue: viewModel)
         self._selectedTab = selectedTab
     }
     
     public var body: some View {
-        GeometryReader { geo in
-            ZStack(alignment: .top) {
-                if viewModel.isLoading {
-                    ProgressView()
-                        .clipped()
-                        .ignoresSafeArea(edges: .top)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-                        .padding(.bottom, 184 + 20 + 48 + 34)
-                } else {
-                    Image(viewModel.state.groupType.image)
-                        .resizable()
-                        .frame(maxWidth: geo.size.width)
-                        .aspectRatio(contentMode: .fit)
-                        .clipped()
-                        .ignoresSafeArea(edges: .top)
-                }
-                VStack {
-                    HomeNavigationBar(
-                        onTapGroup: {
-                            viewModel.action(.didTapMemberButton)
+        ZStack(alignment: .top) {
+            if viewModel.isLoading {
+                ProgressView()
+                    .clipped()
+                    .ignoresSafeArea(edges: .top)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                    .padding(.bottom, 184 + 20 + 48 + 34)
+            } else {
+                Image(viewModel.state.groupType.image)
+                    .resizable()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .aspectRatio(contentMode: .fit)
+                    .clipped()
+                    .ignoresSafeArea(edges: .top)
+            }
+            VStack {
+                HomeNavigationBar(
+                    onTapGroup: {
+                        viewModel.action(.didTapMemberButton)
+                    },
+                    onTapNotification: {
+                        viewModel.action(.didTapNotificationButton)
+                    }
+                )
+                Spacer(minLength: 0)
+                if !viewModel.isLoading {
+                    HomeCharacterView(
+                        onTapMessage: {
+                            viewModel.action(.didTapCharacterMessage)
                         },
-                        onTapNotification: {
-                            viewModel.action(.didTapNotificationButton)
+                        characterStatus: viewModel.state.characterStatus,
+                        onTapInfo: {
+                            viewModel.action(.didTapCharacterStatusBar)
                         }
                     )
-                    Spacer(minLength: 0)
-                    if !viewModel.isLoading {
-                        HomeCharacterView(
-                            onTapMessage: {
-                                viewModel.action(.didTapCharacterMessage)
-                            },
-                            characterStatus: viewModel.state.characterStatus,
-                            onTapInfo: {
-                                viewModel.action(.didTapCharacterStatusBar)
-                            }
-                        )
-                        .padding(.bottom, 184 + 20 + 48 + 34)
-                    }
+                    .padding(.bottom, 184 + 20)
                 }
-                .frame(maxWidth: .infinity)
-                .sheet(
-                    isPresented: $viewModel.state.isBottomSheetPresented,
-                    content: {
-                        HomeBottomSheetView(
-                            completed: viewModel.state.completedHouseworks,
-                            total: viewModel.state.totalHouseworks,
-                            cleanliness: viewModel.state.cleanliness,
-                            recentHouseworks: viewModel.state.recentHouseworks,
-                            onTapEmotionCardList: {
-                                viewModel.action(.didTapEmotionCardList)
-                            },
-                            onTapSendEmotion: { housework in
-                                viewModel.action(.didTapSendEmotion(housework))
-                            },
-                            houseworkPlaces: viewModel.state.houseworkPlaces,
-                            onTapAddHousework: {
-                                viewModel.action(.didTapAddHousework)
-                            },
-                            selectedTab: $selectedTab
-                        )
-                        .presentationDetents([.height(184 + 48), .large])
-                        .presentationDragIndicator(.visible)
-                        .interactiveDismissDisabled()
-                        .presentationCornerRadius(20)
-                    }
-                )
-                .fullScreenCover(
-                    isPresented: $viewModel.state.isCharacterStatusSheetPresented,
-                    content: {
-                        HomeCleanlinessGuideModalView()
-                            .ignoresSafeArea()
-                            .transaction { $0.animation = .easeInOut }
-                    }
-                )
             }
+            .sheet(
+                isPresented: $viewModel.state.isBottomSheetPresented,
+                content: {
+                    HomeBottomSheetView(
+                        completed: viewModel.state.completedHouseworks,
+                        total: viewModel.state.totalHouseworks,
+                        cleanliness: viewModel.state.cleanliness,
+                        recentHouseworks: viewModel.state.recentHouseworks,
+                        onTapEmotionCardList: {
+                            viewModel.action(.didTapEmotionCardList)
+                        },
+                        onTapSendEmotion: { housework in
+                            viewModel.action(.didTapSendEmotion(housework))
+                        },
+                        houseworkPlaces: viewModel.state.houseworkPlaces,
+                        onTapAddHousework: {
+                            viewModel.action(.didTapAddHousework)
+                        },
+                        selectedTab: $selectedTab
+                    )
+                    .presentationDetents([.height(184 + 48), .large])
+                    .presentationDragIndicator(.visible)
+                    .interactiveDismissDisabled()
+                    .presentationCornerRadius(20)
+                    .presentationBackgroundInteraction(.enabled)
+                }
+            )
+            HomeCleanlinessGuideModalView(
+                isPresented: $viewModel.state.isCharacterStatusSheetPresented
+            )
+            .transition(.opacity)
+            .animation(.easeInOut, value: viewModel.state.isCharacterStatusSheetPresented)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .opacity(viewModel.state.isCharacterStatusSheetPresented ? 1 : 0)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onAppear {
+            viewModel.action(.load)
         }
     }
 }

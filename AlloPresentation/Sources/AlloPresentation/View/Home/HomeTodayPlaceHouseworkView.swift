@@ -36,7 +36,7 @@ struct HomeTodayPlaceHouseworkView: View {
             .frame(maxWidth: .infinity)
             .padding(.bottom, 20)
             VStack(spacing: 12) {
-                ForEach(Array(houseworkPlaces.keys.sorted()), id: \.self) { place in
+                ForEach(Array(houseworkPlaces.keys), id: \.self) { place in
                     let image: ImageResource = switch place {
                     case "방": .iconSofa
                     case "욕실": .iconToilet

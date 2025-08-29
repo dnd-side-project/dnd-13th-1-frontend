@@ -22,11 +22,13 @@ public final class TypeInviteCodeViewModel: ViewModelable {
     var coordinator: Coordinator
     let enterGroupUseCase: EnterGroupUseCase
     let setMyGroupUseCase: SetMyGroupUseCase
-    public init(coordinator: Coordinator, enterGroupUseCase: EnterGroupUseCase, setMyGroupUseCase: SetMyGroupUseCase) {
+    let getMyGroupUseCase: GetMyGroupUseCase
+    public init(coordinator: Coordinator, enterGroupUseCase: EnterGroupUseCase, setMyGroupUseCase: SetMyGroupUseCase, getMyGroupUseCase: GetMyGroupUseCase) {
         self.state = .init()
         self.coordinator = coordinator
         self.enterGroupUseCase = enterGroupUseCase
         self.setMyGroupUseCase = setMyGroupUseCase
+        self.getMyGroupUseCase = getMyGroupUseCase
     }
     func action(_ action: Action) {
         switch action {
@@ -35,9 +37,14 @@ public final class TypeInviteCodeViewModel: ViewModelable {
         case .didTapNextButton:
             Task {
                 do {
-                    let groupInfo = try await enterGroupUseCase.execute(inviteCode: state.inputText)
+                    // 재입장 시엔 null 반환하므로 입장 처리에만 사용
+                    try await enterGroupUseCase.execute(inviteCode: state.inputText)
+                    // 재입장 시를 위해 그룹 아이디 따로 요청
+                    let group = try await getMyGroupUseCase.execute()
                     coordinator.popToRoot()
-                    setMyGroupUseCase.execute(groupId: groupInfo.groupId)
+                    if let groupType = group.groupId {
+                        setMyGroupUseCase.execute(groupId: groupType)
+                    }
                 } catch {
                     dump(error)
                 }
