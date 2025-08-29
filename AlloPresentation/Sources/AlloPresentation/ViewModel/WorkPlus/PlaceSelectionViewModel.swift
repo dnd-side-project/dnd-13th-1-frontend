@@ -25,13 +25,16 @@ public final class PlaceSelectionViewModel: ViewModelable {
     public var state: State
     let coordinator: Coordinator
     private let fetchPlacesUseCase: FetchPlacesUseCase
+    let onPlaceSelected: ((HouseworkPlace) -> Void)?
+
     // var selectedCategory: HouseworkPlace?
     // MARK: - Init
     public init(coordinator: Coordinator, initialPlace: String,
-                fetchPlacesUseCase: FetchPlacesUseCase) {
+                fetchPlacesUseCase: FetchPlacesUseCase, onPlaceSelected: ((HouseworkPlace) -> Void)? = nil) {
         self.coordinator = coordinator
         self.fetchPlacesUseCase = fetchPlacesUseCase
         self.state = State()
+        self.onPlaceSelected = onPlaceSelected
     }
     
     // MARK: - Action Handler
@@ -39,6 +42,7 @@ public final class PlaceSelectionViewModel: ViewModelable {
         switch action {
         case .selectPlace(let place):
             state.selectedCategory = place
+            onPlaceSelected?(place)
         case .addNewPlace:
             coordinator.dismissSheet()
             Task {

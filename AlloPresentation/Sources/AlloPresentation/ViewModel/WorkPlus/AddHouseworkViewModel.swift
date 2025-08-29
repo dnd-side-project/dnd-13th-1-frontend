@@ -8,8 +8,8 @@
 import SwiftUI
 import AlloDomain
 
-@Observable
 @MainActor
+@Observable
 public final class AddHouseworkViewModel: ViewModelable {
     // MARK: - State
     struct State {
@@ -22,24 +22,24 @@ public final class AddHouseworkViewModel: ViewModelable {
         var selectedDays: [String] = []
         var alarm: Bool
         var routineText: String
+        var isNewPlaceSelected: Bool = false
     }
+
     // MARK: - Action
     enum Action {
         case didTapBackButton
         case didTapAddHouseworkButton
         case didTapAddPlaceButton
         case didTapAdddRoutineButton
-        case didTapCalendarButton // 시작일/ 종료일
+        case didTapCalendarButton
         case didTapNextButton
     }
-    
-    enum CalendarAction {
-        case selectDate(date: Date)
-    }
+
     // MARK: - Properties
     var state: State
     let coordinator: Coordinator
-    // MARK: - Dependencies
+
+    // MARK: - Init
     public init(coordinator: Coordinator) {
         let today = Date().toKoreanDateString()
         self.state = State(
@@ -52,70 +52,100 @@ public final class AddHouseworkViewModel: ViewModelable {
             routineText: "반복안함"
         )
         self.coordinator = coordinator
+        NotificationCenter.default.addObserver(
+            forName: .newPlaceAdded,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            guard let self = self,
+                  let newPlace = notification.userInfo?["place"] as? HouseworkPlace else { return }
+            Task { @MainActor in
+                self.state.place = newPlace.name
+                self.state.selectedPlaceId = newPlace.placeId
+                self.state.isNewPlaceSelected = true
+                print("새로 추가된 장소 수신:", newPlace.name, newPlace.placeId)
+            }
+        }
     }
-    
-    //MARK: - Action Method
-    func action(_ action: Action) {
-        addHouseWorkAction(action)
-    }
-}
 
-// MARK: Handling Actions
-extension AddHouseworkViewModel {
-    private func addHouseWorkAction(_ action: Action) {
+    // MARK: - Action Handler
+    func action(_ action: Action) {
         switch action {
         case .didTapBackButton:
             coordinator.pop()
+
         case .didTapAddHouseworkButton:
-            coordinator.presentSheet(AppSheet.houseworkSelection(worklistClickAction: { [weak self] selected in
-                self?.state.myHouseworkTitle = selected
-                self?.coordinator.dismissSheet()
-            }),
-                                     onDismiss: {})
-        case .didTapAddPlaceButton:
             coordinator.presentSheet(
-                AppSheet.placeSelection(initialPlace: state.place, placeClickAction: { [weak self] selected, placeId in
-                    self?.state.place = selected
-                    self?.state.selectedPlaceId = placeId
+                AppSheet.houseworkSelection(worklistClickAction: { [weak self] selected in
+                    self?.state.myHouseworkTitle = selected
                     self?.coordinator.dismissSheet()
                 }),
-                onDismiss: {})
+                onDismiss: {}
+            )
+
+        case .didTapAddPlaceButton:
+            // 기존 장소 선택 vs 새 장소 추가 구분
+            coordinator.presentSheet(
+                AppSheet.placeSelection(
+                    initialPlace: state.place,
+                    placeClickAction: { [weak self] selected, placeId in
+                        Task { @MainActor in
+                            guard let self = self else { return }
+                            self.state.place = selected
+                            self.state.selectedPlaceId = placeId
+                            self.state.isNewPlaceSelected = false
+                            self.coordinator.dismissSheet()
+                            print("✅ 기존 장소 선택:", selected, placeId)
+                        }
+                    }
+                ),
+                onDismiss: {}
+            )
 
         case .didTapAdddRoutineButton:
-            coordinator.presentSheet(AppSheet.routineSelection(
-                initialRoutine: state.routine,
-                completeButtonAction: { [weak self] selected, selectedDays, routineText in
-                    self?.state.routine = selected
-                    self?.state.selectedDays = selectedDays   // 선택된 요일 저장
-                    self?.state.routineText = routineText
-                    self?.coordinator.dismissSheet()
-                }
-            ), onDismiss: {})
+            coordinator.presentSheet(
+                AppSheet.routineSelection(
+                    initialRoutine: state.routine,
+                    completeButtonAction: { [weak self] selected, selectedDays, routineText in
+                        Task { @MainActor in
+                            guard let self = self else { return }
+                            self.state.routine = selected
+                            self.state.selectedDays = selectedDays
+                            self.state.routineText = routineText
+                            self.coordinator.dismissSheet()
+                        }
+                    }
+                ),
+                onDismiss: {}
+            )
 
         case .didTapCalendarButton:
-            coordinator.presentSheet(AppSheet.calendarSelection(dateSelectedAction: { [weak self] selected in
-                self?.state.startDate = selected
-                self?.state.endDate = selected
-                self?.coordinator.dismissSheet()
-            }), onDismiss: {})
+            coordinator.presentSheet(
+                AppSheet.calendarSelection(dateSelectedAction: { [weak self] selected in
+                    Task { @MainActor in
+                        guard let self = self else { return }
+                        self.state.startDate = selected
+                        self.state.endDate = selected
+                        self.coordinator.dismissSheet()
+                    }
+                }),
+                onDismiss: {}
+            )
+
         case .didTapNextButton:
             if let housework = makeHousework() {
                 coordinator.push(AppScene.houseworkStandard(housework: housework))
             }
         }
     }
-}
 
-// MARK: - Function
-extension AddHouseworkViewModel {
+    // MARK: - Function
     func makeHousework() -> Housework? {
-        // Date 변환
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko_KR")
         formatter.dateFormat = "yyyy.MM.dd(EE)"
-        guard let date = formatter.date(from: state.startDate) else { return nil }
-        print("routine", state.routineEnum)
-        print("dayOfTheWeek", state.selectedDays.map { $0.toDayOfWeek()})
+        guard let _ = formatter.date(from: state.startDate) else { return nil }
+        let placeIdToUse = state.selectedPlaceId ?? 0
         let housework = Housework(
             id: 0,
             place: state.place,
@@ -126,7 +156,7 @@ extension AddHouseworkViewModel {
             routine: HouseworkRoutine(rawValue: state.routine) ?? .none,
             tags: [],
             houseWorkName: state.myHouseworkTitle,
-            placeAdd: state.selectedPlaceId ?? 0,
+            placeAdd: placeIdToUse,
             tagsAdd: [0],
             members: [0],
             startDate: state.startDate,
@@ -135,12 +165,11 @@ extension AddHouseworkViewModel {
             dayOfTheWeek: state.selectedDays.map { $0.toDayOfWeek() },
             isNotified: state.alarm
         )
-        print("housework문", state.place)
         return housework
     }
-
 }
 
+// MARK: - Extensions
 extension Date {
     func toKoreanDateString() -> String {
         let formatter = DateFormatter()
@@ -149,22 +178,19 @@ extension Date {
         return formatter.string(from: self)
     }
 }
+
 extension AddHouseworkViewModel.State {
     var routineEnum: Routine {
         switch routine {
-        case "반복안함":
-            return .none
-        case "매일":
-            return .everyDay
-        case "매주":
-            return .everyWeek
-        case "격주":
-            return .biWeek
-        default:
-            return .none
+        case "반복안함": return .none
+        case "매일": return .everyDay
+        case "매주": return .everyWeek
+        case "격주": return .biWeek
+        default: return .none
         }
     }
 }
+
 extension String {
     func toDayOfWeek() -> AddDayOfTheWeek {
         switch self {

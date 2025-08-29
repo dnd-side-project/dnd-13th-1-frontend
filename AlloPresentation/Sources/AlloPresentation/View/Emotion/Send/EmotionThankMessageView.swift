@@ -84,7 +84,7 @@ public struct EmotionThankMessageView: View {
                     }
                 
             }
-            .offset(y: -keyboardHeight) // 🔹 키보드 높이만큼 전체 이동
+            .offset(y: -keyboardHeight)
             .animation(.easeOut(duration: 0.25), value: keyboardHeight)
             // 하단 고정 버튼
             MainButton(
