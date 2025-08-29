@@ -25,6 +25,7 @@ public protocol DIContainer {
     func resolveFetchPlaceUsecase() -> FetchPlacesUseCase
     // MARK: - Member UseCase
     func resolveFetchMemberUseCase() -> FetchMemberUseCase
+    func resolvePatchMyProfileUseCase() -> PatchMyProfileUseCase
     // MARK: - Group UseCases
     func resolveCreateGroupUseCase() -> CreateGroupUseCase
     func resolveEnterGroupUseCase() -> EnterGroupUseCase

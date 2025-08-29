@@ -147,4 +147,8 @@ extension DIContainerImpl: DIContainer {
     func resolveFetchMemberUseCase() -> FetchMemberUseCase {
         UseCaseFactory.makeFetchMemberUseCase(memberRepository: memberRepository)
     }
+    
+    func resolvePatchMyProfileUseCase() -> PatchMyProfileUseCase {
+        UseCaseFactory.makePatchMyProfileUseCase(memberRepository: memberRepository)
+    }
 }

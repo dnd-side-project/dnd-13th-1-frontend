@@ -9,6 +9,7 @@ import SwiftUI
 
 public struct TypeInviteCodeView: View {
     @StateObject private var viewModel: TypeInviteCodeViewModel
+    @FocusState private var isCodeFocused: Bool
     
     public init(viewModel: TypeInviteCodeViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
@@ -30,6 +31,7 @@ public struct TypeInviteCodeView: View {
             TextField("", text: $viewModel.state.inputText)
                 .font(.subtitle1)
                 .foregroundStyle(.gray900)
+                .focused($isCodeFocused)
             Rectangle()
                 .frame(maxWidth: .infinity)
                 .frame(height: 1)
@@ -45,6 +47,8 @@ public struct TypeInviteCodeView: View {
             .padding(.bottom, 16)
         }
         .padding(.horizontal, 20)
+        .contentShape(Rectangle())
+        .onTapGesture { isCodeFocused = false }
         
     }
 }

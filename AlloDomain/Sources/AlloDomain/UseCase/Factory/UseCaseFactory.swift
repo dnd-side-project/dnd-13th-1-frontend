@@ -46,6 +46,11 @@ public struct UseCaseFactory {
         return FetchMemberUseCaseImpl(memberRepository: memberRepository)
     }
     
+    // MARK: Member - Profile
+    public static func makePatchMyProfileUseCase(memberRepository: MemberRepository) -> PatchMyProfileUseCase {
+        return PatchMyProfileUseCaseImpl(memberRepository: memberRepository)
+    }
+    
     // MARK: Group
     public static func makeCreateGroupUseCase(groupRepository: GroupRepository) -> CreateGroupUseCase {
         return CreateGroupUseCaseImpl(repo: groupRepository)

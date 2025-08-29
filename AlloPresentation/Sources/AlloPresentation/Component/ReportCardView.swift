@@ -78,7 +78,7 @@ struct ReportCardView: View {
                             .cornerRadius(.radius3)
                         Rectangle()
                             .foregroundStyle(.blue400)
-                            .frame(width: geo.size.width * CGFloat(progressValue) / 100)
+                            .frame(maxWidth: geo.size.width * CGFloat(progressValue) / 100)
                             .frame(height: 13)
                             .cornerRadius(.radius3)
                     }

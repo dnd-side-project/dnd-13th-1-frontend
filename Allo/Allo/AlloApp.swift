@@ -70,7 +70,7 @@ struct AlloApp: App {
                 } else {
                     // MARK: 로그아웃 상태
                     OnboardingNavView(
-                        rootScene: .login,
+                        rootScene: .onboarding,
                         onboardingCoordinator: onBoardingCoordinator
                     )
                 }
@@ -99,8 +99,8 @@ struct AlloApp: App {
     private func getGroupInformation() {
         Task {
             do {
-//                let myGroup = try await diContainer.resolveGetMyGroupUseCase().execute()
-//                diContainer.resolveSetMyGroupUseCase().execute(groupId: myGroup.groupId)
+                let myGroup = try await diContainer.resolveGetMyGroupUseCase().execute()
+                diContainer.resolveSetMyGroupUseCase().execute(groupId: myGroup.groupId)
             } catch {
                 dump(error)
             }

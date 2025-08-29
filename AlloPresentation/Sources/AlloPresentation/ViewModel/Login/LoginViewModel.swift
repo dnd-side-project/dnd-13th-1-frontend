@@ -16,9 +16,11 @@ public final class LoginViewModel: ViewModelable {
         case kakaoLoginButtonTapped
     }
     private let kakaoLoginUseCase: KakaoLoginUseCase
+    var coordinator: Coordinator
     var state: State
-    public init(kakaoLoginUseCase: KakaoLoginUseCase) {
+    public init(coordinator: Coordinator, kakaoLoginUseCase: KakaoLoginUseCase) {
         self.state = .init()
+        self.coordinator = coordinator
         self.kakaoLoginUseCase = kakaoLoginUseCase
     }
     func action(_ action: Action) {
@@ -26,7 +28,8 @@ public final class LoginViewModel: ViewModelable {
         case .kakaoLoginButtonTapped:
             Task {
                 do {
-                    let token = try await kakaoLoginUseCase.execute()
+                    try await kakaoLoginUseCase.execute()
+                    coordinator.push(OnboardingScene.profileSetting)
                 } catch(let error) {
                     dump(error)
                 }

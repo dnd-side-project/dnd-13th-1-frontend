@@ -9,6 +9,10 @@ import SwiftUI
 import AlloDomain
 
 public struct StubMemberRepository: MemberRepository {
+    public func patchMyProfile(nickname: String, imageData: Data) async throws {
+        
+    }
+    
     public init() {}
     public func fetchMembers() async throws -> [Member] {
         return [

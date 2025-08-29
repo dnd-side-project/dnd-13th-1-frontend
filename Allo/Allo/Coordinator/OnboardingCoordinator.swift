@@ -33,8 +33,12 @@ final class OnboardingCoordinator: Coordinator {
     @ViewBuilder
     func buildScene(_ scene: OnboardingScene) -> some View {
         switch scene {
+        case .onboarding:
+            OnboardingView(viewModel: OnboardingViewModel(coordinator: self))
         case .login:
-            LoginView(viewModel: LoginViewModel(kakaoLoginUseCase: diContainer.resolveKakaoLoginUseCase()))
+            LoginView(viewModel: LoginViewModel(coordinator: self, kakaoLoginUseCase: diContainer.resolveKakaoLoginUseCase()))
+        case .profileSetting:
+            ProfileSettingView(viewModel: ProfileSettingViewModel(coordinator: self, patchMyProfileUseCase: diContainer.resolvePatchMyProfileUseCase()))
         case let .onboardingComplete(nickname):
             OnboardingCompleteView(viewModel: OnboardingCompleteViewModel(coordinator: self, nickname: nickname))
         case .enterGroup:

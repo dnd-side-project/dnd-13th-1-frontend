@@ -199,4 +199,8 @@ struct NetworkService: Sendable {
         dump(responseDTO)
         return responseDTO
     }
+
+    func patchMyProfile(_ requestDTO: PatchProfileRequestDTO) async throws {
+        try await provider.request(.patchMyProfile(requestDTO: requestDTO))
+    }
 }

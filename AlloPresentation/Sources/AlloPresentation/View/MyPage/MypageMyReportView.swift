@@ -38,7 +38,7 @@ struct MypageMyReportView: View {
                     valueColor: .blue400,
                     unitColor: .blue400,
                     showProgressBar: true,
-                    progressValue: contribution,
+                    progressValue: contribution > 0 ? contribution : 0,
                     backgroundColor: .gray25
                 )
             }
