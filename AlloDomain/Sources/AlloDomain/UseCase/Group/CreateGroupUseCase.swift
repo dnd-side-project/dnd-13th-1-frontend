@@ -1,7 +1,5 @@
 import Foundation
 
-public protocol CreateGroupUseCase {
-    func execute(characterId: Int) async throws -> GroupInfo
+public protocol CreateGroupUseCase: Sendable {
+    func execute(backGroundTypeNum: Int) async throws -> GroupInfo
 }
-
-

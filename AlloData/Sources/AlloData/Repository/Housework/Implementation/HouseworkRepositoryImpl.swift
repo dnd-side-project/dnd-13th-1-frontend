@@ -107,11 +107,8 @@ final class HouseworkRepositoryImpl: HouseworkRepository {
     }
     
     func getHouseworkDetail(id: Int) async throws -> HouseworkDetail {
-        print("📡 [Repository] getHouseworkDetail 호출됨, id: \(id)")
-        
         do {
             let dto = try await networkService.getHouseworkDetail(id)
-            print("✅ [Repository] 네트워크 응답: \(dto)")
             
             guard let date = dateFormatterYYYYMMDD.date(from: dto.houseWorkDate) else {
                 print("⚠️ [Repository] 날짜 변환 실패, 기본값(Date()) 사용")
@@ -141,7 +138,6 @@ final class HouseworkRepositoryImpl: HouseworkRepository {
             )
             
         } catch {
-            print("❌ [Repository] getHouseworkDetail 실패: \(error)")
             throw error
         }
     }
@@ -161,7 +157,13 @@ final class HouseworkRepositoryImpl: HouseworkRepository {
         let dto = try await networkService.getTodayPlaceHousework(placeId)
         func mapItems(_ arr: [GetTodayPlaceHouseworkResponseDTO.HouseWork]) -> [TodayHouseworkItem] {
             arr.map { item in
-                let urls = item.houseWorkMembers.compactMap { URL(string: $0.memberProfileImageUrl) }
+                let urls = item.houseWorkMembers.map { member in
+                    if let urlString = member.memberProfileImageUrl {
+                        return URL(string: urlString)
+                    } else {
+                        return nil
+                    }
+                }
                 return TodayHouseworkItem(id: item.houseWorkId, title: item.houseWorkTitle, memberProfileImageUrls: urls)
             }
         }

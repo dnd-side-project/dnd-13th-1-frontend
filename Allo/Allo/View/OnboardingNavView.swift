@@ -10,13 +10,15 @@ import Observation
 import AlloPresentation
 
 struct OnboardingNavView: View {
+    let rootScene: OnboardingScene
     @Bindable var onboardingCoordinator: OnboardingCoordinator
 
     var body: some View {
         NavigationStack(path: $onboardingCoordinator.path) {
-            onboardingCoordinator.buildScene(.login)
+            onboardingCoordinator.buildScene(rootScene)
                 .navigationDestination(for: OnboardingScene.self) { scene in
                     onboardingCoordinator.buildScene(scene)
+                        .navigationBarBackButtonHidden()
                 }
         }
     }

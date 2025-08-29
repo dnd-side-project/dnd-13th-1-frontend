@@ -58,8 +58,8 @@ public struct TodayPlaceHousework: Sendable {
 public struct TodayHouseworkItem: Identifiable, Sendable {
     public let id: Int
     public let title: String
-    public let memberProfileImageUrls: [URL]
-    public init(id: Int, title: String, memberProfileImageUrls: [URL]) {
+    public let memberProfileImageUrls: [URL?]
+    public init(id: Int, title: String, memberProfileImageUrls: [URL?]) {
         self.id = id
         self.title = title
         self.memberProfileImageUrls = memberProfileImageUrls

@@ -16,7 +16,7 @@ struct GetTodayPlaceHouseworkResponseDTO: Decodable {
         let houseWorkMembers: [Member]
         struct Member: Decodable {
             let memberId: Int
-            let memberProfileImageUrl: String
+            let memberProfileImageUrl: String?
         }
     }
 }

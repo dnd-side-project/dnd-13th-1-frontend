@@ -15,9 +15,9 @@ public final class Member: Equatable, Identifiable, Sendable {
     // MARK: - Properties
     public let id: Int
     public let name: String
-    public let profileImageUrl: URL
+    public let profileImageUrl: URL?
     // MARK: - Initializer
-    public init(id: Int, name: String, profileImageUrl: URL) {
+    public init(id: Int, name: String, profileImageUrl: URL?) {
         self.id = id
         self.name = name
         self.profileImageUrl = profileImageUrl

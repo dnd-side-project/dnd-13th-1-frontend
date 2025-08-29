@@ -47,6 +47,10 @@ extension DIContainerImpl: DIContainer {
         UseCaseFactory.makeGetMyGroupUseCase(groupRepository: groupRepository)
     }
     
+    func resolveSetMyGroupUseCase() -> SetMyGroupUseCase {
+        UseCaseFactory.makeSetMyGroupUseCase(groupRepository: groupRepository)
+    }
+    
     func resolveFetchTagsUseCase() -> FetchTagsUseCase {
         UseCaseFactory.makeFetchTagsUseCase(tagRepository: tagRepository)
     }
@@ -150,5 +154,9 @@ extension DIContainerImpl: DIContainer {
     
     func resolveFetchMemberUseCase() -> FetchMemberUseCase {
         UseCaseFactory.makeFetchMemberUseCase(memberRepository: memberRepository)
+    }
+    
+    func resolvePatchMyProfileUseCase() -> PatchMyProfileUseCase {
+        UseCaseFactory.makePatchMyProfileUseCase(memberRepository: memberRepository)
     }
 }

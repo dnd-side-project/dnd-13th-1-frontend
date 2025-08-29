@@ -15,23 +15,22 @@ final class GroupRepositoryImpl: GroupRepository {
         self.networkService = networkService
     }
     
-    func createGroup(characterId: Int) async throws -> GroupInfo {
-        let dto = try await networkService.createGroup(characterId)
-        UserDefaultsService.groupId = dto.groupId
+    func createGroup(backGroundTypeNum: Int) async throws -> GroupInfo {
+        let dto = try await networkService.createGroup(backGroundTypeNum)
         return GroupInfo(groupId: dto.groupId, inviteCode: dto.inviteCode)
     }
     
     func enterGroup(inviteCode: String) async throws -> GroupInfo {
         let dto = try await networkService.enterGroup(inviteCode)
-        UserDefaultsService.groupId = dto.groupId
         return GroupInfo(groupId: dto.groupId)
     }
     
     func getMyGroup() async throws -> GroupInfo {
         let dto = try await networkService.getMyGroup()
-        UserDefaultsService.groupId = dto.groupId
-        return GroupInfo(groupId: dto.groupId)
+        return GroupInfo(groupId: dto.groupId, inviteCode: dto.inviteCode)
+    }
+    
+    func setMyGroup(groupId: Int) {
+        UserDefaultsService.groupId = groupId
     }
 }
-
-

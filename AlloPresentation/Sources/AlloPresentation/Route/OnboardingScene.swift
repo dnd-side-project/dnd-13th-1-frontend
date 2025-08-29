@@ -9,7 +9,13 @@ import Foundation
 import SwiftUI
 
 public enum OnboardingScene: AppRoute {
+    case onboarding
     case login
+    case profileSetting
+    case onboardingComplete(nickname: String)
+    case enterGroup
+    case createGroup
+    case copyInviteCode(inviteCode: String, groupId: Int)
     public var id: String {
         String(describing: self)
     }
@@ -22,8 +28,11 @@ public enum OnboardingScene: AppRoute {
 }
 
 public enum OnboardingSheet: AppRoute {
+    case profileImagePicker
     public var id: String {
         switch self {
+        case .profileImagePicker:
+            return "profileImagePicker"
         }
     }
 }
