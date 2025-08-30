@@ -44,7 +44,7 @@ public final class AddHouseworkViewModel: ViewModelable {
         let today = Date().toKoreanDateString()
         self.state = State(
             myHouseworkTitle: "",
-            place: "방",
+            place: "",
             startDate: today,
             endDate: today,
             routine: "반복안함",

@@ -55,8 +55,8 @@ public final class AddHouseworkMemberViewModel: ViewModelable {
                 members: selectedMemberIds,
                 startDate: state.housework.startDate,
                 dueDate: state.housework.dueDate,
-                routineAdd: state.housework.routineAdd,
-                dayOfTheWeek: state.housework.dayOfTheWeek,
+                routineAdd: .none,
+                dayOfTheWeek: [],
                 isNotified: state.housework.isNotified
             )
             coordinator.push(AppScene.houseworkPlusFinish(housework: housework))

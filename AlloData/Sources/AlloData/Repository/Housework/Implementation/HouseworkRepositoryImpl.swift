@@ -61,7 +61,7 @@ final class HouseworkRepositoryImpl: HouseworkRepository {
                 let workDate = dateFormatterYYYYMMDD.date(from: item.houseWorkDate) ?? Date() // 실패하면 오늘 날짜
                 return Housework(
                     id: item.houseWorkId,
-                    place: "",
+                    place: item.placeName,
                     title: item.houseWorkTitle,
                     member: members,
                     date: workDate,
