@@ -219,8 +219,13 @@ extension CheckListViewModel {
         case .didTapCompletedHouseworkListButton:
             state.checkListState.showsCompleted.toggle()
         case let .didTaphousework(housework):
-            // TODO: 집안일 상세보기 바텀시트 UI
-            break
+            let dummyHousework = housework
+            coordinator.presentSheet(
+                AppSheet.houseworkDetailSelection(housework: dummyHousework) {
+                    self.coordinator.dismissSheet()
+                },
+                onDismiss: {}
+            )
         }
     }
 }
