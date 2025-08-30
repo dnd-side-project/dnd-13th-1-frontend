@@ -23,8 +23,6 @@ public struct CalendarDateSheet: View {
                 .font(.subtitle1)
                 .foregroundColor(.gray900)
                 .padding(.top, 20)
-
-            
         }
         Spacer()
     }
