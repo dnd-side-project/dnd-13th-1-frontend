@@ -82,16 +82,20 @@ public struct CalendarDateSheet: View {
             
             LazyVGrid(columns: columns, spacing: 8) {
                 ForEach(daysInMonth(), id: \.self) { date in
-                    Text("\(Calendar.current.component(.day, from: date))")
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .padding(8)
-                        .background(backgroundColor(for: date))
-                        .cornerRadius(8)
+                    Text(date == Date.distantPast ? "" :
+                         "\(Calendar.current.component(.day, from: date))")
+                        .frame(width: 36, height: 36) // 원형을 위해 가로세로 동일하게 설정
+                        .background(
+                            Circle()
+                                .fill(backgroundColor(for: date))
+                        )
+                        .foregroundColor(foregroundColor(for: date))
                         .onTapGesture {
                             select(date)
                         }
                 }
             }
+
             .frame(height: 300)
             
             Spacer()
@@ -157,23 +161,44 @@ public struct CalendarDateSheet: View {
     
     private func backgroundColor(for date: Date) -> Color {
         if date == Date.distantPast { return .clear } // 빈칸 처리
+
+        let today = Calendar.current.startOfDay(for: Date())
+        let target = Calendar.current.startOfDay(for: date)
+
+        // 오늘 날짜인 경우 파란색
+        if target == today {
+            return .blue400
+        }
+
         if let start = startDate, let end = endDate {
             return (date >= start && date <= end) ? .blue400 : .clear
         } else if let start = startDate {
             return date == start ? .blue400 : .clear
         }
+
         return .clear
     }
-    
+
     private func foregroundColor(for date: Date) -> Color {
         if date == Date.distantPast { return .clear } // 빈칸 처리
+        
+        let target = Calendar.current.startOfDay(for: date)
+        
         if let start = startDate, let end = endDate {
-            return (date >= start && date <= end) ? .black : .white
+            return (target >= start && target <= end) ? .white : .black
         } else if let start = startDate {
-            return date == start ? .black : .white
+            return target == start ? .white : .black
         }
-        return .clear
+
+        // 오늘 날짜도 선택 색상과 구분하려면 필요 시 조건 추가 가능
+        let today = Calendar.current.startOfDay(for: Date())
+        if target == today {
+            return .white
+        }
+        
+        return .black
     }
+
     
     private func select(_ date: Date) {
         if date == Date.distantPast { return } // 빈칸 클릭 무시
@@ -196,6 +221,4 @@ public struct CalendarDateSheet: View {
           //  dateClickAction("\(formatter.string(from: start)) ~ \(formatter.string(from: end))")
         }
     }
-    
-    
 }
