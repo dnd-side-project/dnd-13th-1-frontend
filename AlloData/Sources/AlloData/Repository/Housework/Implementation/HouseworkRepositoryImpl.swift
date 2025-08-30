@@ -50,7 +50,7 @@ final class HouseworkRepositoryImpl: HouseworkRepository {
         let dateString = dateFormatterYYYYMMDD.string(from: date)
         let dto = try await networkService.getHouseworkList(groupId, date: dateString)
         
-        func mapHouseworks(_ list: [GetHouseworkResponseDTO.Housework]) -> [Housework] {
+        func mapHouseworks(_ list: [GetHouseworkResponseDTO.Housework], isDone: Bool) -> [Housework] {
             return list.compactMap { item in
                // guard let workDate = dateFormatterYYYYMMDD.date(from: item.houseWorkDate) else { return nil }
                 let members: [Member] = item.houseWorkMembers.map { m in
@@ -61,21 +61,21 @@ final class HouseworkRepositoryImpl: HouseworkRepository {
                 let workDate = dateFormatterYYYYMMDD.date(from: item.houseWorkDate) ?? Date() // 실패하면 오늘 날짜
                 return Housework(
                     id: item.houseWorkId,
-                    place: "",
+                    place: item.placeName,
                     title: item.houseWorkTitle,
                     member: members,
                     date: workDate,
-                    isDone: false,
+                    isDone: isDone,
                     routine: .none,
                     tags: item.houseWorkTag.map{ $0.name }
                 )
 
             }
         }
-        let myLeft = mapHouseworks(dto.myHouseWorkLeft)
-        let ourLeft = mapHouseworks(dto.ourHouseWorkLeft)
-        let myDone = mapHouseworks(dto.myHouseWorkCompleted)
-        let ourDone = mapHouseworks(dto.ourHouseWorkCompleted)
+        let myLeft = mapHouseworks(dto.myHouseWorkLeft, isDone: false)
+        let ourLeft = mapHouseworks(dto.ourHouseWorkLeft, isDone: false)
+        let myDone = mapHouseworks(dto.myHouseWorkCompleted, isDone: true)
+        let ourDone = mapHouseworks(dto.ourHouseWorkCompleted, isDone: true)
         return (myLeft, ourLeft, myDone, ourDone)
     }
     

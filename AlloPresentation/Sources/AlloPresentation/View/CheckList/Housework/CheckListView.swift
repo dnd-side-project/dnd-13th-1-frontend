@@ -70,6 +70,7 @@ public struct CheckListView: View {
                 .frame(maxWidth: .infinity)
                 .background(.white)
                 .cornerRadius(.radius3, corners: [.bottomLeft, .bottomRight])
+                .background(.gray50)
                 CheckListHeaderView(
                     selectedTabIndex: viewModel.state.checkListState.selectedTabIndex,
                     myHouseworkCount: viewModel.state.checkListState.myHouseworksLeft.count,
@@ -86,6 +87,7 @@ public struct CheckListView: View {
                         viewModel.action(.checkListAction(.startEditing))
                     }
                 )
+                .background(.gray50)
                 ScrollView(.vertical) {
                     VStack(alignment: .center, spacing: 12) {
                         ForEach(
@@ -149,10 +151,12 @@ public struct CheckListView: View {
                             }
                         }
                     }
+                    Spacer(minLength: 0)
                 }
+                .padding(.bottom, 20)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(.gray50)
             }
-            .padding(.bottom, 20)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .ignoresSafeArea(edges: .bottom)
             if viewModel.state.isLoading {
