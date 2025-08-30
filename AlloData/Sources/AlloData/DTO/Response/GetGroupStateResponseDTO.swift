@@ -12,3 +12,4 @@ struct GetGroupStateResponseDTO: Codable {
     let state: String
     let message: String
 }
+

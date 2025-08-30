@@ -77,6 +77,7 @@ final class AppCoordinator: Coordinator {
                 getMyContributionUseCase: diContainer.resolveGetMyContributionUseCase(),
                 getWeekCompletionStatusUseCase: diContainer.resolveGetWeekCompletionStatusUseCase(),
                 getTwoWeekComparisonUseCase: diContainer.resolveGetTwoWeekComparisonUseCase(),
+                logoutUseCase: diContainer.resolveLogoutUseCase(),
                 coordinator: self
             )
             MyPageView(viewModel: mypageViewModel)

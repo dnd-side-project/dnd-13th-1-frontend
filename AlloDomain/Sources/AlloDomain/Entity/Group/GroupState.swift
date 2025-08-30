@@ -18,3 +18,4 @@ public struct GroupState: Sendable {
         self.message = message
     }
 }
+

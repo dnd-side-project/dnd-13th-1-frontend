@@ -43,6 +43,7 @@ public final class MyPageViewModel: ViewModelable {
     private let getMyContributionUseCase: GetMyContributionUseCase
     private let getWeekCompletionStatusUseCase: GetWeekCompletionStatusUseCase
     private let getTwoWeekComparisonUseCase: GetTwoWeekComparisonUseCase
+    private let logoutUseCase: LogoutUseCase
     // MARK: - Properties
     var state: State
     let coordinator: Coordinator
@@ -54,6 +55,7 @@ public final class MyPageViewModel: ViewModelable {
         getMyContributionUseCase: GetMyContributionUseCase,
         getWeekCompletionStatusUseCase: GetWeekCompletionStatusUseCase,
         getTwoWeekComparisonUseCase: GetTwoWeekComparisonUseCase,
+        logoutUseCase: LogoutUseCase,
         coordinator: Coordinator
     ) {
         self.fetchMemberUseCase = fetchMemberUseCase
@@ -62,6 +64,7 @@ public final class MyPageViewModel: ViewModelable {
         self.getMyContributionUseCase = getMyContributionUseCase
         self.getWeekCompletionStatusUseCase = getWeekCompletionStatusUseCase
         self.getTwoWeekComparisonUseCase = getTwoWeekComparisonUseCase
+        self.logoutUseCase = logoutUseCase
         self.coordinator = coordinator
         self.state = State(
             profileImageUrl: nil,
@@ -84,7 +87,14 @@ public final class MyPageViewModel: ViewModelable {
     func action(_ action: Action) {
         switch action {
         case .didTapSettingButton:
-            break
+            Task {
+                do {
+                    try await logoutUseCase.execute()
+                } catch {
+                    // Handle error if needed
+                    print("Logout failed: \(error)")
+                }
+            }
         }
     }
 }

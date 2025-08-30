@@ -61,4 +61,8 @@ public struct RepositoryFactory {
         }
         return AIRepositoryImpl(apiClient: AIAPIClient(apiKey: apiKey))
     }
+    
+    public func makeLogoutUseCase() -> LogoutUseCase {
+        LogoutUseCaseImpl()
+    }
 }

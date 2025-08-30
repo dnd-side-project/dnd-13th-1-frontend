@@ -164,4 +164,8 @@ extension DIContainerImpl: DIContainer {
     func resolvePatchMyProfileUseCase() -> PatchMyProfileUseCase {
         UseCaseFactory.makePatchMyProfileUseCase(memberRepository: memberRepository)
     }
+    
+    func resolveLogoutUseCase() -> LogoutUseCase {
+        UseCaseFactory.makeLogoutUseCase(logoutUseCase: repositoryFactory.makeLogoutUseCase())
+    }
 }

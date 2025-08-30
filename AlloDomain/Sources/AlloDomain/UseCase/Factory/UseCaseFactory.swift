@@ -13,6 +13,10 @@ public struct UseCaseFactory {
         return KakaoLoginUseCaseImpl(repository: kakaoLoginRepository)
     }
     
+    public static func makeLogoutUseCase(logoutUseCase: LogoutUseCase) -> LogoutUseCase {
+        return logoutUseCase
+    }
+    
     // MARK: Housework
     public static func makeAddHouseworkUseCase(houseworkRepository: HouseworkRepository) -> AddHouseworkUseCase {
         return AddHouseworkUseCaseImpl(houseworkRepository: houseworkRepository)

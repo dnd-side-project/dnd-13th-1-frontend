@@ -10,3 +10,4 @@ import Foundation
 public protocol GetGroupStateRepository: Sendable {
     func getGroupState(groupId: Int) async throws -> GroupState
 }
+

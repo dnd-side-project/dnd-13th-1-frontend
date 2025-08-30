@@ -8,7 +8,7 @@
 import Foundation
 import Security
 
-public struct KeychainService {
+public struct KeychainService: Sendable {
     private static let service = "com.dnd.allo"
 
     enum KeyChainError: Error {

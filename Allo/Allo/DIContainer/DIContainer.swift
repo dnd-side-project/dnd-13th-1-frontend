@@ -13,6 +13,7 @@ import AlloDomain
 public protocol DIContainer {
     // MARK: - Auth UseCases
     func resolveKakaoLoginUseCase() -> KakaoLoginUseCase
+    func resolveLogoutUseCase() -> LogoutUseCase
     // MARK: - User UseCases
     // MARK: - CheckList UseCases
     func resolveGenerateCalendarDateUseCase() -> GenerateCalendarDateUseCase
