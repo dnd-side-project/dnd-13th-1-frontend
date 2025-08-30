@@ -189,6 +189,7 @@ extension CheckListViewModel {
                     try await completeHousework(housework)
                     state.checkListState.myHouseworksLeft.removeAll(where: { $0.id == housework.id })
                     state.checkListState.ourHouseworksLeft.removeAll(where: { $0.id == housework.id })
+                    await updateHouseworkListOn(housework.date)
                 } catch(let error) {
                     dump(#function)
                     dump(error)
@@ -205,7 +206,9 @@ extension CheckListViewModel {
         case .deleteSelectedHousework:
             Task {
                 do {
-                    // TODO: 집안일 삭제 유즈케이스 호출
+                    for work in state.checkListState.selectedHouseworks {
+                        try await deleteHouseworkUseCase.execute(work)
+                    }
                 } catch(let error) {
                     dump(#function)
                     dump(error)
